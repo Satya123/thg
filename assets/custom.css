@@ -1,0 +1,10 @@
+.CSSDemo {
+    margin: 40px;
+    border: 5px dotted blue;
+}
+
+.CSSDemo_content {
+    font-size: 15px;
+    text-align: center;
+    background-color: lightgray;
+}
