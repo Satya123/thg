@@ -14,10 +14,9 @@ export default class ServiceClass extends React.Component {
           });
       }
 
-      static appDetails = (member, dateOfBirth, lastUrl) => {
-        return axios.post(baseUrl + lastUrl, {
-              memberID: member,
-              birthDate: dateOfBirth
+      static appDetails = (token, lastUrl) => {
+        return axios.get(baseUrl + lastUrl, {
+                headers: { Token: token }
             });
         }
 

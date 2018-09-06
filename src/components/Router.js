@@ -12,6 +12,7 @@ import Dependents from './Dependents';
 import Policies from './Policies';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
+import VendorSplash from './VendorSplash';
 import { Alert } from 'react-native';
 
 
@@ -34,6 +35,7 @@ class RouterComponent extends Component {
             this.setState({ isLogin: false });
 
         } else {
+            console.log(res);
             this.setState({ isLogin: true });
 
         }
@@ -53,9 +55,10 @@ class RouterComponent extends Component {
         <Scene hideNavBar>
         <Scene key='HomeScreen' component={HomeScreen} title='' />
         {
-          (isLogin === true) ? <Scene key='HomeScreen' component={HomeScreen} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
+          (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
         }
         <Scene key='Profile' component={Profile} title='' />
+        <Scene key='VendorSplash' component={VendorSplash} title='' />
         <Scene key='Menu' component={Menu} title='' />
         <Scene key='Notification' component={Notification} title='' />
         <Scene key='Telemedicine' component={Telemedicine} title='' />

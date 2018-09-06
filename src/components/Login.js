@@ -68,6 +68,8 @@ clickToLogin = () => {
 
     const { txtMemberID }  = this.state;
     const { date }  = this.state;
+
+
     if (txtMemberID === '') {
       Alert.alert('Please enter MemberId.');
     } else if (date === '') {
@@ -80,7 +82,7 @@ clickToLogin = () => {
           if (reData.data.status === '1') {
               UserData.saveData('token', reData.data.data.token);
                 this.setState({ loaded: false });
-              Actions.HomeScreen();
+              Actions.VendorSplash();
           } else {
               this.setState({ loaded: false });
             Alert.alert(reData.data.message);

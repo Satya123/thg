@@ -20,9 +20,9 @@ class Profile extends Component {
 
         <View style={styles.MainContainer}>
           <View><Text>Profile Call</Text></View>
-          <View style={{height:'62.5%'}}></View>
+          <View style={{ height:'62.5%' }} />
 
-          <View>
+          <View style={styles.footerView}>
                   <CustomFooter
                   isProfile={this.state.isProfile}
                   isHome={this.state.isHome}
@@ -47,6 +47,7 @@ const styles = {
        backgroundColor: 'yellow'
    },
    footerView: {
+
      height: 40,
       marginBottom: 0,
       padding: 0,
