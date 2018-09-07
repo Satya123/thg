@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert } from 'react-native';
+import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert, ActivityIndicator } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
@@ -9,11 +9,11 @@ import ExtensionHelper from './ExtensionHelper';
 
  class VendorSplash extends React.Component {
 
-  constructor() {
-     super();
+  constructor(props) {
+     super(props);
      this.state = {
         isVisible: true,
-        loaded: false,
+        loaded: true,
 
      }
 }
@@ -33,6 +33,7 @@ import ExtensionHelper from './ExtensionHelper';
           console.log(token);
             this.setState({ loaded: true });
               ServiceClass.appDetails(token, 'appdetails').then((reData) => {
+                debugger;
                 console.log(reData);
                 const that = this;
 
@@ -64,7 +65,8 @@ import ExtensionHelper from './ExtensionHelper';
 }
   goToHomeScreen = () => {
     const {
-        isVisible
+        isVisible,
+
     } = this.state;
       if (isVisible === false) {
           Actions.HomeScreen({ profileData: this.state.dataUser });
@@ -72,6 +74,10 @@ import ExtensionHelper from './ExtensionHelper';
     }
 
     render() {
+      const {
+
+          loaded
+      } = this.state;
       return (
 
 
@@ -86,6 +92,9 @@ import ExtensionHelper from './ExtensionHelper';
               <Image
               source={require('../../assets/logo.png')}
               />
+              {
+                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}}><ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
 
               </View>
 
@@ -108,12 +117,23 @@ container: {
          justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
       },
+      containerActivety: {
+
+          backgroundColor: 'transparent',
+          height: '100%',
+          width: '100%',
+          zIndex: 10000000,
+          position: 'absolute',
+         justifyContent: 'center',
+         alignItems: 'center'
+       },
+
 
       container_logo: {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginTop: '50%'
+
 
             },
           shadow1: {

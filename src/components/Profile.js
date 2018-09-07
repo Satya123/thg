@@ -19,29 +19,10 @@ class Profile extends Component {
           };
     }
     componentDidMount() {
-        this.setData();
+      console.log(this.props.dataArray);
   }
 
-  setData() {
-    var dict = {};
-    var dict1 = {};
-      var dict2 = {};
-    console.log('ProfileDidMountcall');
-    console.log(this.props.dataArray[0]);
-    dict.left = 'ID';
-    dict.right = this.props.dataArray[0].ID;
 
-    this.state.arrData.push(dict);
-    dict1.left = 'Name';
-    dict1.right = this.props.dataArray[0].name;
-    this.state.arrData.push(dict1);
-    dict2.left = 'MemberNo';
-    dict2.right = this.props.dataArray[0].memberNo;
-    this.state.arrData.push(dict2);
-
-    console.log('wiout join');
-    console.log(this.state.arrData);
-  }
 
     render() {
       const{
@@ -51,28 +32,33 @@ class Profile extends Component {
 
         <View style={styles.MainContainer}>
 
-          <View style={{ height: '100%', width: '100%' }}>
+          <View style={{ height: '70%', width: '100%', backgroundColor: '#0f0'}}>
 
           <ImageBackground
             style={styles.imgBackground}
             resizeMode='cover'
             source={require('../../assets/backgroundBlue.png')} >
-
+            <View style={{ height: '95%', width: '100%' }}>
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
             <AccountSubCard arrayDescription={dataArray} />
             </View>
-
-          <View style={styles.footerView}>
-                  <CustomFooter
-                  isProfile={this.state.isProfile}
-                  isHome={this.state.isHome}
-                  isMenu={this.state.isMenu}
-                  isNotification={this.state.isNotification}
-                  />
             </View>
+
+            <View style={styles.footerView}>
+                    <CustomFooter
+                    isProfile={this.state.isProfile}
+                    isHome={this.state.isHome}
+                    isMenu={this.state.isMenu}
+                    isNotification={this.state.isNotification}
+                    />
+              </View>
+
             </ImageBackground>
 
+
             </View>
+
+
             </View>
       );
     }

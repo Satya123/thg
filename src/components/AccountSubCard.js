@@ -13,44 +13,66 @@ class AccountSubCard extends Component {
       };
     }
 componentWillMount() {
-  var dict = {};
-  console.log('SubCard');
-  // console.log(this.props.arrayDescription[0]);
-  // dict.left = 'Name';
-  // dict.right = this.props.arrayDescription[0].name;
-  // this.state.arrData.push(dict);
-  // dict.left = 'ID';
-  // dict.right = this.props.arrayDescription[0].ID;
-  // this.state.arrData.push(dict);
 
-  console.log(this.state.arrayDescription);
+  console.log('SubCard');
+  console.log(this.props.arrayDescription);
+  this.setData();
 
 }
 
 setData() {
   var dict = {};
   var dict1 = {};
-    var dict2 = {};
+  var dict2 = {};
+  var dict3 = {};
+  var dict4 = {};
+  var dict5 = {};
+  var dict6 = {};
+  var dict7 = {};
   console.log('ProfileDidMountcall');
   console.log(this.props.arrayDescription[0]);
-  dict.left = 'ID';
-  dict.right = this.props.arrayDescription[0].ID;
-
-  this.state.arrData.push(dict);
   dict1.left = 'Name';
   dict1.right = this.props.arrayDescription[0].name;
   this.state.arrData.push(dict1);
-  dict2.left = 'MemberNo';
-  dict2.right = this.props.arrayDescription[0].memberNo;
+
+
+  dict.left = 'ID Number';
+  dict.right = this.props.arrayDescription[0].ID;
+
+  this.state.arrData.push(dict);
+
+  dict2.left = 'Primary Language';
+  dict2.right = 'English';
   this.state.arrData.push(dict2);
 
-  console.log('wiout join');
+
+  dict3.left = 'Email';
+  dict3.right = this.props.arrayDescription[0].email;
+  this.state.arrData.push(dict3);
+
+  dict7.left = 'Address';
+  dict7.right = this.props.arrayDescription[0].billAddress.street;
+  this.state.arrData.push(dict7);
+
+  dict4.left = 'City';
+  dict4.right = this.props.arrayDescription[0].billAddress.city;
+  this.state.arrData.push(dict4);
+
+  dict5.left = 'State';
+  dict5.right = this.props.arrayDescription[0].billAddress.state;
+  this.state.arrData.push(dict5);
+
+  dict6.left = 'Zip Code';
+  dict6.right = this.props.arrayDescription[0].billAddress.zip;
+  this.state.arrData.push(dict6);
+
+
   console.log(this.state.arrData);
 }
 
 
 renderView() {
-return this.state.arrayDescription.map((array, index) =>
+return this.state.arrData.map((array, index) =>
   <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10 }}>
       <View style={{ width: '50%' }} >
           <Text style={styles.textSub} key={index}>{array.left}</Text>
@@ -118,8 +140,8 @@ textSub: {
 textSubRight: {
   color: 'black',
   fontSize: 14,
-  justifyContent: 'flex-end',
-alignItems: 'flex-end'
+
+  textAlign: 'right'
 
 },
 

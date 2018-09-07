@@ -149,9 +149,9 @@ topView: {
   marginTop: 0,
   padding: 0,
 
-  height: 60,
+  height: 50,
   width: '100%',
-  color: '#ff7417',
+  backgroundColor: '#ffffff',
 
 },
 firstView: {
@@ -159,7 +159,7 @@ firstView: {
   borderColor: '#ccc',
   width: '25%',
   alignItems: 'center',
-   paddingTop: 20
+   paddingTop: 18
 },
 firstViewActive: {
   borderBottomWidth: 2,
@@ -167,7 +167,7 @@ firstViewActive: {
   width: '25%',
   alignItems: 'center',
   color: '#ff7417',
-  paddingTop: 20
+  paddingTop: 18
 
 },
 secondView: {
@@ -175,7 +175,7 @@ secondView: {
   borderColor: '#ccc',
   width: '30%',
   alignItems: 'center',
-   paddingTop: 20
+   paddingTop: 18
 },
 secondViewActive: {
   borderBottomWidth: 2,
@@ -183,7 +183,7 @@ secondViewActive: {
   width: '30%',
   alignItems: 'center',
   color: '#ff7417',
-  paddingTop: 20
+  paddingTop: 18
 
 },
 thirdViewActive: {
@@ -192,7 +192,7 @@ thirdViewActive: {
   width: '45%',
   alignItems: 'center',
   color: '#ff7417',
-  paddingTop: 20
+  paddingTop: 18
 
 },
 thirdView: {
@@ -200,7 +200,7 @@ thirdView: {
   borderColor: '#dedede',
   width: '45%',
   alignItems: 'center',
-   paddingTop: 20
+   paddingTop: 18
 },
 mainContainer: {
   width: '100%',

@@ -374,3 +374,27 @@ const RouterComponent = () => {
 
       </Router>
     );
+
+
+
+
+    setData() {
+      var dict = {};
+      var dict1 = {};
+        var dict2 = {};
+      console.log('ProfileDidMountcall');
+      console.log(this.props.dataArray[0]);
+      dict.left = 'ID';
+      dict.right = this.props.dataArray[0].ID;
+
+      this.state.arrData.push(dict);
+      dict1.left = 'Name';
+      dict1.right = this.props.dataArray[0].name;
+      this.state.arrData.push(dict1);
+      dict2.left = 'MemberNo';
+      dict2.right = this.props.dataArray[0].memberNo;
+      this.state.arrData.push(dict2);
+  debugger;
+      console.log('wiout join');
+      console.log(this.state.arrData);
+    }
