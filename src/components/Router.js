@@ -53,7 +53,7 @@ class RouterComponent extends Component {
         <Router>
         <Scene key='root' >
         <Scene hideNavBar>
-        <Scene key='HomeScreen' component={HomeScreen} title='' />
+        <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
         {
           (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
         }
@@ -62,7 +62,7 @@ class RouterComponent extends Component {
         <Scene key='Menu' component={Menu} title='' />
         <Scene key='Notification' component={Notification} title='' />
         <Scene key='Telemedicine' component={Telemedicine} title='' />
-        <Scene key='AccountInfo' component={AccountInfo} title='' />
+        <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
         <Scene key='Dependents' component={Dependents} title='' />
         <Scene key='Policies' component={Policies} title='' />
         <Scene key='ServiceClass' component={ServiceClass} title='' />

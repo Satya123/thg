@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Alert, TouchableOpacity, Text } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
+import { Actions } from 'react-native-router-flux';
 import Profile from './Profile';
 import CustomFooter from './CustomFooter';
 import TopMenu from './TopMenu';
@@ -28,16 +29,14 @@ class AccountInfo extends Component {
             isDependents: this.props.isDependents,
             isPolicies: this.props.isPolicies,
             isAccountInfo: true,
+
           };
     }
 
     componentWillMount() {
-    RNSecureKeyStore.get('key1')
-    .then((res) => {
-        console.log(res);
-    }, (err) => {
-        console.log(err);
-    });
+      console.log('AccountInfoDidMountcall');
+      console.log(this.props.userData);
+
     }
 
 
@@ -68,12 +67,18 @@ class AccountInfo extends Component {
           isProfile = false;
             isDependents = false;
             isPolicies = true;
+
       }
 
 
 
 
     render() {
+      const {
+          userData
+      } = this.props;
+
+    //  console.log(userData);
       return (
 
         <View>
@@ -112,7 +117,7 @@ class AccountInfo extends Component {
         <View style={styles.mainContainer}>
 
           {
-            (isProfile === true) ? <Profile /> : null
+            (isProfile === true) ? <Profile dataArray={userData} /> : null
           }
           {
             (isDependents === true) ? <Dependents /> : null

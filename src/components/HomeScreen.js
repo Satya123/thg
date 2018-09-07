@@ -5,6 +5,9 @@ import CustomFooter from './CustomFooter';
 import AccountInfo from './AccountInfo';
 import Policies from './Policies';
 export const AccountInfoProfile = '100';
+import { Actions } from 'react-native-router-flux';
+
+
 
 class HomeScreen extends React.Component {
 
@@ -22,9 +25,14 @@ class HomeScreen extends React.Component {
         };
      }
 
+     componentDidMount() {
+        console.log('HomeScreenDidMountcall');
+       console.log(this.props.profileData);
+     }
+
 
 clickToAccountInfo() {
-    this.props.navigation.navigate('AccountInfo');
+    Actions.AccountInfo({ userData: this.props.profileData });
 }
 
 
