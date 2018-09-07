@@ -33,7 +33,7 @@ import ExtensionHelper from './ExtensionHelper';
           console.log(token);
             this.setState({ loaded: true });
               ServiceClass.appDetails(token, 'appdetails').then((reData) => {
-                debugger;
+
                 console.log(reData);
                 const that = this;
 
