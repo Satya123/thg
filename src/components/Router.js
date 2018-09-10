@@ -14,7 +14,7 @@ import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import VendorSplash from './VendorSplash';
 import { Alert } from 'react-native';
-
+import IDCard from './IDCard';
 
 
 class RouterComponent extends Component {
@@ -66,6 +66,7 @@ class RouterComponent extends Component {
         <Scene key='Dependents' component={Dependents} title='' />
         <Scene key='Policies' component={Policies} title='' />
         <Scene key='ServiceClass' component={ServiceClass} title='' />
+        <Scene key='IDCard' component={IDCard} title='' />
         </Scene>
 
         </Scene>

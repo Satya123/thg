@@ -6,7 +6,7 @@ import AccountInfo from './AccountInfo';
 import Policies from './Policies';
 export const AccountInfoProfile = '100';
 import { Actions } from 'react-native-router-flux';
-
+import IDCard from './IDCard';
 
 
 class HomeScreen extends React.Component {
@@ -34,6 +34,9 @@ class HomeScreen extends React.Component {
 clickToAccountInfo() {
     Actions.AccountInfo({ userData: this.props.profileData });
 }
+clickToIDCard() {
+    Actions.IDCard();
+}
 
 
   render() {
@@ -56,7 +59,7 @@ clickToAccountInfo() {
               <View></View>
               <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => { this.props.navigation.navigate('Telemedicine'); }} >
+              onPress={() => { this.clickToIDCard(); }} >
               <View style={{marginTop:15,}}><Image  source={require('../../assets/id-card.png')} /></View>
                 </TouchableOpacity>
             </View>

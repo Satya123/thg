@@ -36,7 +36,7 @@ class Policies extends Component {
   return (
 
         <View style={styles.MainContainer}>
-        <View style={{ height: '70%', width: '100%', backgroundColor: '#0f0'}}>
+        <View style={{ height: '70%', width: '100%' }}>
 
         <ImageBackground
           style={styles.imgBackground}

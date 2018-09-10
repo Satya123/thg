@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, Animated } from 'react-native';
 import CustomFooter from './CustomFooter';
-import UserData from './UserData';
-import AccountSubCard from './AccountSubCard';
+import CustomHeader from './CustomHeader';
 
 
-class Profile extends Component {
+
+class IDCard extends Component {
 
   constructor(props) {
       super(props);
@@ -22,17 +22,27 @@ class Profile extends Component {
       console.log(this.props.dataArray);
   }
 
+  flipCardAnimation = () => {
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        tension: 10,
+        friction: 8,
+      }).start();
+  }
 
 
     render() {
-      const{
-        dataArray
-      } = this.props;
       return (
 
         <View style={styles.MainContainer}>
+        <View style={{ width: '100%', height: 60 }}>
+              <CustomHeader
+              headerText={'ID Card'}
 
-          <View style={{ height: '70%', width: '100%' }}>
+              />
+        </View>
+
+          <View style={{ height: '90%', width: '100%', backgroundColor: '#0f0'}}>
 
           <ImageBackground
             style={styles.imgBackground}
@@ -40,7 +50,7 @@ class Profile extends Component {
             source={require('../../assets/backgroundBlue.png')} >
             <View style={{ height: '95%', width: '100%' }}>
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
-            <AccountSubCard arrayDescription={dataArray} />
+
             </View>
             </View>
 
@@ -91,4 +101,4 @@ const styles = {
 };
 
 
-    export default Profile;
+    export default IDCard;
