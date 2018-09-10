@@ -398,3 +398,53 @@ const RouterComponent = () => {
       console.log('wiout join');
       console.log(this.state.arrData);
     }
+
+
+
+
+
+    /// Policies
+
+    return (
+      <View>
+      <View style={styles.MainContainer}>
+          <PoliciesCard arrayDescription={SampleNameArray} />
+
+         </View>
+         <View style={styles.footerView}>
+                 <CustomFooter
+                 isProfile={this.state.isProfile}
+                 isHome={this.state.isHome}
+                 isMenu={this.state.isMenu}
+                 isNotification={this.state.isNotification}
+                 />
+                 </View>
+       </View>
+    );
+
+
+    //Policecard
+
+
+    <  <View>
+           <View style={{ flex: 1, flexDirection: 'row', marginTop: 5 }}>
+           <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
+           <Text style={styles.textSubOne}>Type </Text>
+            <Text style={styles.textSub} key={index}>{array.Type}</Text>
+            </View>
+          </View>
+
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
+                <Text style={styles.textSubOne}>Status</Text>
+                 <Text style={styles.textSub} key={index}>{array.Status}</Text>
+                 </View>
+                 </View>
+
+
+              {this.renderViewSub(array.Benifits)}
+
+                <View style={{ flex: 1, flexDirection: 'row', borderBottomWidth: 10, borderColor: '#ffffff' }}>
+                </View>
+
+        </View>

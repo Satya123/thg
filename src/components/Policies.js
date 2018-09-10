@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import CustomFooter from './CustomFooter';
 import PoliciesCard from './PoliciesCard';
 
@@ -17,52 +17,86 @@ class Policies extends Component {
     }
 
     render() {
-      const SampleNameArray = [ { 'PolicyName': 'Health Policy1', 'value': '$10,000', 'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
-       'Leap electronic typesetting, remaining essentially unchanged.']},{ 'PolicyName': 'Health Policy2', 'value': '$120000', 'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
-        'Leap electronic typesetting, remaining essentially unchanged.']} ];
+      const SampleNameArray = [{ 'Type': 'Medical',
+                                'Status': 'Active',
+                                'EffectiveDate': '12/Jan/2017',
+                                'CancellationDate': '21/Dec/2018',
+                                'Network': 'Airtel',
+                                'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
+                                'Leap electronic typesetting, remaining essentially unchanged.']},
+                                { 'Type': 'Dentiest',
+                                  'Status': 'Value',
+                                  'EffectiveDate': '12/Jan/2017',
+                                  'CancellationDate': '21/Dec/2018',
+                                  'Network': 'BSNL',
+                                  'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
+                                                          'Leap electronic typesetting, remaining essentially unchanged.']} ];
 
 
-      return (
-        <View>
+  return (
+
         <View style={styles.MainContainer}>
-            <PoliciesCard arrayDescription={SampleNameArray} />
+        <View style={{ height: '70%', width: '100%', backgroundColor: '#0f0'}}>
 
-           </View>
-           <View style={styles.footerView}>
-                   <CustomFooter
-                   isProfile={this.state.isProfile}
-                   isHome={this.state.isHome}
-                   isMenu={this.state.isMenu}
-                   isNotification={this.state.isNotification}
-                   />
-                   </View>
-         </View>
-      );
+        <ImageBackground
+          style={styles.imgBackground}
+          resizeMode='cover'
+          source={require('../../assets/backgroundBlue.png')} >
+          <View style={{ height: '95%', width: '100%' }}>
+          <View style={{ margin: 10, width: '95%' }}>
+          <PoliciesCard arrayDescription={SampleNameArray} />
+          </View>
+          </View>
+
+          <View style={styles.footerView}>
+                  <CustomFooter
+                  isProfile={this.state.isProfile}
+                  isHome={this.state.isHome}
+                  isMenu={this.state.isMenu}
+                  isNotification={this.state.isNotification}
+                  />
+            </View>
+
+          </ImageBackground>
+
+
+          </View>
+
+
+          </View>
+);
+
+
+
+
     }
 
 
 }
 
 const styles = {
-  MainContainer:
-   {
-       height: '78%',
-       width: '100%',
-       alignItems: 'center',
-       marginTop: 0,
-       backgroundColor: 'yellow'
-   },
-   footerView: {
+
+   MainContainer:
+    {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: 'transparent'
+    },
+    footerView: {
 
       height: 40,
-      marginBottom: 0,
-      padding: 0,
-      width: '100%',
-      backgroundColor: 'red',
-      borderTopWidth: 2,
-      borderColor: '#f3f3f3'
+       marginBottom: 0,
+       paddingBottom: 0,
+       width: '100%',
+       backgroundColor: 'red',
 
-   }
+    },
+    imgBackground: {
+            width: '100%',
+            height: '100%',
+
+
+    },
 };
 
 
