@@ -27,7 +27,8 @@ class HomeScreen extends React.Component {
 
      componentDidMount() {
         console.log('HomeScreenDidMountcall');
-       console.log(this.props.profileData);
+       console.log(this.props.profileData[0].membershipCard);
+
      }
 
 
@@ -35,7 +36,7 @@ clickToAccountInfo() {
     Actions.AccountInfo({ userData: this.props.profileData });
 }
 clickToIDCard() {
-    Actions.IDCard();
+    Actions.IDCard({ cardData: this.props.profileData[0].membershipCard });
 }
 
 

@@ -81,6 +81,7 @@ clickToLogin = () => {
           debugger;
           if (reData.data.status === '1') {
               UserData.saveData('token', reData.data.data.token);
+              UserData.saveData('memberId', txtMemberID);
                 this.setState({ loaded: false });
               Actions.VendorSplash();
           } else {

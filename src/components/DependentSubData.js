@@ -31,7 +31,7 @@ return this.props.arrayDescription.map((array, index) =>
           <Text style={styles.textSub} key={index}>Name</Text>
       </View>
       <View style={{ width: '50%' }}>
-          <Text style={styles.textSubRight} key={index}>{array.name}</Text>
+          <Text style={styles.textSubRight} key={index}>{` ${array.fisrtName} ${array.lastName}`}</Text>
       </View>
  </View>
   <View style={styles.textrow}>
@@ -48,7 +48,7 @@ return this.props.arrayDescription.map((array, index) =>
           <Text style={styles.textSub} key={index}>Birthdate</Text>
       </View>
       <View style={{ width: '50%' }}>
-          <Text style={styles.textSubRight} key={index}>{array.birthdate}</Text>
+          <Text style={styles.textSubRight} key={index}>{array.birthDate}</Text>
       </View>
  </View>
 
@@ -57,7 +57,7 @@ return this.props.arrayDescription.map((array, index) =>
           <Text style={styles.textSub} key={index}>Relationship</Text>
       </View>
       <View style={{ width: '50%' }}>
-          <Text style={styles.textSubRight} key={index}>{array.relationship}</Text>
+          <Text style={styles.textSubRight} key={index}>{array.memberRelation}</Text>
       </View>
  </View>
 </View>

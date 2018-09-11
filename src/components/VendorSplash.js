@@ -14,6 +14,7 @@ import ExtensionHelper from './ExtensionHelper';
      this.state = {
         isVisible: true,
         loaded: true,
+        url: ''
 
      }
 }
@@ -38,9 +39,12 @@ import ExtensionHelper from './ExtensionHelper';
                 const that = this;
 
                 if (reData.data.status === '1') {
-                  console.log(reData.data.data.users);
-                  this.setState({ dataUser: reData.data.data.users });
 
+                  console.log(reData.data.data.siteDetails[0].logoUrl);
+                  this.setState({ dataUser: reData.data.data.users });
+                  this.setState({ url: reData.data.data.siteDetails[0].logoUrl });
+                  console.log(this.state.url);
+                  this.setState({ loaded: false });
                     setTimeout(() => {
                         that.HideSplashScreen();
                       }, 2000);
@@ -69,15 +73,16 @@ import ExtensionHelper from './ExtensionHelper';
 
     } = this.state;
       if (isVisible === false) {
-          Actions.HomeScreen({ profileData: this.state.dataUser });
+         Actions.HomeScreen({ profileData: this.state.dataUser });
       }
     }
 
     render() {
       const {
-
+          url,
           loaded
       } = this.state;
+
       return (
 
 
@@ -90,7 +95,10 @@ import ExtensionHelper from './ExtensionHelper';
               source={require('../../assets/splash-screen-bac.png')}>
               <View style={styles.container_logo}>
               <Image
-              source={require('../../assets/logo.png')}
+              style={{ width: 197, height: 63 }}
+              source={{
+                uri: url
+              }}
               />
               {
                 (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}}><ActivityIndicator size="large" color="#ffa970" /></View></View> : null
@@ -131,9 +139,10 @@ container: {
 
       container_logo: {
                 flex: 1,
+                padding: 10,
                 alignItems: 'center',
                 justifyContent: 'center',
-
+                marginTop: 20
 
             },
           shadow1: {
@@ -173,16 +182,7 @@ container: {
   },
 
 
-containerActivety: {
 
-    backgroundColor: 'transparent',
-    height: '100%',
-    width: '100%',
-    zIndex: 10000000,
-    position: 'absolute',
-   justifyContent: 'center',
-   alignItems: 'center'
- }
 
 
 });

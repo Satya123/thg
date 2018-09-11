@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, Animated } from 'react-native';
+import { Text, View, ImageBackground, Animated, Image, Button } from 'react-native';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 
@@ -10,7 +10,7 @@ class IDCard extends Component {
   constructor(props) {
       super(props);
       this.state = {
-            isProfile: true,
+            isProfile: false,
             isHome: false,
             isMenu: false,
             isNotification: false,
@@ -19,17 +19,16 @@ class IDCard extends Component {
           };
     }
     componentDidMount() {
-      console.log(this.props.dataArray);
+      console.log('IDCardDidMountcall');
+      console.log(this.props.cardData.front);
+      console.log(this.props.cardData.back);
   }
 
-  flipCardAnimation = () => {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        tension: 10,
-        friction: 8,
-      }).start();
-  }
 
+
+clickToFlip() {
+
+}
 
     render() {
       return (
@@ -42,7 +41,7 @@ class IDCard extends Component {
               />
         </View>
 
-          <View style={{ height: '90%', width: '100%', backgroundColor: '#0f0'}}>
+          <View style={{ height: '90%', width: '100%'}}>
 
           <ImageBackground
             style={styles.imgBackground}
@@ -52,6 +51,15 @@ class IDCard extends Component {
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
 
             </View>
+            <View style={{ margin: 10   }}>
+            <Image
+            style={styles.imageMain}
+            source={{
+              uri: this.props.cardData.front
+            }}
+            />
+            </View>
+            <Button title="Flip Me!" onPress={this.clickToFlip} color="#ffffff" />
             </View>
 
             <View style={styles.footerView}>
@@ -98,6 +106,17 @@ const styles = {
 
 
    },
+   btnStyle: {
+    backgroundColor: '#0f0',
+    width: 300,
+    height: 45,
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 5
+   },
+   imageMain: {
+     height: 250,
+   }
 };
 
 

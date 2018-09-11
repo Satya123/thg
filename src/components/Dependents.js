@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Alert,ImageBackground } from 'react-native';
+import { Text, View, Alert,ImageBackground, ActivityIndicator } from 'react-native';
 import CustomFooter from './CustomFooter';
 import TopMenu from './TopMenu';
 import CustomHeader from './CustomHeader';
@@ -16,42 +16,37 @@ class Dependents extends Component {
             isDependents: true,
             dataArray:[],
             isPolicies: false,
-
+            loaded: false,
           };
     }
 
+componentWillMount() {
+  Alert.alert('componentWillMountCall');
+}
+
     componentDidMount() {
-      UserData.retriveData('token').then((res) => {
+      Alert.alert('componentDidMountCall');
+      UserData.retriveData('token').then((resToken) => {
+        UserData.retriveData('memberId').then((res) => {
+            this.getDependant(resToken, res);
+            });
+      })
 
-   // Alert.alert(res);
-       //   console.log(res);
-          this.getDependant(res, '82503220');
-
-
-
-
-
-
-      });
   }
 
 
         getDependant = (token, memberID) => {
-          //  debugger;
+
             console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
-                 // debugger;
-               //  Alert.alert(reData);
-                 // Alert.alert(reData.data.status);
-                  //console.log(reData.status);
-                  console.log(reData.data.status);
+
                   if (reData.data.status === '1') {
                     console.log(reData.data.data);
-                    this.setState({ dataUser: reData.data.data.users });
-
-
-                  } else {
+                    this.setState({ dataArray: reData.data.data });
+                    this.setState({ loaded: false });
+                  }
+                  else {
                       this.setState({ loaded: false });
                     Alert.alert(reData.data.message);
                   }
@@ -63,41 +58,11 @@ class Dependents extends Component {
       }
 
     render() {
-       const SampleNameArray = [
-{ 'name': 'Michal',
-'gender': 'Male',
-'birthdate': '12/Jan/2017',
-'relationship': 'self',
-'Network': 'Idea',
-},
-{ 'name': 'Dolly',
-'gender': 'female',
-'birthdate': '12/Jun/2018',
-'relationship': 'emp',
-'Network': 'Airtel',
-},
-{ 'name': 'Scott',
-'gender': 'Male',
-'birthdate': '13/May/2019',
-'relationship': 'self',
-'Network': 'Airtel',
-},
-{ 'name': 'Michal',
-'gender': 'Active',
-'birthdate': '12/July/2017',
-'relationship': 'self',
-'Network': 'Airtel',
-},
-{ 'name': 'Michal',
-'gender': 'Active',
-'birthdate': '12/Aug/2017',
-'relationship': 'self',
-'Network': 'Airtel',
-} ];
-       const{
-        dataArray
-      } = this.props;
-
+      const {
+        dataArray,
+        loaded
+      } = this.state;
+      console.log(dataArray);
       return (
            <View style={styles.MainContainer}>
 
@@ -109,7 +74,8 @@ class Dependents extends Component {
             source={require('../../assets/backgroundBlue.png')} >
             <View style={{ height: '95%', width: '100%' }}>
             <View style={{ margin: 10, width: '95%' }}>
-            <DependentSubData arrayDescription={SampleNameArray} />
+
+            <DependentSubData arrayDescription={dataArray} />
             </View>
             </View>
             <View style={styles.footerView}>
@@ -120,7 +86,9 @@ class Dependents extends Component {
                     isNotification={this.state.isNotification}
                     />
               </View>
-
+              {
+                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
             </ImageBackground>
 
 
@@ -145,6 +113,16 @@ const styles = {
        //marginTop: 10,
       //backgroundColor: 'yellow'
    },
+   containerActivety: {
+
+       backgroundColor: 'transparent',
+       height: '100%',
+       width: '100%',
+       zIndex: 10000000,
+       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
    footerView: {
      height: 50,
       marginBottom: 0,
