@@ -21,11 +21,11 @@ class Dependents extends Component {
     }
 
 componentWillMount() {
-  Alert.alert('componentWillMountCall');
+
 }
 
     componentDidMount() {
-      Alert.alert('componentDidMountCall');
+
       UserData.retriveData('token').then((resToken) => {
         UserData.retriveData('memberId').then((res) => {
             this.getDependant(resToken, res);

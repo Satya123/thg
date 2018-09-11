@@ -49,29 +49,20 @@ clickToFlip() {
             source={require('../../assets/backgroundBlue.png')} >
             <View style={{ height: '95%', width: '100%' }}>
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
-            <CardFlip ref={(card) => this.card = card} >
-              <TouchableOpacity activeOpacity={1} onPress={() => this.card.flip()} >
-                <Image
-                style={styles.imageMain}
-                source={{
-                  uri: this.props.cardData.front
-                }}
-                />
-                <View style={{ padding:10,marginTop: 10, height:50, textAlign: 'right' }}><Text style={{ color: '#ffffff' }}>Flip Me</Text></View>
-                {/*<View style={{height:50,backgroundColor:'#ff0'}}><Text>Ankleshwar</Text></View>*/}
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={1} onPress={() => this.card.flip()} >
-              <Image
-              style={styles.imageMain}
-              source={{
-                uri: this.props.cardData.back
-              }}
-              />
-                <View style={{ padding: 10, marginTop: 10, height:50, textAlign: 'right', color: '#fff'}}><Text style={{ color: '#ffffff' }}>Flip Me</Text></View>
-              </TouchableOpacity>
-            </CardFlip>
+
+            </View>
+            <View style={{ margin: 10   }}>
+            <Image
+            style={styles.imageMain}
+            source={{
+              uri: this.props.cardData.front
+            }}
+            />
+
+
             </View>
 
+            <Button title="Flip Me!" onPress={this.clickToFlip} color="#ffffff" />
             </View>
 
             <View style={styles.footerView}>
