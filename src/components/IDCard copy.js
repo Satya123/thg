@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground, Animated, Image, Button, TouchableOpacity } from 'react-native';
 import CustomFooter from './CustomFooter';
-import UserData from './UserData';
-import AccountSubCard from './AccountSubCard';
+import CustomHeader from './CustomHeader';
+import CardFlip from 'react-native-card-flip';
 
 
-class Profile extends Component {
+class IDCard extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
-            isProfile: true,
+            isProfile: false,
             isHome: false,
             isMenu: false,
             isNotification: false,
@@ -19,20 +19,29 @@ class Profile extends Component {
           };
     }
     componentDidMount() {
-      console.log(this.props.dataArray);
+      console.log('IDCardDidMountcall');
+      console.log(this.props.cardData.front);
+      console.log(this.props.cardData.back);
   }
 
 
 
+clickToFlip() {
+
+}
+
     render() {
-      const{
-        dataArray
-      } = this.props;
       return (
 
         <View style={styles.MainContainer}>
+        <View style={{ width: '100%', height: 60 }}>
+              <CustomHeader
+              headerText={'ID Card'}
 
-          <View style={{ height: '70%', width: '100%' }}>
+              />
+        </View>
+
+          <View style={{ height: '90%', width: '100%'}}>
 
           <ImageBackground
             style={styles.imgBackground}
@@ -40,8 +49,20 @@ class Profile extends Component {
             source={require('../../assets/backgroundBlue.png')} >
             <View style={{ height: '95%', width: '100%' }}>
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
-            <AccountSubCard arrayDescription={dataArray} />
+
             </View>
+            <View style={{ margin: 10   }}>
+            <Image
+            style={styles.imageMain}
+            source={{
+              uri: this.props.cardData.front
+            }}
+            />
+
+
+            </View>
+
+            <Button title="Flip Me!" onPress={this.clickToFlip} color="#ffffff" />
             </View>
 
             <View style={styles.footerView}>
@@ -88,7 +109,18 @@ const styles = {
 
 
    },
+   btnStyle: {
+    backgroundColor: '#0f0',
+    width: 300,
+    height: 45,
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 5
+   },
+   imageMain: {
+     height: 250,
+   }
 };
 
 
-    export default Profile;
+    export default IDCard;

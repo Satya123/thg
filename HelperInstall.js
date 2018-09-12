@@ -34,3 +34,8 @@ sudo npm install --save react-native-router-flux
 //Api
 
 npm install axios
+
+
+// Flip Card
+
+npm install --save react-native-card-flip

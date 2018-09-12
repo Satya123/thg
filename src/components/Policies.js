@@ -23,6 +23,7 @@ class Policies extends Component {
                                 'CancellationDate': '21/Dec/2018',
                                 'Network': 'Airtel',
                                 'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
+                                'Leap electronic typesetting, remaining essentially unchanged.','Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
                                 'Leap electronic typesetting, remaining essentially unchanged.']},
                                 { 'Type': 'Dentiest',
                                   'Status': 'Value',
@@ -36,7 +37,7 @@ class Policies extends Component {
   return (
 
         <View style={styles.MainContainer}>
-        <View style={{ height: '70%', width: '100%', backgroundColor: '#0f0'}}>
+        <View style={{ height: '70%', width: '100%' }}>
 
         <ImageBackground
           style={styles.imgBackground}

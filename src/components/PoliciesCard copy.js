@@ -91,8 +91,8 @@ return this.props.arrayDescription.map((array, index) =>
   );
 }
 
-clickToReadMore = id => {
-    console.log(id);
+clickToReadMore = (id) => {
+    Alert.alert(id);
       this.setState({ isReadMode: false });
 }
 
@@ -118,7 +118,7 @@ if (isReadMode === true) {
     <Text style={styles.textSub} >{arrayData[1]}</Text>
     </View>
     <TouchableOpacity
-    onPress={this.clickToReadMore.bind(this, index)}
+    onPress={this.clickToReadMore(index)}
     >
     <Text style={{ color: 'blue' }}>Read More ..</Text>
     </TouchableOpacity>

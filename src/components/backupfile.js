@@ -448,3 +448,40 @@ const RouterComponent = () => {
                 </View>
 
         </View>
+
+
+
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+          <View style={{ width: '50%' }} >
+              <Text style={styles.textSub} key={index}>EffectiveDate</Text>
+          </View>
+          <View style={{ width: '50%' }}>
+              <Text style={styles.textSubRight} key={index}>{array.EffectiveDate}</Text>
+
+          </View>
+
+        </View >
+
+
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+          <View style={{ width: '50%' }} >
+              <Text style={styles.textSub} key={index}>CancellationDate</Text>
+          </View>
+          <View style={{ width: '50%' }}>
+              <Text style={styles.textSubRight} key={index}>{array.CancellationDate}</Text>
+
+          </View>
+
+        </View >
+
+
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+          <View style={{ width: '50%' }} >
+              <Text style={styles.textSub} key={index}>Network</Text>
+          </View>
+          <View style={{ width: '50%' }}>
+              <Text style={styles.textSubRight} key={index}>{array.Network}</Text>
+
+          </View>
+
+        </View >
