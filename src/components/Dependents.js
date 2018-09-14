@@ -34,8 +34,7 @@ componentWillMount() {
 
   }
 
-
-        getDependant = (token, memberID) => {
+ getDependant = (token, memberID) => {
 
             console.log(token);
               this.setState({ loaded: true });
@@ -106,13 +105,9 @@ componentWillMount() {
 const styles = {
   MainContainer:
    {
-       flex: 1,
-
-       alignItems: 'center',
-
-       //marginTop: 10,
-      //backgroundColor: 'yellow'
-   },
+    flex: 1,
+     alignItems: 'center',
+ },
    containerActivety: {
 
        backgroundColor: 'transparent',
