@@ -114,18 +114,18 @@ class AccountInfo extends Component {
         </TouchableOpacity>
 
         </View>
+        <View style={styles.mainContainer}>
 
-
-        {
-          (isProfile === true) ? <Profile dataArray={userData} /> : null
-        }
-        {
-          (isDependents === true) ? <Dependents /> : null
-        }
-        {
-            (isPolicies === true) ? <Policies /> : null
-        }
-
+          {
+            (isProfile === true) ? <Profile dataArray={userData} /> : null
+          }
+          {
+            (isDependents === true) ? <Dependents /> : null
+          }
+          {
+              (isPolicies === true) ? <Policies /> : null
+          }
+        </View>
         </View>
 
 
@@ -140,8 +140,8 @@ const styles = {
    {
      flex: 1,
 
-
-    
+      backgroundColor: 'red',
+      paddingTop: ( Platform.OS === 'ios') ? 20 : 0
    },
 
   textActive: {

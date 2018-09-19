@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import HomeScreen from './HomeScreen';
 import Profile from './Profile';
 import Menu from './Menu';
@@ -16,17 +16,27 @@ class CustomFooter extends Component {
                       isHome: this.props.isHome,
                       isProfile: this.props.isProfile,
                       isMenu: this.props.isMenu,
+
                       isNotification: this.props.isNotification
       };
     }
-
+    componentDidMount() {
+      try {
+        const myArray = AsyncStorage.getItem('profileArray');
+        if (myArray !== null) {
+          console.log(JSON.parse(myArray));
+        }
+      } catch (error) {
+        
+      }
+    }
 
 
     clickToHome = () => {
        Actions.HomeScreen();
     }
     clickToProfile = () => {
-      Actions.Profile();
+        Actions.AccountInfo({ userData: this.props.profileData });
     }
     clickToNotification = () => {
       Actions.Notification();
@@ -43,7 +53,12 @@ class CustomFooter extends Component {
 
       console.log(isProfile);
       return (
+        <View>
+        <View style={styles.shadow1}>
+        <Image  source={require('../../assets/b.png')} />
+        </View>
         <View style={styles.footerView}>
+
         <TouchableOpacity
           onPress={this.clickToHome}
           title=""
@@ -87,7 +102,7 @@ class CustomFooter extends Component {
 
 
               </View>
-
+  </View>
 
       );
     }
@@ -110,7 +125,12 @@ const styles = {
 
 
   },
-
+  shadow1: {
+            //  margin: 0,
+              marginBottom: 0,
+              padding: 0,
+              alignItems: 'center',
+          },
 
 };
 

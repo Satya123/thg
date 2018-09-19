@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Alert,ImageBackground, ActivityIndicator } from 'react-native';
+import { Text, View, Alert,ImageBackground, ActivityIndicator,Platform } from 'react-native';
 import CustomFooter from './CustomFooter';
 import TopMenu from './TopMenu';
 import CustomHeader from './CustomHeader';
@@ -65,10 +65,7 @@ componentWillMount() {
       console.log(dataArray);
       return (
            <View style={styles.MainContainer}>
-
-          <View style={{ height: '70%', width: '100%'}}>
-
-          <ImageBackground
+           <ImageBackground
             style={styles.imgBackground}
             resizeMode='cover'
             source={require('../../assets/backgroundBlue.png')} >
@@ -78,6 +75,11 @@ componentWillMount() {
             <DependentSubData arrayDescription={dataArray} />
             </View>
             </View>
+
+              {
+                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
+            </ImageBackground>
             <View style={styles.footerView}>
                     <CustomFooter
                     isProfile={this.state.isProfile}
@@ -86,15 +88,6 @@ componentWillMount() {
                     isNotification={this.state.isNotification}
                     />
               </View>
-              {
-                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-              }
-            </ImageBackground>
-
-
-            </View>
-
-
             </View>
 
       );
@@ -106,12 +99,9 @@ componentWillMount() {
 const styles = {
   MainContainer:
    {
-       flex: 1,
+     flex: 1,
 
-       alignItems: 'center',
 
-       //marginTop: 10,
-      //backgroundColor: 'yellow'
    },
    containerActivety: {
 
@@ -123,14 +113,15 @@ const styles = {
       justifyContent: 'center',
       alignItems: 'center'
     },
-   footerView: {
-     height: 50,
-      marginBottom: 0,
-      padding: 0,
-      width: '100%',
-     // backgroundColor: 'red'
+    footerView: {
+          width: '100%',
+           height: 45,
 
-   },
+
+           position: 'absolute',
+           bottom: 0
+
+    },
    imgBackground: {
       height: '100%',
       width: '100%',

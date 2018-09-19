@@ -13,6 +13,8 @@ import Policies from './Policies';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import VendorSplash from './VendorSplash';
+import CustomServiecs from './CustomServiecs';
+import Appointments from './Appointments';
 import { Alert } from 'react-native';
 import IDCard from './IDCard';
 
@@ -52,10 +54,13 @@ class RouterComponent extends Component {
         <Router>
         <Scene key='root' >
         <Scene hideNavBar>
+
         <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
         {
           (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
         }
+        <Scene key='RouterComponent' component={RouterComponent} title='' />
+        <Scene key='Appointments' component={Appointments} title='' />
         <Scene key='Profile' component={Profile} title='' />
         <Scene key='VendorSplash' component={VendorSplash} title='' />
         <Scene key='Menu' component={Menu} title='' />
@@ -64,6 +69,7 @@ class RouterComponent extends Component {
         <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
         <Scene key='Dependents' component={Dependents} title='' />
         <Scene key='Policies' component={Policies} title='' />
+        <Scene key='CustomServiecs' component={CustomServiecs} title='' />
         <Scene key='ServiceClass' component={ServiceClass} title='' />
         <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
         </Scene>

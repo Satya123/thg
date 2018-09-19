@@ -5,7 +5,7 @@ import TelemedicineCard from './TelemedicineCard';
 import CustomFooter from './CustomFooter';
   import CustomHeader from './CustomHeader';
 
-class Telemedicine extends Component {
+class Appointments extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -43,7 +43,7 @@ class Telemedicine extends Component {
         <View style={styles.MainContainer}>
         <View style={{ width: '100%', height: 60 }}>
               <CustomHeader
-              headerText={'Telemedicine'}
+              headerText={'Appointments'}
 
               />
         </View>
@@ -125,4 +125,4 @@ const styles = {
 };
 
 
-export default Telemedicine;
+export default Appointments;

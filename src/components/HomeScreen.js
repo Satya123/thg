@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground} from 'react-native';
+import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground,AsyncStorage} from 'react-native';
 import { createStackNavigator, } from 'react-navigation';
 import CustomFooter from './CustomFooter';
 import AccountInfo from './AccountInfo';
@@ -7,7 +7,7 @@ import Policies from './Policies';
 export const AccountInfoProfile = '100';
 import { Actions } from 'react-native-router-flux';
 import IDCard from './IDCard';
-
+import CustomServiecs from './CustomServiecs';
 
 class HomeScreen extends React.Component {
 
@@ -28,10 +28,18 @@ class HomeScreen extends React.Component {
      componentDidMount() {
         console.log('HomeScreenDidMountcall');
        console.log(this.props.profileData[0].membershipCard);
+       try {
+          AsyncStorage.setItem('profileArray', JSON.stringify(this.props.profileData));
+          } catch (error) {
 
-     }
-
-
+          }
+        }
+clickToCustomerServies(){
+    Actions.CustomServiecs();
+}
+clickToAppointments(){
+    Actions.Appointments();
+}
 clickToAccountInfo() {
     Actions.AccountInfo({ userData: this.props.profileData });
 }
@@ -42,7 +50,7 @@ clickToIDCard() {
 
   render() {
     return (
-      <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('../../assets/home-bac.png')}>
+      <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('../../assets/backgroundBlue.png')}>
       <View style={{
               flex: 0.5,
               flexDirection: 'row',
@@ -55,7 +63,7 @@ clickToIDCard() {
             onPress={() => { this.clickToAccountInfo(); }}
             >
 
-              <View><Image  source={require('../../assets/acc-info.png')} /></View>
+              <View><Image  source={require('../../assets/account-info.png')} /></View>
               </TouchableOpacity>
               <View></View>
               <TouchableOpacity
@@ -76,7 +84,7 @@ clickToIDCard() {
           }}>
           <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => { this.props.navigation.navigate('Telemedicine'); }} >
+          onPress={() => { this.clickToAppointments(); }} >
             <View style={{marginLeft:8,}}><Image  source={require('../../assets/appointments.png')} /></View>
             </TouchableOpacity>
             <View></View>
@@ -101,21 +109,21 @@ clickToIDCard() {
                   <View></View>
                   <TouchableOpacity
                   activeOpacity={0.5}
-                  onPress={() => { this.props.navigation.navigate('Telemedicine'); }} >
+                  onPress={() => { this.clickToCustomerServies(); }} >
                   <View><Image  source={require('../../assets/customer-service.png')} /></View>
                   </TouchableOpacity>
                   <View></View>
                 </View>
-                <View style={styles.shadow1}>
-                <Image  source={require('../../assets/b.png')} />
-                </View>
 
-                <CustomFooter
-                isProfile={this.state.isProfile}
-                isHome={this.state.isHome}
-                isMenu={this.state.isMenu}
-                isNotification={this.state.isNotification}
-                />
+                  <View style={styles.footerView}>
+                      <CustomFooter
+                      isProfile={this.state.isProfile}
+                      isHome={this.state.isHome}
+                      isMenu={this.state.isMenu}
+                      isNotification={this.state.isNotification}
+                      profileData={this.props.profileData}
+                      />
+                </View>
 
 </ImageBackground>
     );
@@ -270,7 +278,14 @@ container_home: {
     flex:1,
 
   },
+  footerView: {
+    width: '100%',
+     height: 45,
 
+     position: 'absolute',
+     bottom: 0
+
+  },
   TouchableOpacity_Style:{
 
     position: 'absolute',

@@ -485,3 +485,21 @@ const RouterComponent = () => {
           </View>
 
         </View >
+
+
+        source={{
+          //uri: url
+              source={require('../../assets/logo.png')}
+        }}
+
+
+
+
+
+
+
+//Profile
+
+<View style={{ margin: 10, backgroundColor: '#ffffff' }}>
+<AccountSubCard arrayDescription={dataArray} />
+</View>

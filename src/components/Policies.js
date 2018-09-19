@@ -37,7 +37,7 @@ class Policies extends Component {
   return (
 
         <View style={styles.MainContainer}>
-        <View style={{ height: '70%', width: '100%' }}>
+
 
         <ImageBackground
           style={styles.imgBackground}
@@ -49,6 +49,9 @@ class Policies extends Component {
           </View>
           </View>
 
+
+          </ImageBackground>
+
           <View style={styles.footerView}>
                   <CustomFooter
                   isProfile={this.state.isProfile}
@@ -58,10 +61,6 @@ class Policies extends Component {
                   />
             </View>
 
-          </ImageBackground>
-
-
-          </View>
 
 
           </View>
@@ -80,17 +79,16 @@ const styles = {
    MainContainer:
     {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: 'transparent'
+
     },
     footerView: {
 
-      height: 40,
-       marginBottom: 0,
-       paddingBottom: 0,
-       width: '100%',
-       backgroundColor: 'red',
+      width: '100%',
+       height: 45,
 
+
+       position: 'absolute',
+       bottom: 0
     },
     imgBackground: {
             width: '100%',

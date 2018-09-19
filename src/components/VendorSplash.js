@@ -20,7 +20,7 @@ import ExtensionHelper from './ExtensionHelper';
 }
 
 
-  componentDidMount() {
+  componentWillMount() {
     UserData.retriveData('token').then((res) => {
         console.log(res);
 
@@ -39,22 +39,22 @@ import ExtensionHelper from './ExtensionHelper';
                 const that = this;
 
                 if (reData.data.status === '1') {
-
+                  // debugger;
                   console.log(reData.data.data.siteDetails[0].logoUrl);
                   this.setState({ dataUser: reData.data.data.users });
                   this.setState({ url: reData.data.data.siteDetails[0].logoUrl });
-                  console.log(this.state.url);
+                //  Alert.alert(this.state.url);
                   this.setState({ loaded: false });
                     setTimeout(() => {
                         that.HideSplashScreen();
-                      }, 2000);
+                      }, 5000);
                 } else {
                     this.setState({ loaded: false });
                   Alert.alert(reData.data.message);
 
                   setTimeout(() => {
                       that.HideSplashScreen();
-                    }, 2000);
+                    }, 5000);
                 }
               }).catch((error) => {
                   //console.log(error);
@@ -99,6 +99,7 @@ import ExtensionHelper from './ExtensionHelper';
               source={{
                 uri: url
               }}
+
               />
               {
                 (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}}><ActivityIndicator size="large" color="#ffa970" /></View></View> : null
