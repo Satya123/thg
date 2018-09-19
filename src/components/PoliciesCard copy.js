@@ -46,7 +46,7 @@ return this.props.arrayDescription.map((array, index) =>
 
   <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
     <View style={{ width: '50%' }} >
-        <Text style={styles.textSub} key={index}>EffectiveDate</Text>
+        <Text style={styles.textSub} key={index}>Effective Date</Text>
     </View>
     <View style={{ width: '50%' }}>
         <Text style={styles.textSubRight} key={index}>{array.EffectiveDate}</Text>
@@ -58,7 +58,7 @@ return this.props.arrayDescription.map((array, index) =>
 
   <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
     <View style={{ width: '50%' }} >
-        <Text style={styles.textSub} key={index}>CancellationDate</Text>
+        <Text style={styles.textSub} key={index}>Cancellation Date</Text>
     </View>
     <View style={{ width: '50%' }}>
         <Text style={styles.textSubRight} key={index}>{array.CancellationDate}</Text>
@@ -83,7 +83,7 @@ return this.props.arrayDescription.map((array, index) =>
 
 
     <View style={{ backgroundColor: '#ffffff', padding: 10 }}>
-    <Text style={styles.textSub}>Benifits:</Text>
+    <Text style={styles.textSub}>Benefits:</Text>
     {this.renderViewSub(array.Benifits, index)}
     </View>
   </View>

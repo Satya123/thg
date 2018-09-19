@@ -15,7 +15,7 @@ import UserData from './UserData';
 import VendorSplash from './VendorSplash';
 import CustomServiecs from './CustomServiecs';
 import Appointments from './Appointments';
-import { Alert } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import IDCard from './IDCard';
 
 
@@ -52,6 +52,7 @@ class RouterComponent extends Component {
       } = this.state;
       return (
         <Router>
+
         <Scene key='root' >
         <Scene hideNavBar>
 

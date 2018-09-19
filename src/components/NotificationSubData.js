@@ -32,7 +32,7 @@ return this.props.arrayDescription.map((array, index) =>
 
                         </View>
                         <View style={{ width: '5%'}}>
-                            <Text style={styles.textSubRightImage} ><Image  source={require('../../assets/notification-arrow-unread.png')} /></Text>
+                            <Text style={styles.textSubRightImage} ></Text>
                         </View>
                     </View>
                     <View style={styles.textrowGray}>
@@ -42,7 +42,7 @@ return this.props.arrayDescription.map((array, index) =>
                        </View>
 
                         <View style={{ width: '5%' }}>
-                            <Text style={styles.textSubRightImage} ><Image  source={require('../../assets/notification-arrow-read.png')} /></Text>
+                            <Text style={styles.textSubRightImage} ></Text>
                         </View>
                     </View>
                  </View>

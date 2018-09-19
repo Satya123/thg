@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground, ActivityIndicator } from 'react-native';
+import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground, ActivityIndicator,StatusBar } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import { createStackNavigator, } from 'react-navigation';
 import DatePicker from 'react-native-datepicker';
@@ -211,7 +211,10 @@ let Splash_Screen = (
                       {
                         (this.state.isVisible === true) ? Splash_Screen : null
                       }
-
+                      <StatusBar
+                      backgroundColor=""
+                      barStyle="light-content"
+                      />
                       <OfflineNotice />
                   </View>
 

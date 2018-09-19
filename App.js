@@ -6,7 +6,7 @@
  * @flow
  */
  import React, {Component} from 'react';
- import { View } from 'react-native';
+ import { View, StatusBar } from 'react-native';
  import { StackNavigator } from 'react-navigation';
  import Login from './src/components/Login';
  import HomeScreen from './src/components/HomeScreen';
@@ -56,7 +56,7 @@ Telemedicine: { screen: Telemedicine,
      return (
 
        <Router />
-       
+
      );
    }
  }

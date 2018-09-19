@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert, ActivityIndicator } from 'react-native';
+import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert, ActivityIndicator, StatusBar } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
@@ -110,6 +110,10 @@ import ExtensionHelper from './ExtensionHelper';
                         </ImageBackground>
 
                         {this.goToHomeScreen()}
+                        <StatusBar
+                        backgroundColor=""
+                        barStyle="light-content"
+                        />
                     </View>
 
 

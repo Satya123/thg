@@ -110,22 +110,22 @@ class AccountInfo extends Component {
         activeOpacity={0.5}
         onPress={() => { this.clickToPolicies(); }}
         >
-            <Text style={(isPolicies === true) ? styles.textActive : styles.textInActive}>POLICIES & BENIFITS</Text>
+            <Text style={(isPolicies === true) ? styles.textActive : styles.textInActive}>POLICIES & BENEFITS</Text>
         </TouchableOpacity>
 
         </View>
-        <View style={styles.mainContainer}>
 
-          {
-            (isProfile === true) ? <Profile dataArray={userData} /> : null
-          }
-          {
-            (isDependents === true) ? <Dependents /> : null
-          }
-          {
-              (isPolicies === true) ? <Policies /> : null
-          }
-        </View>
+
+        {
+          (isProfile === true) ? <Profile dataArray={userData} /> : null
+        }
+        {
+          (isDependents === true) ? <Dependents /> : null
+        }
+        {
+            (isPolicies === true) ? <Policies /> : null
+        }
+
         </View>
 
 
@@ -140,8 +140,8 @@ const styles = {
    {
      flex: 1,
 
-      backgroundColor: 'red',
-      paddingTop: ( Platform.OS === 'ios') ? 20 : 0
+
+
    },
 
   textActive: {
