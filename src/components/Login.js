@@ -8,6 +8,7 @@ import axios from 'axios';
 import HomeScreen from './HomeScreen';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
+import OfflineNotice from './OfflineNotice';
 
 
 class Login extends React.Component {
@@ -22,7 +23,7 @@ constructor(props) {
 
         isVisible: true,
         Login: false,
-        date: '',
+        date: '07/01/1997',
 
      };
 //this.state = {date:"2016-05-15"}
@@ -90,6 +91,7 @@ clickToLogin = () => {
           }
         }).catch((error) => {
             //console.log(error);
+              this.setState({ loaded: false });
             Alert.alert(error);
         });
       }
@@ -210,7 +212,7 @@ let Splash_Screen = (
                         (this.state.isVisible === true) ? Splash_Screen : null
                       }
 
-
+                      <OfflineNotice />
                   </View>
 
 

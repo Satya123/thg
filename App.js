@@ -6,7 +6,7 @@
  * @flow
  */
  import React, {Component} from 'react';
- import { } from 'react-native';
+ import { View } from 'react-native';
  import { StackNavigator } from 'react-navigation';
  import Login from './src/components/Login';
  import HomeScreen from './src/components/HomeScreen';
@@ -15,6 +15,7 @@
   import Profile from './src/components/Profile';
   import Menu from './src/components/Menu';
   import Router from './src/components/Router';
+  import OfflineNotice from './src/components/OfflineNotice'
 
 
  const navigationOptions = { title: 'Welcome', header: null, navigationBarHidden: true };
@@ -53,7 +54,9 @@ Telemedicine: { screen: Telemedicine,
  export default class App extends Component {
    render() {
      return (
+
        <Router />
+       
      );
    }
  }

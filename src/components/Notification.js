@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Alert,ImageBackground, ActivityIndicator,Image, AsyncStorage } from 'react-native';
+
+
+
 import CustomFooter from './CustomFooter';
 import TopMenu from './TopMenu';
 import CustomHeader from './CustomHeader';
@@ -12,63 +14,53 @@ class Dependents extends Component {
   constructor(props) {
       super(props);
         this.state = {
-          isNotification: true,
             isProfile: false,
             isDependents: true,
             dataArray:[],
             isPolicies: false,
             loaded: false,
-            arrayValue: [],
           };
     }
 
 componentWillMount() {
-  AsyncStorage.getItem('profileArray')
-  .then((contacts) => {
-  const value = contacts ? JSON.parse(contacts) : [];
-
-  console.log(value);
-  this.setState({ arrayValue: value })
-});
 
 }
 
     componentDidMount() {
 
-      // UserData.retriveData('token').then((resToken) => {
-      //   UserData.retriveData('memberId').then((res) => {
-      //       this.getDependant(resToken, res);
-      //       });
-      // })
+      UserData.retriveData('token').then((resToken) => {
+        UserData.retriveData('memberId').then((res) => {
+            this.getDependant(resToken, res);
+            });
+      })
 
   }
 
- // getDependant = (token, memberID) => {
- //
- //            console.log(token);
- //              this.setState({ loaded: true });
- //                ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
- //
- //                  if (reData.data.status === '1') {
- //                    console.log(reData.data.data);
- //                    this.setState({ dataArray: reData.data.data });
- //                    this.setState({ loaded: false });
- //                  }
- //                  else {
- //                      this.setState({ loaded: false });
- //                    Alert.alert(reData.data.message);
- //                  }
- //
- //                }).catch((error) => {
- //                    //console.log(error);
- //                    Alert.alert(error);
- //                });
- //      }
+ getDependant = (token, memberID) => {
+
+            console.log(token);
+              this.setState({ loaded: true });
+                ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
+
+                  if (reData.data.status === '1') {
+                    console.log(reData.data.data);
+                    this.setState({ dataArray: reData.data.data });
+                    this.setState({ loaded: false });
+                  }
+                  else {
+                      this.setState({ loaded: false });
+                    Alert.alert(reData.data.message);
+                  }
+
+                }).catch((error) => {
+                    //console.log(error);
+                    Alert.alert(error);
+                });
+      }
 
     render() {
       const {
         dataArray,
-        arrayValue,
         loaded
       } = this.state;
      // console.log(SampleNameArray);
@@ -97,14 +89,14 @@ componentWillMount() {
 
 
       return (
- <View style={styles.MainContainer}>
+ <View>
         <View style={{ width: '100%', height: 60 }}>
               <CustomHeader
               headerText={'Notification'}
 
               />
         </View>
-
+           <View style={styles.MainContainer}>
            <ImageBackground
             style={styles.imgBackground}
             resizeMode='cover'
@@ -116,22 +108,20 @@ componentWillMount() {
             {<NotificationSubData arrayDescription={SampleNameArray} />}
 
             </View>
-
-              {
-                                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100, height:100, backgroundColor:'white', alignItems:'center', justifyContent:'center', borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-              }
-            </ImageBackground>
             <View style={styles.footerView}>
                     <CustomFooter
                     isProfile={this.state.isProfile}
                     isHome={this.state.isHome}
                     isMenu={this.state.isMenu}
                     isNotification={this.state.isNotification}
-                    profileData={arrayValue}
                     />
               </View>
+              {
+                                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100, height:100, backgroundColor:'white', alignItems:'center', justifyContent:'center', borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
+            </ImageBackground>
           </View>
-
+            </View>
 
       );
     }
@@ -142,6 +132,7 @@ componentWillMount() {
 const styles = {
   MainContainer:
    {
+
       flex: 1,
 
  },

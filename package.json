@@ -1,5 +1,5 @@
 {
-  "name": "THG",
+  "name": "thg",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,7 +13,8 @@
     "react-native-card-flip": "^1.0.3",
     "react-native-datepicker": "^1.7.2",
     "react-native-router-flux": "^4.0.1",
-    "react-native-secure-key-store": "^1.0.9"
+    "react-native-secure-key-store": "^1.0.9",
+    "react-navigation": "^2.13.0"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",

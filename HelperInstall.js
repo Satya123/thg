@@ -8,26 +8,25 @@ npm install react-native-datepicker --save
 npm install --save react-navigation
 
 // Loacl storage secuire
-yarn add react-native-secure-key-store
-react-native link react-native-secure-key-store
-https://www.npmjs.com/package/react-native-secure-key-store
+
 
 
 // eslint setup
 
-npm install --save-dev eslint-config-rallycoding
+sudo npm install --save-dev eslint-config-rallycoding
 create and add .eslintrc file this code
 {
   "extends": "rallycoding"
 }
 
 // navigationOptions
-yarn add react-native-secure-key-store
 
 
+sudo npm install react-native-secure-key-store --save
+sudo react-native link react-native-secure-key-store
 // libarary UI
 
-npm install --save react-native-router-flux
+sudo npm install --save react-native-router-flux
 
 
 
