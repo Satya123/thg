@@ -70,25 +70,34 @@ clickToFlip() {
             }
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
 
-            <FlipCard
-  style={styles.card}
-  friction={6}
-  perspective={1000}
-  flipHorizontal={true}
-  flipVertical={false}
-  flip={false}
-  clickable={true}
-  onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
->
-  {/* Face Side */}
-  <View style={styles.face}>
-    <Text>The Face</Text>
-  </View>
-  {/* Back Side */}
-  <View style={styles.back}>
-    <Text>The Back</Text>
-  </View>
-</FlipCard>
+            <FlipCard 
+              friction={6}
+              perspective={1000}
+              flipHorizontal={true}
+              flipVertical={false}
+              flip={false}
+              clickable={true}
+              onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
+              >
+              <View>
+                <Image
+                style={styles.imageMain}
+                source={{
+                  uri: this.props.cardData.front
+                }}
+                />
+                <View style={{height:150,marginTop:10,justifyContent:'center',alignItems:'center'}}><Text>!!!!!!!!!!FlipMe!!!!!!!</Text></View>
+              </View>
+              <View>
+              <Image
+              style={styles.imageMain}
+              source={{
+                uri: this.props.cardData.back
+              }}
+              />
+               <View style={{height:150,marginTop:10,justifyContent:'center',alignItems:'center'}}><Text>!!!!!!!!!!!FlipBack!!!!!!!</Text></View>
+              </View>
+            </FlipCard>
             </View>
 
             </View>
