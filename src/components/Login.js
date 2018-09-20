@@ -23,7 +23,7 @@ constructor(props) {
 
         isVisible: true,
         Login: false,
-        date: '07/01/1997',
+        date: '',
 
      };
 //this.state = {date:"2016-05-15"}

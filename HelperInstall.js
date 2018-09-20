@@ -39,3 +39,9 @@ npm install axios
 // Flip Card
 
 npm install --save react-native-card-flip
+
+
+
+//
+
+sudo npm i react-native-flip-card

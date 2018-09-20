@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, Animated, Image, Button, TouchableOpacity,
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import CardFlip from 'react-native-card-flip';
-
+import FlipCard from 'react-native-flip-card'
 
 class IDCard extends Component {
 
@@ -70,27 +70,25 @@ clickToFlip() {
             }
             <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
 
-            <CardFlip ref={(card) => this.card = card} >
-              <TouchableOpacity activeOpacity={1} onPress={() => this.card.flip()} >
-                <Image
-                style={styles.imageMain}
-                source={{
-                  uri: this.props.cardData.front
-                }}
-                />
-                <View style={{ marginTop: 10, height:50, textAlign: 'center', justifyContent: 'center', alignItems: 'center' }}><Image  source={require('../../assets/flip-back.png')} /></View>
-                {/*<View style={{height:50,backgroundColor:'#ff0'}}><Text>Ankleshwar</Text></View>*/}
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={1} onPress={() => this.card.flip()} >
-              <Image
-              style={styles.imageMain}
-              source={{
-                uri: this.props.cardData.back
-              }}
-              />
-                <View style={{ marginTop: 10, height:50, textAlign: 'center', justifyContent: 'center', alignItems: 'center', color: '#fff'}}><Image  source={require('../../assets/flip-forward.png')} /></View>
-              </TouchableOpacity>
-            </CardFlip>
+            <FlipCard
+  style={styles.card}
+  friction={6}
+  perspective={1000}
+  flipHorizontal={true}
+  flipVertical={false}
+  flip={false}
+  clickable={true}
+  onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
+>
+  {/* Face Side */}
+  <View style={styles.face}>
+    <Text>The Face</Text>
+  </View>
+  {/* Back Side */}
+  <View style={styles.back}>
+    <Text>The Back</Text>
+  </View>
+</FlipCard>
             </View>
 
             </View>
