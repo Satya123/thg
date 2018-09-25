@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, Animated, Image, Button, TouchableOpacity, ActivityIndicator,AsyncStorage,Platform } from 'react-native';
+import { Text, View, ImageBackground, Animated, Image, Button, TouchableOpacity, ActivityIndicator,AsyncStorage } from 'react-native';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import CardFlip from 'react-native-card-flip';
@@ -14,19 +14,12 @@ class IDCard extends Component {
             isHome: false,
             isMenu: false,
             isNotification: false,
-            isFlip: false,
             isAccountInfo: this.props.isAccountInfo,
             arrayValue: [],
-             imageURL : '',
             loaded: false,
           };
     }
     componentDidMount() {
-         this.setState({
- 
-      imageURL : this.props.cardData.front
- 
-    })
       console.log('IDCardDidMountcall');
       console.log(this.props.cardData.front);
       console.log(this.props.cardData.back);
@@ -39,42 +32,14 @@ class IDCard extends Component {
 
         console.log(value);
         this.setState({ arrayValue: value })
-        
       });
   }
 
 
 
-Load_New_Image=()=>{
-    if (this.state.isFlip === true){
-      
-      this.setState({
- 
-      imageURL : this.props.cardData.front
- 
-    })
-       this.setState({
- 
-         isFlip: false
- 
-    })
-      
-    }else{
-       this.setState({
- 
-      imageURL : this.props.cardData.back
- 
-    })
-       this.setState({
- 
-         isFlip: true
- 
-    })
-    }
-   
-  }
+clickToFlip() {
 
-
+}
 
     render() {
       const {
@@ -103,21 +68,41 @@ Load_New_Image=()=>{
             {
               (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
             }
-        <View style={{ margin: 10,  width: '95%' }}>
- 
-            <Image 
-              source = {{ uri: this.state.imageURL }}
- 
-              style = {styles.imageMain} />
- 
-              <Button title="Click Here To Flip" onPress={this.Load_New_Image} />
-                
-        
-              
+            <View style={{ margin: 10, backgroundColor: '#ffffff', width: '95%' }}>
+
+            <FlipCard 
+              friction={6}
+              perspective={1000}
+              flipHorizontal={true}
+              flipVertical={false}
+              flip={false}
+              clickable={true}
+              onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
+              >
+              <View>
+                <Image
+                style={styles.imageMain}
+                source={{
+                  uri: this.props.cardData.front
+                }}
+                />
+                <View style={{height:150,marginTop:10,justifyContent:'center',alignItems:'center'}}><Text>!!!!!!!!!!FlipMe!!!!!!!</Text></View>
+              </View>
+              <View>
+              <Image
+              style={styles.imageMain}
+              source={{
+                uri: this.props.cardData.back
+              }}
+              />
+               <View style={{height:150,marginTop:10,justifyContent:'center',alignItems:'center'}}><Text>!!!!!!!!!!!FlipBack!!!!!!!</Text></View>
+              </View>
+            </FlipCard>
+            </View>
 
             </View>
 
-              </View>
+
 
             </ImageBackground>
 
@@ -143,17 +128,8 @@ Load_New_Image=()=>{
 const styles = {
   MainContainer:
    {
+       flex: 1,
 
-     flex:1,
-  
-
-   },
-   imageStyle:{
- 
-    width: 200, 
-    height: 300, 
-    resizeMode: 'center'
- 
    },
    footerView: {
      width: '100%',

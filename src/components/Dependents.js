@@ -35,7 +35,7 @@ componentWillMount() {
   }
 
  getDependant = (token, memberID) => {
-
+          debugger;
             console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
