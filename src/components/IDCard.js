@@ -1,36 +1,50 @@
-import React, { Component } from 'react';
-import { Text, View, ImageBackground, Animated, Image, Button, TouchableOpacity, ActivityIndicator,AsyncStorage,Platform } from 'react-native';
+import React, { Component } from 'react'
+import { Animated, View, StyleSheet, Image, Dimensions, ScrollView , ImageBackground, AsyncStorage,Text} from 'react-native'
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import CardFlip from 'react-native-card-flip';
 import FlipCard from 'react-native-flip-card'
 
-class IDCard extends Component {
 
-  constructor(props) {
+const deviceWidth = Dimensions.get('window').width 
+const FIXED_BAR_WIDTH = 280
+const BAR_SPACE = 10
+
+const images = [ ]
+
+export default class IDCard extends Component {
+
+   constructor(props) {
       super(props);
       this.state = {
             isProfile: false,
             isHome: false,
             isMenu: false,
             isNotification: false,
-            isFlip: false,
             isAccountInfo: this.props.isAccountInfo,
             arrayValue: [],
-             imageURL : '',
             loaded: false,
           };
     }
-    componentDidMount() {
-         this.setState({
- 
-      imageURL : this.props.cardData.front
- 
-    })
+  
+  
+  numItems = images.length
+  itemWidth = 75
+  animVal = new Animated.Value(0)
+  
+  
+     componentDidMount() {
+     
       console.log('IDCardDidMountcall');
-      console.log(this.props.cardData.front);
+      
       console.log(this.props.cardData.back);
         this.setState({ loaded: true });
+       images.push(this.props.cardData.front)
+       images.push(this.props.cardData.back)
+        numItems = images.length
+        itemWidth = (FIXED_BAR_WIDTH / this.numItems) - ((this.numItems - 1) * BAR_SPACE)
+        animVal = new Animated.Value(0)
+       
         setTimeout(() => { this.setState({ loaded: false }); }, 1000);
 
         AsyncStorage.getItem('profileArray')
@@ -39,123 +53,140 @@ class IDCard extends Component {
 
         console.log(value);
         this.setState({ arrayValue: value })
-        
       });
   }
+  
 
-
-
-Load_New_Image=()=>{
-    if (this.state.isFlip === true){
-      
-      this.setState({
- 
-      imageURL : this.props.cardData.front
- 
-    })
-       this.setState({
- 
-         isFlip: false
- 
-    })
-      
-    }else{
-       this.setState({
- 
-      imageURL : this.props.cardData.back
- 
-    })
-       this.setState({
- 
-         isFlip: true
- 
-    })
-    }
-   
-  }
-
-
-
-    render() {
-      const {
+  render() {
+     const {
         arrayValue,
         loaded
       } = this.state;
-      return (
+    
+    let imageArray = []
+    let barArray = []
+    images.forEach((image, i) => {
+      console.log(image, i)
+      const thisImage = (
+        <Image
+          key={`image${i}`}
+          source={{uri: image}}
+          style={{ width: deviceWidth }}
+        />
+      )
+      imageArray.push(thisImage)
 
-        <View style={styles.MainContainer}>
-        <View style={{ width: '100%', height: 60 }}>
+      const scrollBarVal = this.animVal.interpolate({
+        inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
+        outputRange: [-this.itemWidth, this.itemWidth],
+        extrapolate: 'clamp',
+      })
+
+      const thisBar = (
+        <View
+          key={`bar${i}`}
+          style={[
+            styles.track,
+            {
+              width: this.itemWidth,
+              marginLeft: i === 0 ? 0 : BAR_SPACE,
+            },
+          ]}
+        >
+          <Animated.View
+
+            style={[
+              styles.bar,
+              {
+                width: this.itemWidth,
+                transform: [
+                  { translateX: scrollBarVal },
+                ],
+              },
+            ]}
+          />
+        </View>
+      )
+      barArray.push(thisBar)
+    })
+
+    return (
+      <View style={styles.MainContainer}>
+          <View style={{ width: '100%', height: 60 }}>
               <CustomHeader
               headerText={'ID Card'}
 
               />
         </View>
-
-
-
-
-
-          <ImageBackground
+        
+           <ImageBackground
             style={styles.imgBackground}
             resizeMode='cover'
             source={require('../../assets/backgroundBlue.png')} >
-            <View style={{ height: '95%', width: '100%' }}>
-            {
-              (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-            }
-        <View style={{ margin: 10,  width: '95%' }}>
- 
-            <Image 
-              source = {{ uri: this.state.imageURL }}
- 
-              style = {styles.imageMain} />
- 
-              <Button title="Click Here To Flip" onPress={this.Load_New_Image} />
-                
         
-              
+      <View
+        style={styles.container}
+        flex={0.8}
+        >
+    
+       
+        
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={10}
+          pagingEnabled
+          onScroll={
+            Animated.event(
+              [{ nativeEvent: { contentOffset: { x: this.animVal } } }]
+            )
+          }
+        >
 
-            </View>
+          {imageArray}
 
-              </View>
-
+        </ScrollView>
+        <View style={{height: 50, marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
+      
+        <View
+          style={styles.barContainer}
+        >
+          {barArray}
+        </View>
+         
+       
+      </View>
+      </View>
+               
+ 
             </ImageBackground>
-
-
-
+ 
             <View style={styles.footerView}>
                     <CustomFooter
-                    isProfile={this.state.isProfile}
+                     isProfile={this.state.isProfile}
                     isHome={this.state.isHome}
                     isMenu={this.state.isMenu}
                     isNotification={this.state.isNotification}
                     profileData={arrayValue}
+                   
                     />
               </View>
-
-            </View>
-      );
-    }
-
-
+      </View>
+    )
+  }
 }
 
-const styles = {
-  MainContainer:
-   {
 
-     flex:1,
-  
-
-   },
-   imageStyle:{
- 
-    width: 200, 
-    height: 300, 
-    resizeMode: 'center'
- 
-   },
-   footerView: {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
+      
+    
+  },
+     footerView: {
      width: '100%',
       height: 45,
 
@@ -163,34 +194,36 @@ const styles = {
       bottom: 0
 
    },
-   imgBackground: {
+    MainContainer:
+   {
+       flex: 1,
+       
+   },
+  barContainer: {
+    marginTop: 30,
+    position: 'absolute',
+    zIndex: 2,
+    bottom: 40,
+    flexDirection: 'row',
+  },
+  track: {
+    backgroundColor: '#ccc',
+    overflow: 'hidden',
+    height: 2,
+  },
+     imgBackground: {
            width: '100%',
            height: '100%',
+         
+           
 
 
    },
-   containerActivety: {
-
-       backgroundColor: 'transparent',
-       height: '100%',
-       width: '100%',
-       zIndex: 10000000,
-       position: 'absolute',
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-   btnStyle: {
-    backgroundColor: '#0f0',
-    width: 300,
-    height: 45,
-    borderColor: 'transparent',
-    borderWidth: 0,
-    borderRadius: 5
-   },
-   imageMain: {
-     height: 250,
-   }
-};
-
-
-    export default IDCard;
+  bar: {
+    backgroundColor: '#5294d6',
+    height: 2,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+  },
+})

@@ -45,3 +45,7 @@ npm install --save react-native-card-flip
 //
 
 sudo npm i react-native-flip-card
+
+
+//call reaord
+npm install --save react-native-phone-call
