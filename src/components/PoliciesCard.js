@@ -12,9 +12,13 @@ class PoliciesCard extends Component {
       };
     }
 componentWillMount() {
-//  debugger;
+ debugger;
 console.log(this.props.arrayDescription);
 }
+  componentDidMount(){
+    console.log('policiescardcall');
+    console.log(this.props.arrayDescription);
+  }
 
 
 renderView() {
@@ -84,7 +88,7 @@ return this.props.arrayDescription.map((array, index) =>
 
     <View style={{ backgroundColor: '#ffffff', padding: 10 }}>
     <Text style={styles.textSub}>Benefits:</Text>
-    {this.renderViewSub(array.Benifits, index)}
+    
     </View>
   </View>
 

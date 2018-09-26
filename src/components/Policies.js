@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator } from 'react-native';
 import CustomFooter from './CustomFooter';
 import PoliciesCard from './PoliciesCard';
+import UserData from './UserData';
+import ServiceClass from './ServiceClass';
+
 
 class Policies extends Component {
 
@@ -10,30 +13,65 @@ class Policies extends Component {
         this.state = {
             isProfile: false,
             isDependents: false,
-
+            loaded: false,
             isPolicies: true,
-
+            dataArray: [],
           };
     }
+  
+  
+   componentDidMount() {
+    console.log('polices call');
+      UserData.retriveData('token').then((resToken) => {
+
+        
+          this.getPolocies(resToken, '284369');
+      })
+
+  }
+  
+  
+   getPolocies = (token, memberID) => {
+          
+            console.log(token);
+              this.setState({ loaded: true });
+                ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
+                  
+                  if (reData.data.status === '1') {
+                    console.log(reData.data.data);
+                    this.setState({ dataArray: reData.data.data });
+                    this.setState({ loaded: false });
+                  }
+                  else {
+                      this.setState({ loaded: false });
+                    Alert.alert(reData.data.message);
+                  }
+
+                }).catch((error) => {
+                    //console.log(error);
+                    Alert.alert(error);
+                });
+      }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
     render() {
-      const SampleNameArray = [{ 'Type': 'Medical',
-                                'Status': 'Active',
-                                'EffectiveDate': '09/20/2017',
-                                'CancellationDate': '09/19/2018',
-                                'Network': 'Airtel',
-                                'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
-                                'Leap electronic typesetting, remaining essentially unchanged.','Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
-                                'Leap electronic typesetting, remaining essentially unchanged.']},
-                                { 'Type': 'Dentist',
-                                  'Status': 'Active',
-                                  'EffectiveDate': '09/20/2017',
-                                  'CancellationDate': '09/19/2018',
-                                  'Network': 'BSNL',
-                                  'Benifits': ['Lorem Ipsum is simply dummy the printing and typesetting industry','When an unknown printer took a galley make.',
-                                                          'Leap electronic typesetting, remaining essentially unchanged.']} ];
-
-
+    
+      const {
+       dataArray,
+        loaded
+      } = this.state;
+      debugger;
+      console.log(dataArray);
   return (
 
         <View style={styles.MainContainer}>
@@ -45,11 +83,13 @@ class Policies extends Component {
           source={require('../../assets/backgroundBlue.png')} >
           <View style={{ height: '95%', width: '100%' }}>
           <View style={{ margin: 10, width: '95%' }}>
-          <PoliciesCard arrayDescription={SampleNameArray} />
+          <PoliciesCard arrayDescription={dataArray} />
           </View>
           </View>
 
-
+            {
+                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
           </ImageBackground>
 
           <View style={styles.footerView}>
@@ -80,6 +120,16 @@ const styles = {
     {
         flex: 1,
 
+    },
+     containerActivety: {
+
+       backgroundColor: 'transparent',
+       height: '100%',
+       width: '100%',
+       zIndex: 10000000,
+       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     footerView: {
 

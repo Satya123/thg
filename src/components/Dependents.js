@@ -25,7 +25,7 @@ componentWillMount() {
 }
 
     componentDidMount() {
-
+    
       UserData.retriveData('token').then((resToken) => {
         UserData.retriveData('memberId').then((res) => {
             this.getDependant(resToken, res);
@@ -35,7 +35,7 @@ componentWillMount() {
   }
 
  getDependant = (token, memberID) => {
-          debugger;
+          
             console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
