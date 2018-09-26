@@ -38,9 +38,11 @@ class Policies extends Component {
                 ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
                   
                   if (reData.data.status === '1') {
-                    console.log(reData.data.data);
+                 
+                    console.log(reData.data.data[0].telemedicine.phone);
                     this.setState({ dataArray: reData.data.data });
                     this.setState({ loaded: false });
+                      UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
                   }
                   else {
                       this.setState({ loaded: false });
@@ -70,7 +72,7 @@ class Policies extends Component {
        dataArray,
         loaded
       } = this.state;
-      debugger;
+   
       console.log(dataArray);
   return (
 

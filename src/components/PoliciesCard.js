@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Text, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Image, Text, ScrollView, TouchableHighlight, Alert } from 'react-native';
 
 
 class PoliciesCard extends Component {
@@ -12,7 +12,7 @@ class PoliciesCard extends Component {
       };
     }
 componentWillMount() {
- debugger;
+ 
 console.log(this.props.arrayDescription);
 }
   componentDidMount(){
@@ -20,16 +20,20 @@ console.log(this.props.arrayDescription);
     console.log(this.props.arrayDescription);
   }
 
+  setImage(url) {
+    Alert.alert(url);
+  }
 
 renderView() {
 return this.props.arrayDescription.map((array, index) =>
+                                       
 <View style={{ marginBottom: 10 }}>
   <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Type</Text>
     </View>
     <View style={{ width: '50%' }}>
-        <Text style={styles.textSubRight} key={index}>{array.Type}</Text>
+        <Text style={styles.textSubRight} key={index}>{array.type}</Text>
 
     </View>
 
@@ -41,7 +45,7 @@ return this.props.arrayDescription.map((array, index) =>
         <Text style={styles.textSub} key={index}>Status</Text>
     </View>
     <View style={{ width: '50%' }}>
-        <Text style={styles.textSubRight} key={index}>{array.Status}</Text>
+        <Text style={styles.textSubRight} key={index}>{array.status}</Text>
 
     </View>
 
@@ -53,7 +57,7 @@ return this.props.arrayDescription.map((array, index) =>
         <Text style={styles.textSub} key={index}>Effective Date</Text>
     </View>
     <View style={{ width: '50%' }}>
-        <Text style={styles.textSubRight} key={index}>{array.EffectiveDate}</Text>
+        <Text style={styles.textSubRight} key={index}>{array.effectiveDate}</Text>
 
     </View>
 
@@ -65,7 +69,7 @@ return this.props.arrayDescription.map((array, index) =>
         <Text style={styles.textSub} key={index}>Cancellation Date</Text>
     </View>
     <View style={{ width: '50%' }}>
-        <Text style={styles.textSubRight} key={index}>{array.CancellationDate}</Text>
+        <Text style={styles.textSubRight} key={index}>{array.cancelDate}</Text>
 
     </View>
 
@@ -77,7 +81,7 @@ return this.props.arrayDescription.map((array, index) =>
         <Text style={styles.textSub} key={index}>Network</Text>
     </View>
     <View style={{ width: '50%' }}>
-        <Text style={styles.textSubRight} key={index}>{array.Network}</Text>
+        <Text style={styles.textSubRight} key={index}>{array.network}</Text>
 
     </View>
 
@@ -86,10 +90,23 @@ return this.props.arrayDescription.map((array, index) =>
 
 
 
-    <View style={{ backgroundColor: '#ffffff', padding: 10 }}>
-    <Text style={styles.textSub}>Benefits:</Text>
-    
+  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+    <View style={{ width: '80%' }} >
+        <Text style={styles.textSub} key={index}>Benefits</Text>
     </View>
+    <View style={{ width: '20%', backgroundColor:'#ff7417', height: 20}}>
+      
+       <TouchableHighlight
+                onPress={() => {
+                  this.setImage(array.benefitsDetails);
+                }}>
+               <Text style={{color: 'white',fontSize: 14,textAlign: 'center'}} key={index}>View</Text>
+              </TouchableHighlight>
+       
+
+    </View>
+
+  </View >
   </View>
 
   );

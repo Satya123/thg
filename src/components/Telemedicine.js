@@ -5,7 +5,7 @@ import TelemedicineCard from './TelemedicineCard';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import call from 'react-native-phone-call';
-
+import UserData from './UserData';
 
 // const args = {
 //   number: '9093900003', // String value with the number to call
@@ -17,11 +17,20 @@ class Telemedicine extends Component {
      super(props);
      this.state = {
        arrayValue: [],
+       phoneText: '',
      };
 }
-  
+componentDidMount(){
+  UserData.retriveData('phoneNumber').then((resPhone) => {
+          this.setState({ phoneText: resPhone });
+        
+         
+      })
+}  
 
    componentWillMount() {
+     
+     
      console.log('componentWillMount call Telemedicine');
    AsyncStorage.getItem('profileArray')
    .then((contacts) => {
@@ -33,7 +42,8 @@ class Telemedicine extends Component {
   
   clickToIDCall(number){
     const args = {
-      number: number, 
+      number: number,
+      
       prompt: false
     }
     call(args).catch(console.error)
@@ -44,7 +54,8 @@ class Telemedicine extends Component {
   
    render() {
      const{
-       arrayValue
+       arrayValue,
+       phoneText
      } = this.state
      const SampleNameArray = ['Lorem Ipsum is simply dummy the printing and typesetting industry.',
      'When an unknown printer took a galley make.',
@@ -66,9 +77,9 @@ class Telemedicine extends Component {
            </View>
               <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => { this.clickToIDCall('8510074970'); }} >
+              onPress={() => { this.clickToIDCall(phoneText); }} >
            <View style={{ marginTop: 10 }}>
-               <Text style={styles.textStyle}>8510074970</Text>
+               <Text style={styles.textStyle}>{phoneText}</Text>
              </View>
                  </TouchableOpacity>
          </View>
