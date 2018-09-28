@@ -241,3 +241,28 @@ textSubRight: {
 };
 
 export default PoliciesCard;
+  
+  
+  
+  
+  
+  
+     <TouchableHighlight
+                onPress={() => {
+                  this.setImage(array.benefitsDetails);
+                }}>
+               <Text style={{color: 'white',fontSize: 14,textAlign: 'center'}} key={index}>View</Text>
+              </TouchableHighlight>
+  
+  
+  
+  
+  
+          <ScrollView style={{ width: '100%',height:'90%', backgroundColor: '#0f0' }}>  
+         
+          {this.renderView()}
+        <View style={{ height:'90%', backgroundColor: '#0f0' }}>
+         {
+           (this.state.isVisible === true) ? Splash_Screen : null
+          }
+        </View>

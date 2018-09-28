@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator, AsyncStorage } from 'react-native';
 import CustomFooter from './CustomFooter';
 import PoliciesCard from './PoliciesCard';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
+
 
 
 class Policies extends Component {
@@ -16,9 +17,20 @@ class Policies extends Component {
             loaded: false,
             isPolicies: true,
             dataArray: [],
+            arrayValue:[],
           };
     }
-  
+     componentWillMount() {
+     
+     
+     console.log('componentWillMount call Telemedicine');
+   AsyncStorage.getItem('profileArray')
+   .then((contacts) => {
+   const value = contacts ? JSON.parse(contacts) : [];
+   console.log(value);
+   this.setState({ arrayValue: value })
+ });
+   }
   
    componentDidMount() {
     console.log('polices call');
@@ -39,10 +51,11 @@ class Policies extends Component {
                   
                   if (reData.data.status === '1') {
                  
-                    console.log(reData.data.data[0].telemedicine.phone);
+                    console.log(reData.data.data[0].telemedicine.details);
                     this.setState({ dataArray: reData.data.data });
                     this.setState({ loaded: false });
                       UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
+                     UserData.saveData('details', reData.data.data[0].telemedicine.details);
                   }
                   else {
                       this.setState({ loaded: false });
@@ -70,6 +83,7 @@ class Policies extends Component {
     
       const {
        dataArray,
+        arrayValue,
         loaded
       } = this.state;
    
@@ -83,7 +97,7 @@ class Policies extends Component {
           style={styles.imgBackground}
           resizeMode='cover'
           source={require('../../assets/backgroundBlue.png')} >
-          <View style={{ height: '95%', width: '100%' }}>
+          <View style={{  width: '100%' }}>
           <View style={{ margin: 10, width: '95%' }}>
           <PoliciesCard arrayDescription={dataArray} />
           </View>
@@ -100,6 +114,7 @@ class Policies extends Component {
                   isHome={this.state.isHome}
                   isMenu={this.state.isMenu}
                   isNotification={this.state.isNotification}
+                  profileData={arrayValue}
                   />
             </View>
 

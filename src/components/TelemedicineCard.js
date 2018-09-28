@@ -42,14 +42,7 @@ return this.props.arrayDescription.map(array =>
 
           {this.renderView()}
         </View>
-        <View style={{ backgroundColor: '#f3f3f3', marginTop: 1 }}>
-        <View style={{ height: 40, marginTop: 10, padding: 10 }} >
-              <Text style={styles.textStyle}>How to Activate</Text>
-
-          </View>
-
-            {this.renderView()}
-          </View>
+   
           </ScrollView>
 
 

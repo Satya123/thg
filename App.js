@@ -16,6 +16,7 @@
   import Menu from './src/components/Menu';
   import Router from './src/components/Router';
   import OfflineNotice from './src/components/OfflineNotice'
+  import AppNew from './app/App';
 
 
  const navigationOptions = { title: 'Welcome', header: null, navigationBarHidden: true };
@@ -55,7 +56,7 @@ Telemedicine: { screen: Telemedicine,
    render() {
      return (
 
-       <Router />
+       <AppNew />
 
      );
    }

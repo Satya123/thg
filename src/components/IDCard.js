@@ -8,7 +8,7 @@ import FlipCard from 'react-native-flip-card'
 
 const deviceWidth = Dimensions.get('window').width 
 const FIXED_BAR_WIDTH = 280
-const BAR_SPACE = 10
+const BAR_SPACE = 5
 
 const images = [ ]
 
@@ -16,6 +16,7 @@ export default class IDCard extends Component {
 
    constructor(props) {
       super(props);
+
       this.state = {
             isProfile: false,
             isHome: false,
@@ -29,20 +30,25 @@ export default class IDCard extends Component {
   
   
   numItems = images.length
-  itemWidth = 75
+  itemWidth = 5.0
   animVal = new Animated.Value(0)
   
   
      componentDidMount() {
-     
+      
       console.log('IDCardDidMountcall');
+       if (images.length > 0){
+         
+       }else{
+                 images.push(this.props.cardData.front)
+                  images.push(this.props.cardData.back)
+       }
       
       console.log(this.props.cardData.back);
         this.setState({ loaded: true });
-       images.push(this.props.cardData.front)
-       images.push(this.props.cardData.back)
+    
         numItems = images.length
-        itemWidth = (FIXED_BAR_WIDTH / this.numItems) - ((this.numItems - 1) * BAR_SPACE)
+       // itemWidth = (FIXED_BAR_WIDTH / this.numItems) - ((this.numItems - 1) * BAR_SPACE)
         animVal = new Animated.Value(0)
        
         setTimeout(() => { this.setState({ loaded: false }); }, 1000);
@@ -71,7 +77,9 @@ export default class IDCard extends Component {
         <Image
           key={`image${i}`}
           source={{uri: image}}
-          style={{ width: deviceWidth }}
+          
+          style={{ width: 320, 
+                  height: 300, }}
         />
       )
       imageArray.push(thisImage)
@@ -220,8 +228,10 @@ const styles = StyleSheet.create({
 
    },
   bar: {
-    backgroundColor: '#5294d6',
-    height: 2,
+    backgroundColor: '#ff7417',
+    height: 5,
+    width: 5,
+    borderRadius: 2,
     position: 'absolute',
     left: 0,
     top: 0,

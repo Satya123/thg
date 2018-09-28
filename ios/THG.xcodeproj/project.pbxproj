@@ -37,7 +37,7 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* THGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* THGTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
-		3B1F74BC215B8ECB00438599 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B1F74BB215B8ECB00438599 /* GoogleService-Info.plist */; };
+		3BC48719215CEAEA00AB4B81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BC486F1215CEAEA00AB4B81 /* GoogleService-Info.plist */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6C89B8D0AB3D8BC66194A3A3 /* libPods-THGTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336623C4A0DF126ED2A2A19B /* libPods-THGTests.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -369,8 +369,8 @@
 		3094CFAF2F5BA087DF6CF6C4 /* libPods-THG-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-THG-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		336623C4A0DF126ED2A2A19B /* libPods-THGTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-THGTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3991963B2F8F4994B2D4F695 /* RNSecureKeyStore.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSecureKeyStore.xcodeproj; path = "../node_modules/react-native-secure-key-store/ios/RNSecureKeyStore.xcodeproj"; sourceTree = "<group>"; };
-		3B1F74BB215B8ECB00438599 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "THG/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B1F74BD215B8F2400438599 /* THG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = THG.entitlements; path = THG/THG.entitlements; sourceTree = "<group>"; };
+		3BC486F1215CEAEA00AB4B81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "THG/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C06D536B4B487EA7CE3BD4C /* Pods-THG-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-THG-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-THG-tvOS/Pods-THG-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -667,7 +667,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				3B1F74BB215B8ECB00438599 /* GoogleService-Info.plist */,
+				3BC486F1215CEAEA00AB4B81 /* GoogleService-Info.plist */,
 				1B039092215111F500D05DEF /* splash-screen.jpg */,
 				13B07FAE1A68108700A75B9A /* THG */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1193,7 +1193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B039093215111F500D05DEF /* splash-screen.jpg in Resources */,
-				3B1F74BC215B8ECB00438599 /* GoogleService-Info.plist in Resources */,
+				3BC48719215CEAEA00AB4B81 /* GoogleService-Info.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);

@@ -36,7 +36,7 @@ class AccountInfo extends Component {
     componentWillMount() {
       console.log('AccountInfoDidMountcall');
       console.log(this.props.userData);
-
+      this.setState({ isProfile: true });
     }
 
 

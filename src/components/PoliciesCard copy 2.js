@@ -22,7 +22,7 @@ console.log(this.props.arrayDescription);
   }
 
   setImage(url) {
-   
+    Alert.alert(url);
      this.setState({ 
       isVisible : true ,
        urlImg: url
@@ -113,13 +113,13 @@ return this.props.arrayDescription.map((array, index) =>
     <View style={{ width: '80%' }} >
         <Text style={styles.textSub} key={index}>Benefits</Text>
     </View>
-    <View style={{ width: '20%', height: 25}}>
+    <View style={{ width: '20%', backgroundColor:'#ff7417', height: 20}}>
      
        <TouchableHighlight
                 onPress={() => {
                   this.setImage(array.benefitsDetails);
                 }}>
-                <View><Image  source={require('../../assets/view-icon.png')} style={{marginLeft:20}}/></View>
+               <Text style={{color: 'white',fontSize: 14,textAlign: 'center'}} key={index}>View</Text>
               </TouchableHighlight>
        
 
@@ -190,12 +190,9 @@ if (isReadMode === true) {
       urlImg,
   } = this.state;
     
-    
-    return (
-   <View style={styles.MainContainer}>
-       
-         {
-           (this.state.isVisible === true) ?  <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '100%'}}><View style={styles.SplashScreen_RootView}>
+     let Splash_Screen = (
+
+            <View style={styles.SplashScreen_RootView}>
 
                 <View style={styles.SplashScreen_ChildView}>
 
@@ -212,23 +209,29 @@ if (isReadMode === true) {
                   style={styles.TouchableOpacity_Style}
                   onPress={this.Hide_Splash_Screen} >
 
-                    <Image source={require('../../assets/close-icon.png')}
+                    <Image source={{uri: 'https://reactnativecode.com/wp-content/uploads/2018/01/close_button.png'}}
                     style={{width:25, height: 25}} />
 
                 </TouchableOpacity>
 
             
-            </View></View> : null
+            </View> )
+    
+    
+    
+    return (
+   <View style={styles.MainContainer}>
+         {
+           (this.state.isVisible === false) ?  <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '100%',backgroundColor:'#0f0'}}>
+           <Text>Hi FirstView</Text>
+        </View> : null
           }
-     
+      
       
          
           
-        <View style={{height: '100%', width: '100%'}}>
-           <ScrollView>  
-         
-          {this.renderView()}
-          </ScrollView>
+        <View style={{height: 300, width: '100%',backgroundColor:'red'}}>
+          <Text>Hi SecondView</Text>
         </View>
         
     
@@ -334,8 +337,7 @@ textSubRight: {
     {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.9)',
-       
+        backgroundColor: '#00BCD4',
         flex:1,
         margin: 0,
     },

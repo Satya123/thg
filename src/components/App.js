@@ -4,11 +4,6 @@
  * @flow
  */
 
-
-
-
-
-
 import React, { Component } from "react";
 import {
   StyleSheet,
@@ -216,7 +211,7 @@ class MainPage extends Component {
           <Text style={styles.feedback}>{this.state.tokenCopyFeedback}</Text>
 
           <Text style={styles.feedback}>
-            Remote notif won't be available to iOS emulators
+            Remote notif won't be available to iOS emulators i know
           </Text>
 
           <TouchableOpacity

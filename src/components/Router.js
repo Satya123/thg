@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
+import {Text} from 'react-native';
 import Login from './Login';
 import HomeScreen from './HomeScreen';
 import Profile from './Profile';
@@ -15,6 +16,7 @@ import UserData from './UserData';
 import VendorSplash from './VendorSplash';
 import CustomServiecs from './CustomServiecs';
 import Appointments from './Appointments';
+import NotificationPermission from './NotificationPermission';
 import { Alert, StatusBar } from 'react-native';
 import IDCard from './IDCard';
 
@@ -50,12 +52,13 @@ class RouterComponent extends Component {
       const {
           isLogin
       } = this.state;
+ 
       return (
         <Router>
-
+          
         <Scene key='root' >
         <Scene hideNavBar>
-
+         
         <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
         {
           (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />

@@ -9,11 +9,8 @@ import HomeScreen from './HomeScreen';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import OfflineNotice from './OfflineNotice';
-import FCM, { NotificationActionType } from "react-native-fcm";
-import NotificationPermission from './NotificationPermission';
-import { registerKilledListener, registerAppListener } from "./Listeners";
-import firebaseClient from "./FirebaseClient";
-registerKilledListener();
+
+
 class Login extends React.Component {
  static navigationOptions = { title: '', header: null, navigationBarHidden: true };
 
@@ -23,8 +20,7 @@ constructor(props) {
      this.state = {
         loaded: false,
         txtMemberID: '',
-        token: "",
-      tokenCopyFeedback: "",
+
         isVisible: true,
         Login: false,
         date: '',
@@ -130,9 +126,8 @@ let Splash_Screen = (
 
     return (
 
-     
+
       <View style={styles.container}>
-       
       {
             Login &&
             <ImageBackground

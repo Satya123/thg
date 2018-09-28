@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, Image , AsyncStorage, TouchableOpacity } from 'react-native';
+import { View, Text, Image , AsyncStorage, TouchableOpacity, ImageBackground,ActivityIndicator } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import TelemedicineCard from './TelemedicineCard';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import call from 'react-native-phone-call';
 import UserData from './UserData';
+import ServiceClass from './ServiceClass';
 
 // const args = {
 //   number: '9093900003', // String value with the number to call
 //   prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
 // }
+
+
 
 class Telemedicine extends Component {
  constructor(props) {
@@ -18,20 +21,70 @@ class Telemedicine extends Component {
      this.state = {
        arrayValue: [],
        phoneText: '',
+       details:'',
+       loaded: false,
      };
 }
 componentDidMount(){
-  UserData.retriveData('phoneNumber').then((resPhone) => {
-          this.setState({ phoneText: resPhone });
+  UserData.retriveData('token').then((resToken) => {
+
         
-         
+          this.getPolocies(resToken, '284369');
       })
+  
+  
+//   UserData.retriveData('phoneNumber').then((resPhone) => {
+          
+    
+//               UserData.retriveData('details').then((resText) => {
+               
+//                 console.log(resText)
+               
+                    
+         
+//       })
+         
+//       })
+
 }  
+  
+     getPolocies = (token, memberID) => {
+      
+            console.log(token);
+              this.setState({ loaded: true });
+                ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
+                
+                  if (reData.data.status === '1') {
+                    
+                    console.log(reData.data.data[0].telemedicine.details);
+                    this.setState({ dataArray: reData.data.data });
+                    
+//                       UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
+//                      UserData.saveData('details', reData.data.data[0].telemedicine.details);
+                    
+                    this.setState({ phoneText: reData.data.data[0].telemedicine.phone });
+                     this.setState({ details: reData.data.data[0].telemedicine.details });
+                    this.setState({ loaded: false });
+                  }
+                  else {
+                      this.setState({ loaded: false });
+                    Alert.alert(reData.data.message);
+                  }
+
+                }).catch((error) => {
+                    //console.log(error);
+                    Alert.alert(error);
+                  this.setState({ loaded: false });
+                });
+      }
+  
+  
+  
 
    componentWillMount() {
      
      
-     console.log('componentWillMount call Telemedicine');
+  console.log('componentWillMount call Telemedicine');
    AsyncStorage.getItem('profileArray')
    .then((contacts) => {
    const value = contacts ? JSON.parse(contacts) : [];
@@ -55,20 +108,25 @@ componentDidMount(){
    render() {
      const{
        arrayValue,
-       phoneText
+       phoneText,
+       loaded,
+       details
      } = this.state
-     const SampleNameArray = ['Lorem Ipsum is simply dummy the printing and typesetting industry.',
-     'When an unknown printer took a galley make.',
-      'Leap electronic typesetting, remaining essentially unchanged.',
-       'It was popularised in the of Letraset sheets.',
-       'Containing Lorem Ipsum passages recently with desktop.'];
+     const SampleNameArray = [];
+   SampleNameArray.push(details);
+     
      return (
        <View style={styles.MainContainer}>
+       
        <View style={{ width: '100%', height: 60 }}>
              <CustomHeader
              headerText={'Telemedicine'}
              />
        </View>
+           <ImageBackground
+          style={styles.imgBackground}
+          resizeMode='cover'
+          source={require('../../assets/backgroundBlue.png')} >
          <View style={{ height: 60, backgroundColor: '#f3f3f3', flexDirection: 'row' }}>
            <View style={styles.ImageView} >
            <Image
@@ -83,7 +141,16 @@ componentDidMount(){
              </View>
                  </TouchableOpacity>
          </View>
-         <TelemedicineCard arrayDescription={SampleNameArray} />
+              <View style={{ margin: 10, width: '95%' }}>
+           <TelemedicineCard arrayDescription={SampleNameArray} />
+          </View>
+             
+        
+           {
+                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+              }
+          </ImageBackground> 
+            
          <View style={styles.footerView}>
                  <CustomFooter
                    profileData={arrayValue}
@@ -129,7 +196,22 @@ const styles = {
    fontWeight: 'bold',
     alignItems: 'flex-start',
     justifyContent: 'flex-start'
- }
+ },
+      imgBackground: {
+            width: '100%',
+            height: '100%',
+
+
+    },  containerActivety: {
+
+       backgroundColor: 'transparent',
+       height: '100%',
+       width: '100%',
+       zIndex: 10000000,
+       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
 };
 export default Telemedicine;
 
