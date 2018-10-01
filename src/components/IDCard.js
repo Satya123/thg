@@ -36,7 +36,7 @@ export default class IDCard extends Component {
   
      componentDidMount() {
       
-      console.log('IDCardDidMountcall');
+      //console.log('IDCardDidMountcall');
        if (images.length > 0){
          
        }else{
@@ -44,7 +44,7 @@ export default class IDCard extends Component {
                   images.push(this.props.cardData.back)
        }
       
-      console.log(this.props.cardData.back);
+      //console.log(this.props.cardData.back);
         this.setState({ loaded: true });
     
         numItems = images.length
@@ -57,7 +57,7 @@ export default class IDCard extends Component {
         .then((contacts) => {
         const value = contacts ? JSON.parse(contacts) : [];
 
-        console.log(value);
+        //console.log(value);
         this.setState({ arrayValue: value })
       });
   }
@@ -72,7 +72,7 @@ export default class IDCard extends Component {
     let imageArray = []
     let barArray = []
     images.forEach((image, i) => {
-      console.log(image, i)
+      //console.log(image, i)
       const thisImage = (
         <Image
           key={`image${i}`}

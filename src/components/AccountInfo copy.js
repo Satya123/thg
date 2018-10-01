@@ -34,22 +34,22 @@ class AccountInfo extends Component {
     componentWillMount() {
     RNSecureKeyStore.get('key1')
     .then((res) => {
-        console.log(res);
+        //console.log(res);
     }, (err) => {
-        console.log(err);
+        //console.log(err);
     });
     }
 
 
     showView() {
       if (isProfile === true) {
-        console.log(' call profile view');
+        //console.log(' call profile view');
           return (<Profile />);
       } else if (isDependents === true) {
-        console.log(' call dependents view');
+        //console.log(' call dependents view');
             return (<Dependents />);
       } else if (isPolicies === true) {
-        console.log(' call Policies view');
+        //console.log(' call Policies view');
           return (<Policies />);
       }
     }

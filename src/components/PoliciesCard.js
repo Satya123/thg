@@ -17,8 +17,8 @@ componentWillMount() {
 console.log(this.props.arrayDescription);
 }
   componentDidMount(){
-    console.log('policiescardcall');
-    console.log(this.props.arrayDescription);
+    //console.log('policiescardcall');
+    //console.log(this.props.arrayDescription);
   }
 
   setImage(url) {
@@ -132,7 +132,7 @@ return this.props.arrayDescription.map((array, index) =>
 }
 
 clickToReadMore = id => {
-    console.log(id);
+    //console.log(id);
       this.setState({ isReadMode: false });
 }
 

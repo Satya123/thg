@@ -34,16 +34,16 @@ class RouterComponent extends Component {
   }
   componentDidMount() {
     UserData.retriveData('token').then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res === '') {
             this.setState({ isLogin: false });
         } else {
-            console.log(res);
+            //console.log(res);
             this.setState({ isLogin: true });
 
         }
     }, (err) => {
-        console.log(err);
+        //console.log(err);
     });
   }
 

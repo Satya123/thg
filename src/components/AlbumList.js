@@ -18,7 +18,7 @@ state = { albums: [] };
 
 
   componentWillMount() {
-    console.log('componentWillMount call');
+    //console.log('componentWillMount call');
     //debugger;
     axios.get('https://rallycoding.herokuapp.com/api/music_albums')
           .then(response => this.setState({ albums: response.data }));
@@ -31,7 +31,7 @@ reanderAlbums() {
 }
 
 render() {
-  console.log(this.state);
+  //console.log(this.state);
   return (
       <View>
 

@@ -27,7 +27,7 @@ componentWillMount() {
   .then((contacts) => {
   const value = contacts ? JSON.parse(contacts) : [];
 
-  console.log(value);
+  //console.log(value);
   this.setState({ arrayValue: value })
 });
 
@@ -45,12 +45,12 @@ componentWillMount() {
 
  // getDependant = (token, memberID) => {
  //
- //            console.log(token);
+ //            //console.log(token);
  //              this.setState({ loaded: true });
  //                ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
  //
  //                  if (reData.data.status === '1') {
- //                    console.log(reData.data.data);
+ //                    //console.log(reData.data.data);
  //                    this.setState({ dataArray: reData.data.data });
  //                    this.setState({ loaded: false });
  //                  }
@@ -71,7 +71,7 @@ componentWillMount() {
         arrayValue,
         loaded
       } = this.state;
-     // console.log(SampleNameArray);
+     // //console.log(SampleNameArray);
 
           const SampleNameArray = [
 { 'notification': 'It is last established fact that reader will be distracted by redable content of the page1',

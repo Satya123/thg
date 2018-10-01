@@ -14,8 +14,8 @@ class AccountSubCard extends Component {
     }
 componentWillMount() {
 
-  console.log('SubCard');
-  console.log(this.props.arrayDescription);
+  //console.log('SubCard');
+  //console.log(this.props.arrayDescription);
   this.setData();
 
 }
@@ -29,8 +29,8 @@ setData() {
   var dict5 = {};
   var dict6 = {};
   var dict7 = {};
-  console.log('ProfileDidMountcall');
-  console.log(this.props.arrayDescription[0]);
+  //console.log('ProfileDidMountcall');
+  //console.log(this.props.arrayDescription[0]);
   dict1.left = 'Name';
   dict1.right = this.props.arrayDescription[0].name;
   this.state.arrData.push(dict1);
@@ -67,7 +67,7 @@ setData() {
   this.state.arrData.push(dict6);
 
 
-  console.log(this.state.arrData);
+  //console.log(this.state.arrData);
 }
 
 

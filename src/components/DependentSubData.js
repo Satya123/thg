@@ -14,8 +14,8 @@ class DependentSubData extends Component {
     }
 componentWillMount() {
 
-  console.log('SubCard');
-  console.log(this.props.arrayDescription);
+  //console.log('SubCard');
+  //console.log(this.props.arrayDescription);
  // this.setData();
 
 }

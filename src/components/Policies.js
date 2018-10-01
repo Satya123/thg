@@ -23,17 +23,17 @@ class Policies extends Component {
      componentWillMount() {
      
      
-     console.log('componentWillMount call Telemedicine');
+     //console.log('componentWillMount call Telemedicine');
    AsyncStorage.getItem('profileArray')
    .then((contacts) => {
    const value = contacts ? JSON.parse(contacts) : [];
-   console.log(value);
+   //console.log(value);
    this.setState({ arrayValue: value })
  });
    }
   
    componentDidMount() {
-    console.log('polices call');
+    //console.log('polices call');
       UserData.retriveData('token').then((resToken) => {
 
         
@@ -45,13 +45,13 @@ class Policies extends Component {
   
    getPolocies = (token, memberID) => {
           
-            console.log(token);
+            //console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
                   
                   if (reData.data.status === '1') {
                  
-                    console.log(reData.data.data[0].telemedicine.details);
+                    //console.log(reData.data.data[0].telemedicine.details);
                     this.setState({ dataArray: reData.data.data });
                     this.setState({ loaded: false });
                       UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
@@ -87,7 +87,7 @@ class Policies extends Component {
         loaded
       } = this.state;
    
-      console.log(dataArray);
+      //console.log(dataArray);
   return (
 
         <View style={styles.MainContainer}>

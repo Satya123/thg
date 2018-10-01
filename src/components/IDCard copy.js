@@ -20,9 +20,9 @@ class IDCard extends Component {
           };
     }
     componentDidMount() {
-      console.log('IDCardDidMountcall');
-      console.log(this.props.cardData.front);
-      console.log(this.props.cardData.back);
+      //console.log('IDCardDidMountcall');
+      //console.log(this.props.cardData.front);
+      //console.log(this.props.cardData.back);
         this.setState({ loaded: true });
         setTimeout(() => { this.setState({ loaded: false }); }, 1000);
 
@@ -30,7 +30,7 @@ class IDCard extends Component {
         .then((contacts) => {
         const value = contacts ? JSON.parse(contacts) : [];
 
-        console.log(value);
+        //console.log(value);
         this.setState({ arrayValue: value })
       });
   }

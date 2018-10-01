@@ -64,13 +64,13 @@ class MainPage extends Component {
     }
 
     FCM.getFCMToken().then(token => {
-      console.log("TOKEN (getFCMToken)", token);
+      //console.log("TOKEN (getFCMToken)", token);
       this.setState({ token: token || "" });
     });
 
     if (Platform.OS === "ios") {
       FCM.getAPNSToken().then(token => {
-        console.log("APNS TOKEN (getFCMToken)", token);
+        //console.log("APNS TOKEN (getFCMToken)", token);
       });
     }
 

@@ -25,7 +25,7 @@ class Profile extends Component {
     }
     componentDidMount() {
 
-      console.log(this.props.dataArray);
+      //console.log(this.props.dataArray);
   }
 
   clickToLogOut = () => {

@@ -24,7 +24,7 @@ class CustomFooter extends Component {
       try {
         const myArray = AsyncStorage.getItem('profileArray');
         if (myArray !== null) {
-          console.log(JSON.parse(myArray));
+          //console.log(JSON.parse(myArray));
         }
       } catch (error) {
         
@@ -51,7 +51,7 @@ class CustomFooter extends Component {
          isHome, isProfile, isNotification, isMenu
        } = this.state;
 
-      console.log(isProfile);
+      //console.log(isProfile);
       return (
         <View>
         <View style={styles.shadow1}>

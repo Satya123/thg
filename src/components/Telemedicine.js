@@ -38,7 +38,7 @@ componentDidMount(){
     
 //               UserData.retriveData('details').then((resText) => {
                
-//                 console.log(resText)
+//                 //console.log(resText)
                
                     
          
@@ -50,13 +50,13 @@ componentDidMount(){
   
      getPolocies = (token, memberID) => {
       
-            console.log(token);
+            //console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
                 
                   if (reData.data.status === '1') {
                     
-                    console.log(reData.data.data[0].telemedicine.details);
+                    //console.log(reData.data.data[0].telemedicine.details);
                     this.setState({ dataArray: reData.data.data });
                     
 //                       UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
@@ -84,11 +84,11 @@ componentDidMount(){
    componentWillMount() {
      
      
-  console.log('componentWillMount call Telemedicine');
+  //console.log('componentWillMount call Telemedicine');
    AsyncStorage.getItem('profileArray')
    .then((contacts) => {
    const value = contacts ? JSON.parse(contacts) : [];
-   console.log(value);
+   //console.log(value);
    this.setState({ arrayValue: value })
  });
    }

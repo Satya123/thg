@@ -14,14 +14,14 @@ class CustomServiecs extends Component {
       };
 }
     componentWillMount() {
-      console.log('componentWillMount call Telemedicine');
+      //console.log('componentWillMount call Telemedicine');
 
 
     AsyncStorage.getItem('profileArray')
     .then((contacts) => {
     const value = contacts ? JSON.parse(contacts) : [];
 
-    console.log(value);
+    //console.log(value);
     this.setState({ arrayValue: value })
   });
 

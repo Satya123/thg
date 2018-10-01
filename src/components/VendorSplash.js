@@ -22,7 +22,7 @@ import ExtensionHelper from './ExtensionHelper';
 
   componentWillMount() {
     UserData.retriveData('token').then((res) => {
-        console.log(res);
+        //console.log(res);
 
         this.callAppDetails(res);
     });
@@ -31,16 +31,16 @@ import ExtensionHelper from './ExtensionHelper';
 
       callAppDetails = (token) => {
         //  debugger;
-          console.log(token);
+          //console.log(token);
             this.setState({ loaded: true });
               ServiceClass.appDetails(token, 'appdetails').then((reData) => {
 
-                console.log(reData);
+                //console.log(reData);
                 const that = this;
 
                 if (reData.data.status === '1') {
                   // debugger;
-                  console.log(reData.data.data.siteDetails[0].logoUrl);
+                  //console.log(reData.data.data.siteDetails[0].logoUrl);
                   this.setState({ dataUser: reData.data.data.users });
                   this.setState({ url: reData.data.data.siteDetails[0].logoUrl });
                 //  Alert.alert(this.state.url);
@@ -111,7 +111,7 @@ import ExtensionHelper from './ExtensionHelper';
 
                         {this.goToHomeScreen()}
                         <StatusBar
-                        backgroundColor=""
+                        
                         barStyle="light-content"
                         />
                     </View>

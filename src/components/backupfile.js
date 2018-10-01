@@ -337,10 +337,10 @@ onPress={() => { this.clickToPolicies(); }}
 
 // callbcakc
 ServiceClass.SecondClassFunctionWithArgument('82503220', '07/01/1997', 'login').then((reData) => {
-  console.log(reData);
+  //console.log(reData);
   Actions.HomeScreen();
 }).catch((error) => {
-    console.log(error);
+    //console.log(error);
 });
 
 
@@ -382,8 +382,8 @@ const RouterComponent = () => {
       var dict = {};
       var dict1 = {};
         var dict2 = {};
-      console.log('ProfileDidMountcall');
-      console.log(this.props.dataArray[0]);
+      //console.log('ProfileDidMountcall');
+      //console.log(this.props.dataArray[0]);
       dict.left = 'ID';
       dict.right = this.props.dataArray[0].ID;
 
@@ -395,8 +395,8 @@ const RouterComponent = () => {
       dict2.right = this.props.dataArray[0].memberNo;
       this.state.arrData.push(dict2);
   debugger;
-      console.log('wiout join');
-      console.log(this.state.arrData);
+      //console.log('wiout join');
+      //console.log(this.state.arrData);
     }
 
 

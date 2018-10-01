@@ -8,9 +8,9 @@ export default class UserData extends React.Component {
   static saveData = (key, value) => {
     RNSecureKeyStore.set(key, value)
     .then((res) => {
-        console.log(res);
+        //console.log(res);
     }, (err) => {
-        console.log(err);
+        //console.log(err);
     });
   }
 }

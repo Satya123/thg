@@ -78,7 +78,7 @@ clickToLogin = () => {
     } else {
           this.setState({ loaded: true })
         ServiceClass.loginData(txtMemberID, date, 'login').then((reData) => {
-          console.log(reData);
+          //console.log(reData);
           debugger;
           if (reData.data.status === '1') {
               UserData.saveData('token', reData.data.data.token);
@@ -212,7 +212,7 @@ let Splash_Screen = (
                         (this.state.isVisible === true) ? Splash_Screen : null
                       }
                       <StatusBar
-                      backgroundColor=""
+                      
                       barStyle="light-content"
                       />
                       <OfflineNotice />

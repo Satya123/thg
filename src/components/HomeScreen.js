@@ -26,8 +26,8 @@ class HomeScreen extends React.Component {
      }
 
      componentDidMount() {
-        console.log('HomeScreenDidMountcall');
-       console.log(this.props.profileData[0].membershipCard);
+        //console.log('HomeScreenDidMountcall');
+       //console.log(this.props.profileData[0].membershipCard);
        try {
           AsyncStorage.setItem('profileArray', JSON.stringify(this.props.profileData));
           } catch (error) {

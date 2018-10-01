@@ -36,12 +36,12 @@ componentWillMount() {
 
  getDependant = (token, memberID) => {
           
-            console.log(token);
+            //console.log(token);
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
 
                   if (reData.data.status === '1') {
-                    console.log(reData.data.data);
+                    //console.log(reData.data.data);
                     this.setState({ dataArray: reData.data.data });
                     this.setState({ loaded: false });
                   }
@@ -61,7 +61,7 @@ componentWillMount() {
         dataArray,
         loaded
       } = this.state;
-      console.log(dataArray);
+      //console.log(dataArray);
       return (
            <View style={styles.MainContainer}>
            <ImageBackground
