@@ -10,6 +10,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "axios": "^0.18.0",
+    "native-base": "^2.8.0",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-card-flip": "^1.0.3",

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Scene, Router } from 'react-native-router-flux';
+import {Container, StyleProvider,  Header, Left, Right, Icon, Button, Body} from 'native-base';
 import {Text} from 'react-native';
 import Login from './Login';
 import HomeScreen from './HomeScreen';
@@ -39,7 +40,7 @@ class RouterComponent extends Component {
             this.setState({ isLogin: false });
         } else {
             console.log(res);
-            this.setState({ isLogin: true });
+            this.setState({ isLogin: false });
 
         }
     }, (err) => {
@@ -52,13 +53,15 @@ class RouterComponent extends Component {
       const {
           isLogin
       } = this.state;
- 
+
       return (
+
+
         <Router>
-          
+
         <Scene key='root' >
         <Scene hideNavBar>
-         
+
         <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
         {
           (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
@@ -81,11 +84,21 @@ class RouterComponent extends Component {
         </Scene>
 
         </Router>
+
+
+
       );
     }
 
 
 }
+const styles = {
+  MainContainer:
+   {
+     flex: 1,
 
+
+
+   },}
 
 export default RouterComponent;

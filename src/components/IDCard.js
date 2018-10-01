@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Animated, View, StyleSheet, Image, Dimensions, ScrollView , ImageBackground, AsyncStorage,Text} from 'react-native'
+import { Animated, View, StyleSheet, Dimensions, ScrollView , ImageBackground, AsyncStorage,Text} from 'react-native'
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import CardFlip from 'react-native-card-flip';
 import FlipCard from 'react-native-flip-card'
-
-
-const deviceWidth = Dimensions.get('window').width 
+import ProgressBar from 'react-native-progress/Bar';
+import Image from 'react-native-image-progress';
+const deviceWidth = Dimensions.get('window').width
 const FIXED_BAR_WIDTH = 280
 const BAR_SPACE = 5
 
@@ -27,30 +27,30 @@ export default class IDCard extends Component {
             loaded: false,
           };
     }
-  
-  
+
+
   numItems = images.length
   itemWidth = 5.0
   animVal = new Animated.Value(0)
-  
-  
+
+
      componentDidMount() {
-      
+
       console.log('IDCardDidMountcall');
        if (images.length > 0){
-         
+
        }else{
                  images.push(this.props.cardData.front)
                   images.push(this.props.cardData.back)
        }
-      
+
       console.log(this.props.cardData.back);
         this.setState({ loaded: true });
-    
+
         numItems = images.length
        // itemWidth = (FIXED_BAR_WIDTH / this.numItems) - ((this.numItems - 1) * BAR_SPACE)
         animVal = new Animated.Value(0)
-       
+
         setTimeout(() => { this.setState({ loaded: false }); }, 1000);
 
         AsyncStorage.getItem('profileArray')
@@ -61,14 +61,14 @@ export default class IDCard extends Component {
         this.setState({ arrayValue: value })
       });
   }
-  
+
 
   render() {
      const {
         arrayValue,
         loaded
       } = this.state;
-    
+
     let imageArray = []
     let barArray = []
     images.forEach((image, i) => {
@@ -77,8 +77,8 @@ export default class IDCard extends Component {
         <Image
           key={`image${i}`}
           source={{uri: image}}
-          
-          style={{ width: 320, 
+          indicator={ProgressBar}
+          style={{ width: 320,
                   height: 300, }}
         />
       )
@@ -126,19 +126,19 @@ export default class IDCard extends Component {
 
               />
         </View>
-        
+
            <ImageBackground
             style={styles.imgBackground}
             resizeMode='cover'
             source={require('../../assets/backgroundBlue.png')} >
-        
+
       <View
         style={styles.container}
         flex={0.8}
         >
-    
-       
-        
+
+
+
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -155,20 +155,20 @@ export default class IDCard extends Component {
 
         </ScrollView>
         <View style={{height: 50, marginTop: 10, justifyContent: 'center', alignItems: 'center'}}>
-      
+
         <View
           style={styles.barContainer}
         >
           {barArray}
         </View>
-         
-       
+
+
       </View>
       </View>
-               
- 
+
+
             </ImageBackground>
- 
+
             <View style={styles.footerView}>
                     <CustomFooter
                      isProfile={this.state.isProfile}
@@ -176,7 +176,7 @@ export default class IDCard extends Component {
                     isMenu={this.state.isMenu}
                     isNotification={this.state.isNotification}
                     profileData={arrayValue}
-                   
+
                     />
               </View>
       </View>
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-      
-    
+
+
   },
      footerView: {
      width: '100%',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     MainContainer:
    {
        flex: 1,
-       
+
    },
   barContainer: {
     marginTop: 30,
@@ -222,8 +222,8 @@ const styles = StyleSheet.create({
      imgBackground: {
            width: '100%',
            height: '100%',
-         
-           
+
+
 
 
    },

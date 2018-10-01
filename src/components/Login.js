@@ -9,11 +9,9 @@ import HomeScreen from './HomeScreen';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import OfflineNotice from './OfflineNotice';
-import FCM, { NotificationActionType } from "react-native-fcm";
+
 import NotificationPermission from './NotificationPermission';
-import { registerKilledListener, registerAppListener } from "./Listeners";
-import firebaseClient from "./FirebaseClient";
-registerKilledListener();
+
 class Login extends React.Component {
  static navigationOptions = { title: '', header: null, navigationBarHidden: true };
 
@@ -59,6 +57,8 @@ constructor(props) {
 
 
 
+
+
    HideSplashScreen= () => {
 
        this.setState({
@@ -89,6 +89,7 @@ clickToLogin = () => {
               UserData.saveData('memberId', txtMemberID);
                 this.setState({ loaded: false });
               Actions.VendorSplash();
+          //  this.props.navigation.navigate('VendorSplash');
           } else {
               this.setState({ loaded: false });
             Alert.alert(reData.data.message);
@@ -130,9 +131,10 @@ let Splash_Screen = (
 
     return (
 
-     
-      <View style={styles.container}>
-       
+
+
+     <View style={styles.container}>
+
       {
             Login &&
             <ImageBackground

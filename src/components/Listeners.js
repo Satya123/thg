@@ -1,5 +1,5 @@
 import { Platform, AsyncStorage, AppState } from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 import FCM, {FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType, NotificationActionType, NotificationActionOption, NotificationCategoryOption} from "react-native-fcm";
 
 AsyncStorage.getItem('lastNotification').then(data=>{
@@ -62,8 +62,10 @@ export function registerAppListener(navigation){
         }, 500)
       }
       setTimeout(()=>{
-        alert(`User tapped notification\n${JSON.stringify(notif)}`)
-      }, 500)
+
+      //  alert(`User tapped notification\n${JSON.stringify(notif)}`)
+          Actions.Notification();
+      }, 100)
     }
 
     if(Platform.OS ==='ios'){
