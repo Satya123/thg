@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+
 import React, { Component } from "react";
 import {
   StyleSheet,
@@ -11,24 +12,42 @@ import {
   View,
   Clipboard,
   Platform,
-  ImageBackground,
-  ScrollView
-} from "react-native";
-import Login from './Login';
-import Router from './Router';
-import FCM, { NotificationActionType } from "react-native-fcm";
+  ScrollView,
+  Alert,
+  StatusBar
 
+} from "react-native";
+import { Scene, Router } from 'react-native-router-flux';
+import Login from './Login';
+import HomeScreen from './HomeScreen';
+import Profile from './Profile';
+import Telemedicine from './Telemedicine';
+import Menu from './Menu';
+import Notification from './Notification';
+import CustomHeader from './CustomHeader';
+import AccountInfo from './AccountInfo';
+import Dependents from './Dependents';
+import Policies from './Policies';
+import ServiceClass from './ServiceClass';
+import UserData from './UserData';
+import VendorSplash from './VendorSplash';
+import CustomServiecs from './CustomServiecs';
+import Appointments from './Appointments';
+import IDCard from './IDCard';
+import FCM, { NotificationActionType } from "react-native-fcm";
+import { Actions } from 'react-native-router-flux';
 import { registerKilledListener, registerAppListener } from "./Listeners";
 import firebaseClient from "./FirebaseClient";
 
 registerKilledListener();
 
-class MainPage extends Component {
+class NotificationPermission extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       token: "",
+       isLogin: false,
       tokenCopyFeedback: ""
     };
   }
@@ -45,8 +64,11 @@ class MainPage extends Component {
       this.setState({
         initNotif: notif
       });
-      if (notif && notif.targetScreen === "detail") {
-     
+
+      if (notif && notif.targetScreen === "Notification") {
+        setTimeout(() => {
+            Actions.Notification();
+        }, 500);
       }
     });
 
@@ -57,77 +79,35 @@ class MainPage extends Component {
         alert: true
       });
     } catch (e) {
-      console.error(e);
-    }
+  }
 
     FCM.getFCMToken().then(token => {
-      //console.log("TOKEN (getFCMToken)", token);
-      this.setState({ token: token || "" });
+   this.setState({ token: token || "" });
     });
 
     if (Platform.OS === "ios") {
       FCM.getAPNSToken().then(token => {
-        //console.log("APNS TOKEN (getFCMToken)", token);
-      });
+     });
     }
+  UserData.retriveData('token').then((res) => {
+        //console.log(res);
+        if (res === '') {
+            this.setState({ isLogin: false });
+        } else {
+          //  console.log(res);
+            this.setState({ isLogin: true });
 
-    // topic example
-    // FCM.subscribeToTopic('sometopic')
-    // FCM.unsubscribeFromTopic('sometopic')
-  }
-
-  showLocalNotification() {
-    FCM.presentLocalNotification({
-      channel: 'default',
-      id: new Date().valueOf().toString(), // (optional for instant notification)
-      title: "Test Notification with action", // as FCM payload
-      body: "Force touch to reply", // as FCM payload (required)
-      sound: "bell.mp3", // "default" or filename
-      priority: "high", // as FCM payload
-      click_action: "com.myapp.MyCategory", // as FCM payload - this is used as category identifier on iOS.
-      badge: 10, // as FCM payload IOS only, set 0 to clear badges
-      number: 10, // Android only
-      ticker: "My Notification Ticker", // Android only
-      auto_cancel: true, // Android only (default true)
-      large_icon:
-        "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg", // Android only
-      icon: "ic_launcher", // as FCM payload, you can relace this with custom icon you put in mipmap
-      big_text: "Show when notification is expanded", // Android only
-      sub_text: "This is a subText", // Android only
-      color: "red", // Android only
-      vibrate: 300, // Android only default: 300, no vibration if you pass 0
-      wake_screen: true, // Android only, wake up screen when notification arrives
-      group: "group", // Android only
-      picture:
-        "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png", // Android only bigPicture style
-      ongoing: true, // Android only
-      my_custom_data: "my_custom_field_value", // extra data you want to throw
-      lights: true, // Android only, LED blinking (default false)
-      show_in_foreground: true // notification when app is in foreground (local & remote)
+        }
+    }, (err) => {
+       // console.log(err);
     });
-  }
-
-  scheduleLocalNotification() {
-    FCM.scheduleLocalNotification({
-      id: "testnotif",
-      fire_date: new Date().getTime() + 5000,
-      vibrate: 500,
-      title: "Hello",
-      body: "Test Scheduled Notification",
-      sub_text: "sub text",
-      priority: "high",
-      large_icon:
-        "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
-      show_in_foreground: true,
-      picture:
-        "https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png",
-      wake_screen: true,
-      extra1: { a: 1 },
-      extra2: 1
-    });
-  }
+    
+    Alert.alert('notification call');
+}
 
   sendRemoteNotification(token) {
+   // debugger;
+    //console.log(token);
     let body;
 
     if (Platform.OS === "android") {
@@ -164,6 +144,7 @@ class MainPage extends Component {
   }
 
   sendRemoteData(token) {
+   // console.log(token);
     let body = {
       to: token,
       data: {
@@ -177,50 +158,52 @@ class MainPage extends Component {
     firebaseClient.send(JSON.stringify(body), "data");
   }
 
-  showLocalNotificationWithAction() {
-    FCM.presentLocalNotification({
-      title: "Test Notification with action",
-      body: "Force touch to reply",
-      priority: "high",
-      show_in_foreground: true,
-      click_action: "com.myidentifi.fcm.text", // for ios
-      android_actions: JSON.stringify([
-        {
-          id: "view",
-          title: "view"
-        },
-        {
-          id: "dismiss",
-          title: "dismiss"
-        }
-      ]) // for android, take syntax similar to ios's. only buttons are supported
-    });
-  }
-  
-  componentWillUnmount() {
-    this.onTokenRefreshListener();
-}
+
 
   render() {
-  
+    let { token, tokenCopyFeedback,   isLogin } = this.state;
 
     return (
-     
-      <Text>{JSON.stringify(this.state.initNotif)}</Text>
-     
-     
-     
-    
+
+      <Router>
+
+      <Scene key='root' >
+      <Scene hideNavBar>
+       <Scene key='VendorSplash' component={VendorSplash} title='' />
+        <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
+        {
+          (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
+        }
+        <Scene key='NotificationPermission' component={NotificationPermission} title='' />
+        <Scene key='Notification' component={Notification} title='' />
+        <Scene key='Appointments' component={Appointments} title='' />
+        <Scene key='Profile' component={Profile} title='' />
+        <Scene key='VendorSplash' component={VendorSplash} title='' />
+        <Scene key='Menu' component={Menu} title='' />
+        <Scene key='Telemedicine' component={Telemedicine} title='' />
+        <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
+        <Scene key='Dependents' component={Dependents} title='' />
+        <Scene key='Policies' component={Policies} title='' />
+        <Scene key='CustomServiecs' component={CustomServiecs} title='' />
+        <Scene key='ServiceClass' component={ServiceClass} title='' />
+        <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
+        <Scene key='Login' component={Login} title='' />
+      </Scene>
+      </Scene>
+      </Router>
+
     );
   }
 
-  
   setClipboardContent(text) {
-//     Clipboard.setString(text);
-//     this.setState({ tokenCopyFeedback: "Token copied to clipboard." });
-//     setTimeout(() => {
-//       this.clearTokenCopyFeedback();
-//     }, 2000);
+
+    this.sendRemoteData(text);
+    this.sendRemoteNotification(text);
+    Clipboard.setString(text);
+    this.setState({ tokenCopyFeedback: "Token copied to clipboard." });
+    setTimeout(() => {
+      this.clearTokenCopyFeedback();
+    }, 2000);
   }
 
   clearTokenCopyFeedback() {
@@ -228,62 +211,4 @@ class MainPage extends Component {
   }
 }
 
-const styles = StyleSheet.create({
- container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 2
-  },
-  feedback: {
-    textAlign: "center",
-    color: "#996633",
-    marginBottom: 3
-  },
-  button: {
-    backgroundColor: "teal",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    marginVertical: 10,
-    borderRadius: 10
-  },
-  buttonText: {
-    color: "white",
-    backgroundColor: "transparent"
-  },
-
-
-    MainContainer:
-       {
-           flex: 1,
-           width:'100%',
-           height:'100%',
-          
-          
-
-          
-       },
-   imgBackground: {
-            width: '100%',
-            height: '100%',
-            flex: 1,
-
-    },
-});
-
-export default MainPage;
-
-
-
-
-
+export default NotificationPermission;

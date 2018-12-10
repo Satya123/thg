@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, Image , AsyncStorage, TouchableOpacity, ImageBackground,ActivityIndicator } from 'react-native';
+import { View, Text, Image , AsyncStorage, TouchableOpacity, ImageBackground,ActivityIndicator,ScrollView,Alert,NetInfo} from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import TelemedicineCard from './TelemedicineCard';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
 import call from 'react-native-phone-call';
 import UserData from './UserData';
+import OfflineNotice from './OfflineNotice';
 import ServiceClass from './ServiceClass';
-
+import ResponsiveImage from 'react-native-responsive-image';
 // const args = {
 //   number: '9093900003', // String value with the number to call
 //   prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
 // }
-
-
 
 class Telemedicine extends Component {
  constructor(props) {
@@ -25,33 +24,26 @@ class Telemedicine extends Component {
        loaded: false,
      };
 }
-componentDidMount(){
-  UserData.retriveData('token').then((resToken) => {
-
-        
-          this.getPolocies(resToken, '284369');
-      })
-  
-  
-//   UserData.retriveData('phoneNumber').then((resPhone) => {
-          
-    
-//               UserData.retriveData('details').then((resText) => {
-               
-//                 //console.log(resText)
-               
-                    
-         
-//       })
-         
-//       })
-
-}  
+    componentDidMount() {
+        NetInfo.isConnected.fetch().done((isConnected) => {
+            if (isConnected)
+            {
+                UserData.retriveData('token').then((resToken) => {
+                    UserData.retriveData('memberId').then((res) => {
+                        this.getPolocies(resToken, res);
+                    });
+                })
+            } else
+            {
+            }
+        });
+    }  
   
      getPolocies = (token, memberID) => {
       
             //console.log(token);
               this.setState({ loaded: true });
+              /***********ServiceClass ***********************************************************************/
                 ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
                 
                   if (reData.data.status === '1') {
@@ -68,21 +60,18 @@ componentDidMount(){
                   }
                   else {
                       this.setState({ loaded: false });
-                    Alert.alert(reData.data.message);
+                   // Alert.alert(reData.data.message);
                   }
 
                 }).catch((error) => {
                     //console.log(error);
-                    Alert.alert(error);
+                   // Alert.alert(error);
                   this.setState({ loaded: false });
                 });
       }
   
-  
-  
-
    componentWillMount() {
-     
+  //   Alert.alert("componentWillMount");
      
   //console.log('componentWillMount call Telemedicine');
    AsyncStorage.getItem('profileArray')
@@ -127,25 +116,29 @@ componentDidMount(){
           style={styles.imgBackground}
           resizeMode='cover'
           source={require('../../assets/backgroundBlue.png')} >
-         <View style={{ height: 60, backgroundColor: '#f3f3f3', flexDirection: 'row' }}>
+         <View style={{ height: 80, backgroundColor: '#f3f3f3', flexDirection: 'row' }}>
            <View style={styles.ImageView} >
-           <Image
-                  source={require('../../assets/phone35x35.png')}
+           <ResponsiveImage
+                  source={require('../../assets/call_icon.png')} initWidth="55" initHeight="55"
            />
            </View>
               <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => { this.clickToIDCall(phoneText); }} >
-           <View style={{ marginTop: 10 }}>
-               <Text style={styles.textStyle}>{phoneText}</Text>
+           <View style={{ marginTop: 5 , padding:10}}>
+           <ResponsiveImage
+                  source={require('../../assets/Click-to-Call-a-Doctor.png')} initWidth="280" initHeight="50"
+           />
              </View>
                  </TouchableOpacity>
-         </View>
+                 </View>
+   
               <View style={{ margin: 10, width: '95%' }}>
+     
            <TelemedicineCard arrayDescription={SampleNameArray} />
+           
           </View>
-             
-        
+          
            {
                 (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
               }
@@ -190,6 +183,7 @@ const styles = {
      height: 35,
      width: 35,
  alignItems: 'flex-start',
+ marginRight: 20
  },
  textStyle: {
    fontSize: 30,

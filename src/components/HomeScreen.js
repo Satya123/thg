@@ -1,5 +1,8 @@
+/*
+* @This is home link app page of App
+ */
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground,AsyncStorage} from 'react-native';
+import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground,AsyncStorage,SafeAreaView} from 'react-native';
 import { createStackNavigator, } from 'react-navigation';
 import CustomFooter from './CustomFooter';
 import AccountInfo from './AccountInfo';
@@ -8,15 +11,17 @@ export const AccountInfoProfile = '100';
 import { Actions } from 'react-native-router-flux';
 import IDCard from './IDCard';
 import CustomServiecs from './CustomServiecs';
+import Chat from './Chat';
+import LiveChat from 'react-native-livechat'
+import UserData from './UserData';
+import OfflineNotice from './OfflineNotice';
+import ResponsiveImage from 'react-native-responsive-image';
+
 
 class HomeScreen extends React.Component {
-
-
-  constructor(props) {
+ constructor(props) {
      super(props);
-
-
-  this.state = {
+     this.state = {
 
           isProfile: false,
           isHome: true,
@@ -26,36 +31,39 @@ class HomeScreen extends React.Component {
      }
 
      componentDidMount() {
-        //console.log('HomeScreenDidMountcall');
-       //console.log(this.props.profileData[0].membershipCard);
-       try {
-          AsyncStorage.setItem('profileArray', JSON.stringify(this.props.profileData));
-          } catch (error) {
+  AsyncStorage.getItem('profileArray')
+   .then((contacts) => {
+   const value = contacts ? JSON.parse(contacts) : [];
+   //console.log(value);
+   this.setState({ arrayValue: value })
+ });
 
-          }
-        }
+ }
 clickToCustomerServies(){
-    Actions.CustomServiecs();
+    Actions.CustomServiecs({phoneNumber: this.state.arrayValue[0].customerServicePhone});
 }
-clickToAppointments(){
-    Actions.Appointments();
+clickToAppointments(){  
+    //Actions.Appointments();
+    Actions.Appointments({isViewAppointments:true});
 }
 clickToAccountInfo() {
-    Actions.AccountInfo({ userData: this.props.profileData });
+    Actions.AccountInfo({ userData: this.state.arrayValue });
 }
 clickToIDCard() {
-    Actions.IDCard({ cardData: this.props.profileData[0].membershipCard });
+    Actions.IDCard({ cardData: this.state.arrayValue[0].membershipCard });
 }
 
-
-  render() {
+ render() {
     return (
+
+       <SafeAreaView style={styles.safeArea}>
+
       <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('../../assets/backgroundBlue.png')}>
       <View style={{
               flex: 0.5,
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginTop:130,
+              marginTop:80,
               marginBottom:20
             }}>
             <TouchableOpacity
@@ -63,43 +71,51 @@ clickToIDCard() {
             onPress={() => { this.clickToAccountInfo(); }}
             >
 
-              <View><Image  source={require('../../assets/account-info.png')} /></View>
+              <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+              <ResponsiveImage  source={require('../../assets/account-info.png')} initWidth="62" initHeight="61"/>
+              <Text style={{fontSize:18,color:'white'}}>Account Info</Text>
+              </View>
+
               </TouchableOpacity>
               <View></View>
               <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => { this.clickToIDCard(); }} >
-              <View style={{marginTop:15,}}><Image  source={require('../../assets/id-card.png')} /></View>
+              <View style={{marginTop:17,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+              <ResponsiveImage  source={require('../../assets/id-card.png')}   initWidth="66" initHeight="39"/>
+              <Text style={{fontSize:18,color:'white',marginTop:5}}>ID Card</Text>
+              </View>
                 </TouchableOpacity>
             </View>
     <View style={styles.container_logo}>
-    <Image  source={require('../../assets/logo.png')} />
+    <ResponsiveImage  source={require('../../assets/logo.png')}   initWidth="231" initHeight="60"/>
     </View>
     <View style={{
             //flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginTop: 10,
-
-          }}>
+            marginTop: 10, }}>
           <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => { this.clickToAppointments(); }} >
-            <View style={{marginLeft:8,}}><Image  source={require('../../assets/appointments.png')} /></View>
+            <View style={{marginLeft:8,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+            <ResponsiveImage  source={require('../../assets/appointments.png')} initWidth="51" initHeight="55"/>
+            <Text style={{fontSize:18,color:'white'}}>Appointments</Text>
+            </View>
             </TouchableOpacity>
-            <View></View>
+            <View>
+         </View>
 
             <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => { this.props.navigation.navigate('Telemedicine'); }} >
 
-            <View style={{marginRight:8,}}><Image  source={require('../../assets/telemedicine.png')} /></View>
+            <View style={{marginRight:8,justifyContent:'center',alignItems:'center'}}>
+            <ResponsiveImage  source={require('../../assets/telemedicine.png')}  initWidth="83" initHeight="55"/>
+            <Text style={{fontSize:18,color:'white'}}>Telemedicine</Text>
+            </View>
               </TouchableOpacity>
-
-
-
-
-          </View>
+        </View>
 
           <View style={{
                   flex: 1,
@@ -110,7 +126,10 @@ clickToIDCard() {
                   <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => { this.clickToCustomerServies(); }} >
-                  <View><Image  source={require('../../assets/customer-service.png')} /></View>
+                  <View style={{justifyContent:'center',alignItems:'center'}}>
+                  <ResponsiveImage  source={require('../../assets/customer-service.png')}  initWidth="66" initHeight="66"/>
+                    <Text style={{fontSize:18,color:'white'}}>Customer Services</Text>
+                  </View>
                   </TouchableOpacity>
                   <View></View>
                 </View>
@@ -126,19 +145,22 @@ clickToIDCard() {
                 </View>
 
 </ImageBackground>
+</SafeAreaView>
     );
   }
 }
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ddd'
+  },
 
 container: {
           flex: 1,
           margin: 0,
           padding:0,
           alignItems: 'center',
-         //justifyContent: 'center',
-        //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
-      },
+    },
       MainContainer:
        {
            flex: 1,
@@ -173,7 +195,6 @@ container_home: {
     imgBackground: {
             width: '100%',
             height: '100%',
-            //resizeMode: 'cover',
             flex: 1,
 
     },
@@ -214,7 +235,6 @@ container_home: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        //backgroundColor: '#0f0',
         borderWidth: .5,
         borderColor: '#ffa970',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -280,7 +300,7 @@ container_home: {
   },
   footerView: {
     width: '100%',
-     height: 45,
+     height: 50,
 
      position: 'absolute',
      bottom: 0
@@ -310,8 +330,6 @@ container_home: {
     box3: {
       backgroundColor: '#e3aa1a'
     }
-
-
 });
 
 export default HomeScreen;

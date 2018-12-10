@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, Text, ImageBackground, ActivityIndicator, AsyncStorage,ScrollView,NetInfo } from 'react-native';
 import CustomFooter from './CustomFooter';
 import PoliciesCard from './PoliciesCard';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
 
-
-
 class Policies extends Component {
-
-  constructor(props) {
+ constructor(props) {
       super(props);
         this.state = {
             isProfile: false,
@@ -21,25 +18,25 @@ class Policies extends Component {
           };
     }
      componentWillMount() {
-     
-     
-     //console.log('componentWillMount call Telemedicine');
+   
    AsyncStorage.getItem('profileArray')
    .then((contacts) => {
    const value = contacts ? JSON.parse(contacts) : [];
-   //console.log(value);
    this.setState({ arrayValue: value })
  });
    }
   
    componentDidMount() {
-    //console.log('polices call');
-      UserData.retriveData('token').then((resToken) => {
-
-        
-          this.getPolocies(resToken, '284369');
-      })
-
+    NetInfo.isConnected.fetch().done((isConnected) => {
+         if ( isConnected )
+         {                UserData.retriveData('token').then((resToken) => {
+                 UserData.retriveData('memberId').then((res) => {
+                   
+                        this.getPolocies(resToken, res);
+                     });                })          }
+         else
+         {          }
+     });
   }
   
   
@@ -50,35 +47,18 @@ class Policies extends Component {
                 ServiceClass.appDetails(token, `policies/${ memberID}`).then((reData) => {
                   
                   if (reData.data.status === '1') {
-                 
-                    //console.log(reData.data.data[0].telemedicine.details);
-                    this.setState({ dataArray: reData.data.data });
+                     this.setState({ dataArray: reData.data.data });
                     this.setState({ loaded: false });
                       UserData.saveData('phoneNumber', reData.data.data[0].telemedicine.phone);
                      UserData.saveData('details', reData.data.data[0].telemedicine.details);
                   }
                   else {
                       this.setState({ loaded: false });
-                    Alert.alert(reData.data.message);
-                  }
+                    }
 
                 }).catch((error) => {
-                    //console.log(error);
-                    Alert.alert(error);
                 });
       }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
     render() {
     
       const {
@@ -97,12 +77,13 @@ class Policies extends Component {
           style={styles.imgBackground}
           resizeMode='cover'
           source={require('../../assets/backgroundBlue.png')} >
+          <ScrollView>
           <View style={{  width: '100%' }}>
           <View style={{ margin: 10, width: '95%' }}>
           <PoliciesCard arrayDescription={dataArray} />
           </View>
           </View>
-
+         </ScrollView>
             {
                 (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
               }
@@ -117,18 +98,9 @@ class Policies extends Component {
                   profileData={arrayValue}
                   />
             </View>
-
-
-
-          </View>
+    </View>
 );
-
-
-
-
-    }
-
-
+}
 }
 
 const styles = {

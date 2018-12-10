@@ -18,8 +18,10 @@ renderView() {
 
 return this.props.arrayDescription.map(array =>
   <View style={{ flexDirection: 'row', paddingTop: 5, paddingRight: 20 }}>
-      <View style={{ width: 25, height: 25, }} >
-          <Image source={require('../../assets/bullat-arrow25x25.png')} />
+     <View style={ styles.bullet }>
+      
+              <Text>{'\u2022' + " "}</Text>
+       
       </View>
       <View>
           <Text style={styles.textSub} key={keyId}>{array}</Text>
@@ -33,14 +35,13 @@ return this.props.arrayDescription.map(array =>
 
   render() {
     return (
-      <ScrollView style={{ backgroundColor: '#ffffff' }}>
+      <ScrollView style={{height: '100%' }}>
       <View style={{ backgroundColor: '#f3f3f3', marginTop: 1 }}>
       <View style={{ height: 40, marginTop: 10, padding: 10 }} >
             <Text style={styles.textStyle}>Telemedicine Features</Text>
 
         </View>
-
-          {this.renderView()}
+         {this.renderView()}
         </View>
    
           </ScrollView>
@@ -51,21 +52,6 @@ return this.props.arrayDescription.map(array =>
 
 
 }
-
-
-// <View style={{ flexDirection: 'row', padding: 5 }}>
-//     <View style={{ width: 35, height: 35, }} >
-//         <Image source={require('../../assets/bullat-arrow25x25.png')} />
-//     </View>
-//     <View>
-//         <Text style={styles.textSub}>Lorem Ipsum is simply dummy the </Text>
-//     </View>
-//   </View>
-//
-//
-// </View>
-
-
 
 
 const styles = {
@@ -101,7 +87,12 @@ textSub: {
 
 
 },
-
+ bullet: {
+         width: 20,
+          alignItems:'center',
+          fontWeight:'bold',
+          paddingLeft:5,
+}
 
 };
 

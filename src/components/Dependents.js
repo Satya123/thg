@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Alert,ImageBackground, ActivityIndicator,Platform } from 'react-native';
+import { Text, View, Alert,ImageBackground, ActivityIndicator,Platform,ScrollView,NetInfo,AsyncStorage } from 'react-native';
 import CustomFooter from './CustomFooter';
 import TopMenu from './TopMenu';
 import CustomHeader from './CustomHeader';
@@ -17,22 +17,29 @@ class Dependents extends Component {
             dataArray:[],
             isPolicies: false,
             loaded: false,
-          };
+          }
     }
 
-componentWillMount() {
-
-}
-
-    componentDidMount() {
-    
-      UserData.retriveData('token').then((resToken) => {
-        UserData.retriveData('memberId').then((res) => {
-            this.getDependant(resToken, res);
-            });
-      })
-
-  }
+ componentDidMount() {
+        NetInfo.isConnected.fetch().done((isConnected) => {
+            if (isConnected)
+            {
+                UserData.retriveData('token').then((resToken) => {
+                    UserData.retriveData('memberId').then((res) => {
+                        this.getDependant(resToken, res);
+                    });
+                })
+                AsyncStorage.getItem('profileArray')
+                        .then((contacts) => {
+                            const value = contacts ? JSON.parse(contacts) : [];
+                            console.log(value);
+                            this.setState({arrayValue: value})
+                        });
+            } else
+            {
+            }
+        });
+    }
 
  getDependant = (token, memberID) => {
           
@@ -68,11 +75,14 @@ componentWillMount() {
             style={styles.imgBackground}
             resizeMode='cover'
             source={require('../../assets/backgroundBlue.png')} >
+            
             <View style={{ height: '95%', width: '100%' }}>
+                 <ScrollView style={{ height: '90%'}}>   
             <View style={{ margin: 10, width: '95%' }}>
 
             <DependentSubData arrayDescription={dataArray} />
             </View>
+                </ScrollView>
             </View>
 
               {

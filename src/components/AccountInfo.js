@@ -1,5 +1,10 @@
+/*
+ * @author satya
+ * created date  5 November 2018
+ * This is page for Account Info
+ */
 import React, { Component } from 'react';
-import { View, Alert, TouchableOpacity, Text, Platform } from 'react-native';
+import { View, Alert, TouchableOpacity, Text, Platform,SafeAreaView } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import { Actions } from 'react-native-router-flux';
 import Profile from './Profile';
@@ -9,6 +14,7 @@ import Dependents from './Dependents';
 import Telemedicine from './Telemedicine';
 import  Policies  from './Policies';
 import CustomHeader from './CustomHeader';
+import OfflineNotice from './OfflineNotice';
 var isProfile = true;
 var isDependents = false;
 var isPolicies = false;
@@ -20,7 +26,6 @@ class AccountInfo extends Component {
       isDependents = dependents;
       isPolicies = policie;
   }
-
 
   constructor(props) {
       super(props);
@@ -34,8 +39,8 @@ class AccountInfo extends Component {
     }
 
     componentWillMount() {
-      //console.log('AccountInfoDidMountcall');
-      //console.log(this.props.userData);
+      console.log('AccountInfoDidMountcall');
+      console.log(this.props.userData);
       this.setState({ isProfile: true });
     }
 
@@ -69,20 +74,16 @@ class AccountInfo extends Component {
             isPolicies = true;
 
       }
-
-
-
-
-    render() {
+  render() {
       const {
           userData
       } = this.props;
 
-    //  //console.log(userData);
+    //  console.log(userData);
       return (
-
+         <SafeAreaView style={styles.safeArea}>
         <View style={styles.MainContainer}>
-        <View style={{ width: '100%', height: 60 }}>
+        <View style={{ width: '100%' }}>
               <CustomHeader
               headerText={'AccountInfo'}
 
@@ -127,7 +128,8 @@ class AccountInfo extends Component {
         }
 
         </View>
-
+          <OfflineNotice />
+          </SafeAreaView>
 
       );
     }
@@ -136,12 +138,13 @@ class AccountInfo extends Component {
 }
 
 const styles = {
+  safeArea: {
+    flex: 1,
+
+  },
   MainContainer:
    {
      flex: 1,
-
-
-
    },
 
   textActive: {

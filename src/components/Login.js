@@ -1,5 +1,11 @@
+/*
+ * @author satya
+ * created date  2 Aug 2018
+ * Modified  19 November 2018
+ * This is page for Request Form Appointment
+ */
 import React from 'react';
-import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground, ActivityIndicator,StatusBar } from 'react-native';
+import { StyleSheet, TextInput, View, Alert, Button, Text, Platform, Image, TouchableOpacity, ImageBackground, ActivityIndicator, StatusBar } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import { createStackNavigator, } from 'react-navigation';
 import DatePicker from 'react-native-datepicker';
@@ -9,288 +15,265 @@ import HomeScreen from './HomeScreen';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import OfflineNotice from './OfflineNotice';
-import FCM, { NotificationActionType } from "react-native-fcm";
+import DeviceInfo from 'react-native-device-info';
 import NotificationPermission from './NotificationPermission';
-import { registerKilledListener, registerAppListener } from "./Listeners";
-import firebaseClient from "./FirebaseClient";
-registerKilledListener();
+import FCM, { NotificationActionType } from "react-native-fcm";
+import { Picker} from 'react-native-wheel-pick';
 class Login extends React.Component {
- static navigationOptions = { title: '', header: null, navigationBarHidden: true };
+    static navigationOptions = {title: '', header: null, navigationBarHidden: true};
 
-constructor(props) {
-   super(props);
+    constructor(props) {
+        super(props);
 
-     this.state = {
-        loaded: false,
-        txtMemberID: '',
-        token: "",
-      tokenCopyFeedback: "",
-        isVisible: true,
-        Login: false,
-        date: '07/01/1997',
+        this.state = {
+            loaded: false,
+            txtMemberID: '',
+            token: "",
+            tokenCopyFeedback: "",
+            isVisible: true,
+            Login: false,
+            date: '',
+            //date: '07/01/1997',
 
-     };
+        };
 //this.state = {date:"2016-05-15"}
-   }
+    }
 
-/***********************************************************/
+    /***********************************************************/
     componentDidMount() {
+        //  ServiceClass.SecondClassFunction();
+        var that = this;
+          //  alert(DeviceInfo.getDeviceId());
 
-    //  ServiceClass.SecondClassFunction();
+        setTimeout(function () {
 
+            that.HideSplashScreen();
 
-    var that = this;
-    setTimeout(function(){
+        }, 3000);
 
-        that.HideSplashScreen();
+        setTimeout(() => {
+            this.setState({Login: true});
+        }, 2000);
+    }
+    HideSplashScreen = () => {
 
-      }, 3000);
+        this.setState({
+            isVisible: false
 
-    setTimeout(() => { this.setState({ Login: true }); }, 2000);
-   }
-
-
-
-
-   HideSplashScreen= () => {
-
-       this.setState({
-         isVisible: false
-
-       });
-     }
-
-clickToLogin = () => {
-    // ServiceClass.SecondClassFunctionWithArgument('82503220', '07/01/1997', 'login');
-
-
-    const { txtMemberID }  = this.state;
-    const { date }  = this.state;
-
-
-    if (txtMemberID === '') {
-      Alert.alert('Please enter MemberId.');
-    } else if (date === '') {
-      Alert.alert('Please enter Date of Birth.');
-    } else {
-          this.setState({ loaded: true })
-        ServiceClass.loginData(txtMemberID, date, 'login').then((reData) => {
-          //console.log(reData);
-          debugger;
-          if (reData.data.status === '1') {
-              UserData.saveData('token', reData.data.data.token);
-              UserData.saveData('memberId', txtMemberID);
-                this.setState({ loaded: false });
-              Actions.VendorSplash();
-          } else {
-              this.setState({ loaded: false });
-            Alert.alert(reData.data.message);
-          }
-        }).catch((error) => {
-            //console.log(error);
-              this.setState({ loaded: false });
-            Alert.alert(error);
         });
-      }
-}
+    }
 
-  render() {
+    clickToLogin = () => {
+        // ServiceClass.SecondClassFunctionWithArgument('82503220', '07/01/1997', 'login');
+        const {txtMemberID} = this.state;
+        const {date} = this.state;
+        if (txtMemberID === '') {
+            Alert.alert('Please enter MemberId.');
+        } else if (date === '') {
+            Alert.alert('Please enter Date of Birth.');
+        } else {
+            
+       //alert("hi")
+            this.setState({loaded: true})
+            ServiceClass.loginData(txtMemberID, date,DeviceInfo.getDeviceId() ,'login').then((reData) => {
+              // debugger;
+           
+                
+                if (reData.data.status === '1') {
+                    UserData.saveData('token', reData.data.data.token);
+                    UserData.retriveData('token').then((resToken) => {
+                    })
+                    this.setState({loaded: false});
+                    Actions.VendorSplash();
 
-    const {
-       Login,
-       loaded
-     } = this.state;
+                } else {
+                    this.setState({loaded: false});
+                }
+            }).catch((error) => {
+                //console.log(error);
+                this.setState({loaded: false});
+                  //alert(error)
+            });
+        }
+    }
 
-     // const = {
-     //   data,
-     //   meta
-     // } = this.props;
-let Splash_Screen = (
+    render() {
 
+        const isIos = Platform.OS === 'ios'
+        const {
+            Login,
+            loaded
+        } = this.state;
+
+        let Splash_Screen = (
                 <View style={styles.SplashScreen_RootView}>
+                    <Image source={require('../../assets/splash-screen.jpg')}
+                           style={{width: '100%', height: '100%', resizeMode: 'contain'}} />
+                
+                </View>);
 
 
-
-
-
-                        <Image source={require('../../assets/splash-screen.jpg')}
-                        style={{width:'100%', height: '100%', resizeMode: 'contain'}} />
-
-
-
-                       </View>);
-
-
-    return (
-
-     
-      <View style={styles.container}>
-       
-      {
-            Login &&
-            <ImageBackground
-            style={styles.imgBackground}
-            resizeMode='cover'
-            source={require('../../assets/background.png')}>
+            return (
                     <View style={styles.container}>
-                    <Image
-                    source={require('../../assets/logo.png')}
-                    style={{marginBottom: 65, marginTop: 100}}/>
+                    
+                        {
+                            Login &&
+                                            <ImageBackground
+                                                style={styles.imgBackground}
+                                                resizeMode='cover'
+                                                source={require('../../assets/background.png')}>
+                                                <View style={styles.container}>
+                                                    <Image
+                                                        source={require('../../assets/logo.png')}
+                                                        style={{marginBottom: 65, marginTop: 100}}/>
+                                        
+                                                    <View style={styles.SectionStyle1}>
+                                                        <Image source={require('../../assets/user_icon.png')} style={styles.ImageStyle} />
+                                                        <TextInput
+                                                            style={{flex: 1, width: 100}}
+                                                            placeholder="Member ID"
+                                                            placeholderTextColor="#000"
+                                                            underlineColorAndroid="transparent"
+                                                            onChangeText={txtMemberID => this.setState({txtMemberID})}
+                                                            />
+                                        
+                                                    </View>
+                                                    <View style={styles.SectionStyle}>
+                                                        <Image source={require('../../assets/cal.png')} style={styles.ImageStyle_birth} />
+                                                        <DatePicker
+                                                            style={{width: 267}}
+                                                            customStyles={{
+                                                                    dateInput: {
+                                                                                alignItems: 'flex-start',
+                                                                                borderWidth: 0,
 
-                    <View style={styles.SectionStyle1}>
-                      <Image source={require('../../assets/user_icon.png')} style={styles.ImageStyle} />
-                      <TextInput
-                                  style={{flex:1,width: 100}}
-                                  placeholder="Member ID"
-                                  placeholderTextColor="#000"
-                                  underlineColorAndroid="transparent"
-                                  onChangeText={txtMemberID => this.setState({txtMemberID})}
-                              />
+                                                            },
+                                        
+                                                            placeholderText: {
+                                                                                                            color: '#000'
+                                                            },
+                                                            dateText:{
+                                                                                                            // textAlign: 'left',
 
-                    </View>
-                    <View style={styles.SectionStyle}>
-                      <Image source={require('../../assets/cal.png')} style={styles.ImageStyle_birth} />
-                      <DatePicker
-                         style={{width: 267}}
-                         customStyles={{
-                           dateInput: {
-                         alignItems: 'flex-start',
-                         borderWidth: 0,
+                                                                                                            color: '#000',
+                                                                                                    paddingLeft: 0,
 
-                        },
-
-                        placeholderText: {
-                          color: '#000'
-                        },
-                       dateText:{
-                        // textAlign: 'left',
-
-                         color: '#000',
-                            paddingLeft:0,
-
-
-                       }
-                     }}
-                         showIcon={false}
-                         //customStyles={customStyles}
-                          ref='datepicker'
-                         date={this.state.date}
-                         mode="date"
-                         placeholder="Birthday"
-                         format="MM/DD/YYYY"
-                         minDate="01/01/1950"
-                         maxDate="01/01/2050"
-                         autoComplete="off"
-                         confirmBtnText="OK"
-                         cancelBtnText="Cancel"
-
-                         onDateChange={(date) => {this.setState({date: date})}}   />
-
-                    </View>
-
-                       {
-                         (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}}><ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-                       }
-
-
-                    <TouchableOpacity
-                      onPress={this.clickToLogin}
-                    >
-                    <Image
-                             source={require('../../assets/login.png')}
-                             style={{width:267,marginTop:10,}}
-                             />
-                      </TouchableOpacity>
-
-                    </View>
-                      </ImageBackground>
+                                                            }
+                                                            }}
+                                                            showIcon={false}
+                                                            androidMode='spinner'
+                                                            //customStyles={customStyles}
+                                                            ref='datepicker'
+                                                            date={this.state.date}
+                                                            mode="date"
+                                                            placeholder="Birthday"
+                                                            format="MM/DD/YYYY"
+                                                            minDate="01/01/1950"
+                                                            maxDate="01/01/2050"
+                                                            autoComplete="off"
+                                                            confirmBtnText="OK"
+                                                            cancelBtnText="Cancel"
+                                        
+                                                            onDateChange={(date) => {
+                                                                                    this.setState({date: date})}}   />
+                                        
+                                                </View>
+                                        
+                                                {
+                                                                                                (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#ffa970" /></View></View> : null
+                                                }
+                                        
+                                        
+                                                <TouchableOpacity
+                                                    onPress={this.clickToLogin}
+                                                    >
+                                                    <Image
+                                                        source={require('../../assets/login.png')}
+                                                        style={{width: 267, marginTop: 10, }}
+                                                        />
+                                                </TouchableOpacity>
+                                        
+                                            </View>
+                                        </ImageBackground>
                     }
-
-                      {
-                        (this.state.isVisible === true) ? Splash_Screen : null
-                      }
-                      <StatusBar
-                      
-                      barStyle="light-content"
-                      />
-                      <OfflineNotice />
-                  </View>
-
-
-  );
-  }
-}
+                    
+                    {
+                                                                        (this.state.isVisible === true) ? Splash_Screen : null
+                    }
+                    <StatusBar
+                    
+                        barStyle="light-content"
+                        />
+                    <OfflineNotice />
+                    </View>
+                                                      );
+                                                    }
+                                                }
 
 
 
 const navigateData = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      title: 'Login'
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            title: 'Login'
+        },
     },
-  },
-  Home: {
+    Home: {
 
-    screen: HomeScreen,
-    navigationOptions: {
-      title: 'Home', header: null
-    }
-  },
+        screen: HomeScreen,
+        navigationOptions: {
+            title: 'Home', header: null
+        }
+    },
 });
-
-
-
-
-
 
 const styles = StyleSheet.create({
 
-container: {
-          flex: 1,
-          margin: 0,
-          padding: 0,
-          alignItems: 'center',
-         //justifyContent: 'center',
+    container: {
+        flex: 1,
+        margin: 0,
+        padding: 0,
+        alignItems: 'center',
+        //justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
-      },
-      MainContainer:
-       {
-           flex: 1,
-           justifyContent: 'center',
-           alignItems: 'center',
-
-           paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
-       },
-
-      container_logo: {
-              //  margin: 0,
-                marginBottom:20,
-                padding:0,
+    },
+    MainContainer:
+            {
+                flex: 1,
+                justifyContent: 'center',
                 alignItems: 'center',
+
+                paddingTop: (Platform.OS === 'ios') ? 20 : 0
             },
-          shadow1: {
-                    //  margin: 0,
-                      marginBottom:0,
-                      padding:0,
-                      alignItems: 'center',
-                  },
 
+    container_logo: {
+        //  margin: 0,
+        marginBottom: 20,
+        padding: 0,
+        alignItems: 'center',
+    },
+    shadow1: {
+        //  margin: 0,
+        marginBottom: 0,
+        padding: 0,
+        alignItems: 'center',
+    },
 
-container_home: {
-  backgroundColor: '#4286f4',
-  flex: 1,
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  marginTop: 50,
+    container_home: {
+        backgroundColor: '#4286f4',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginTop: 50,
 
-},
+    },
     imgBackground: {
-            width: '100%',
-            height: '100%',
-            //resizeMode: 'cover',
-            flex: 1,
+        width: '100%',
+        height: '100%',
+        //resizeMode: 'cover',
+        flex: 1,
 
     },
     ImageStyle: {
@@ -298,7 +281,7 @@ container_home: {
         margin: 5,
         height: 20,
         width: 8,
-        resizeMode : 'stretch',
+        resizeMode: 'stretch',
         alignItems: 'center'
     },
     ImageStyle_birth: {
@@ -308,24 +291,24 @@ container_home: {
         //paddingLeft:10,
         height: 20,
         width: 20,
-        resizeMode : 'stretch',
+        resizeMode: 'stretch',
         alignItems: 'center'
     },
     viewStyleOne: {
-        width:40,
-        height:40,
+        width: 40,
+        height: 40,
         justifyContent: 'center',
-        alignItems:'center',
-        backgroundColor:'#b642f4'
-      },
-      textStyle:{
-        textAlign:'center'
-      },
+        alignItems: 'center',
+        backgroundColor: '#b642f4'
+    },
+    textStyle: {
+        textAlign: 'center'
+    },
     innerContainer: {
-          flex: .5,
-                flexDirection: 'row',
-                alignItems: 'flex-start' //replace with flex-end or center
-          },
+        flex: .5,
+        flexDirection: 'row',
+        alignItems: 'flex-start' //replace with flex-end or center
+    },
     SectionStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -336,11 +319,11 @@ container_home: {
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
 
         height: 40,
-        borderRadius: 5 ,
+        borderRadius: 5,
         margin: 20,
         width: 267,
-        paddingLeft:40,
-        shadowOffset:{  width: 5,  height: 5,  },
+        paddingLeft: 40,
+        shadowOffset: {width: 5, height: 5, },
         borderWidth: 1,
 
     },
@@ -353,7 +336,7 @@ container_home: {
         borderColor: '#ffa970',
         backgroundColor: 'rgba(255, 255, 255, 0.5)',
         height: 40,
-        borderRadius: 5 ,
+        borderRadius: 5,
         margin: 10,
         width: 267,
     },
@@ -361,77 +344,75 @@ container_home: {
         borderWidth: .5,
         marginRight: 30,
         width: 90,
-        height:90
+        height: 90
     },
-  textInput:
-    {
-        height: 40,
-        borderWidth: 1,
-        marginVertical: 5,
-        alignSelf: 'stretch',
-        padding: 8,
-        fontSize: 16,
-        backgroundColor: '#ede9e0',
-        color: '#ede9e0',
-        borderColor:'#ede9e0',
-        width: 267,
-        margin:30,
-     },
+    textInput:
+            {
+                height: 40,
+                borderWidth: 1,
+                marginVertical: 5,
+                alignSelf: 'stretch',
+                padding: 8,
+                fontSize: 16,
+                backgroundColor: '#ede9e0',
+                color: '#ede9e0',
+                borderColor: '#ede9e0',
+                width: 267,
+                margin: 30,
+            },
     SplashScreen_RootView:
-    {
-      flex: 1,
-      margin: 0,
-      position: 'absolute',
-        width: '100%',
-        height: '100%',
+            {
+                flex: 1,
+                margin: 0,
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
 
+            },
+    SplashScreen_ChildView:
+            {
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                flex: 1,
+
+            },
+
+    TouchableOpacity_Style: {
+
+        position: 'absolute',
+        zIndex: 100000
 
     },
-  SplashScreen_ChildView:
-  {
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    flex: 1,
-
-  },
-
-  TouchableOpacity_Style:{
-
-    position: 'absolute',
-    zIndex: 100000
-
-  },
-  container2: {
-      flex: .5,
-      flexDirection: 'row',
-      alignItems: 'flex-start' //replace with flex-end or center
+    container2: {
+        flex: .5,
+        flexDirection: 'row',
+        alignItems: 'flex-start' //replace with flex-end or center
     },
     box: {
-      width: 100,
-      height: 100
+        width: 100,
+        height: 100
     },
     box1: {
-      backgroundColor: '#2196F3'
+        backgroundColor: '#2196F3'
     },
     box2: {
-      backgroundColor: '#8BC34A'
+        backgroundColor: '#8BC34A'
     },
     box3: {
-      backgroundColor: '#e3aa1a'
+        backgroundColor: '#e3aa1a'
     },
-containerActivety: {
+    containerActivety: {
 
-    backgroundColor: 'transparent',
-    height: '100%',
-    width: '100%',
-    zIndex: 10000000,
-    position: 'absolute',
-   justifyContent: 'center',
-   alignItems: 'center'
- }
+        backgroundColor: 'transparent',
+        height: '100%',
+        width: '100%',
+        zIndex: 10000000,
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 
 
 });
-
-export default Login;
+ export default Login;

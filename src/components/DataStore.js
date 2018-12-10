@@ -2,8 +2,6 @@
 import React from 'react';
 import {} from 'react-native';
 
-
-
 export default function formatDataForListView =  (bookingIDs) => {
   const dataBlob = {};
   const sectionIDs = [];

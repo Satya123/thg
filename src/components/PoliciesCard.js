@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Image, Text, ScrollView, TouchableHighlight, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableHighlight, Alert, TouchableOpacity} from 'react-native';
 import Popup from './Popup';
-
+import Image from 'react-native-image-progress';
+import ProgressBar from 'react-native-progress/Bar';
+import Progress from 'react-native-progress';
+import Pdf from 'react-native-pdf';
 class PoliciesCard extends Component {
-
-  constructor(props) {
+ constructor(props) {
       super(props);
       this.props = props;
       this.state = {
@@ -13,17 +15,11 @@ class PoliciesCard extends Component {
       };
     }
 componentWillMount() {
- 
+
 console.log(this.props.arrayDescription);
 }
-  componentDidMount(){
-    //console.log('policiescardcall');
-    //console.log(this.props.arrayDescription);
-  }
-
-  setImage(url) {
-   
-     this.setState({ 
+ setImage(url) {
+ this.setState({
       isVisible : true ,
        urlImg: url
     });
@@ -31,23 +27,24 @@ console.log(this.props.arrayDescription);
 
     Hide_Splash_Screen=()=>{
 
-    this.setState({ 
-      isVisible : false 
+    this.setState({
+      isVisible : false
 
     });
 
   }
 
-  
+
 renderView() {
   const{
     isView,
   }=this.state;
-  
+
 return this.props.arrayDescription.map((array, index) =>
-                                       
-<View style={{ marginBottom: 10 }}>
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+  
+<View style={{ marginBottom: 10}}>
+    
+  <View style={styles.mainRow}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Type</Text>
     </View>
@@ -57,9 +54,7 @@ return this.props.arrayDescription.map((array, index) =>
     </View>
 
   </View >
-
-
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+<View style={styles.mainRow}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Status</Text>
     </View>
@@ -67,11 +62,8 @@ return this.props.arrayDescription.map((array, index) =>
         <Text style={styles.textSubRight} key={index}>{array.status}</Text>
 
     </View>
-
-  </View >
-
-
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+</View >
+ <View style={styles.mainRow}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Effective Date</Text>
     </View>
@@ -83,7 +75,7 @@ return this.props.arrayDescription.map((array, index) =>
   </View >
 
 
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+  <View style={styles.mainRow}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Cancellation Date</Text>
     </View>
@@ -95,7 +87,7 @@ return this.props.arrayDescription.map((array, index) =>
   </View >
 
 
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+  <View style={styles.mainRow}>
     <View style={{ width: '50%' }} >
         <Text style={styles.textSub} key={index}>Network</Text>
     </View>
@@ -109,25 +101,20 @@ return this.props.arrayDescription.map((array, index) =>
 
 
 
-  <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 }}>
+  <View style={styles.mainRow}>
     <View style={{ width: '80%' }} >
         <Text style={styles.textSub} key={index}>Benefits</Text>
     </View>
     <View style={{ width: '20%', height: 25}}>
-     
-       <TouchableHighlight
-                onPress={() => {
-                  this.setImage(array.benefitsDetails);
-                }}>
-                <View><Image  source={require('../../assets/view-icon.png')} style={{marginLeft:20}}/></View>
-              </TouchableHighlight>
-       
-
-    </View>
+ <TouchableOpacity onPress={()=>this.setImage(array.benefitsDetails)}>
+    <Image style={styles.imagestyle} source={require('../../assets/view-icon.png')} />
+</TouchableOpacity> 
+ </View>
 
   </View >
+  
   </View>
-
+  
   );
 }
 
@@ -184,30 +171,24 @@ if (isReadMode === true) {
 
 
   render() {
-    
-    const { 
+
+    const {
     isVisible,
       urlImg,
   } = this.state;
-    
-    
+const source = { uri: urlImg, cache: true };
+
     return (
    <View style={styles.MainContainer}>
-       
+
          {
-           (this.state.isVisible === true) ?  <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '100%'}}><View style={styles.SplashScreen_RootView}>
-
-                <View style={styles.SplashScreen_ChildView}>
-
-                    {/* Put all your components Image and Text here inside Child view which you want to show in Splash Screen. */}
-
-                    <Image source={{uri: urlImg }}
-                    style={{width:'100%', height: '100%', resizeMode: 'contain'}} />
-
-                </View>
-
-
-                <TouchableOpacity 
+           (this.state.isVisible === true) ?  <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '100%'}}>
+               <View style={styles.SplashScreen_RootView}>
+                  <Pdf
+                    source={source}
+                   
+                    style={styles.pdf}/>
+                <TouchableOpacity
                   activeOpacity = { 0.5 }
                   style={styles.TouchableOpacity_Style}
                   onPress={this.Hide_Splash_Screen} >
@@ -217,27 +198,27 @@ if (isReadMode === true) {
 
                 </TouchableOpacity>
 
-            
-            </View></View> : null
+            </View> 
+            </View> : null
           }
-     
-      
-         
-          
+
+
+
+
         <View style={{height: '100%', width: '100%'}}>
-           <ScrollView>  
-         
+           <ScrollView style={{paddingBottom: 30, width: '100%'}}>
+
           {this.renderView()}
           </ScrollView>
         </View>
-        
-    
-       
+
+
+
       </View>
-   
-        
-       
-      
+
+
+
+
 
     );
   }
@@ -264,9 +245,17 @@ const styles = {
   //  backgroundColor: 'blue'
   },
 
+mainRow: { flexDirection: 'row', borderBottomWidth: 1, borderColor: '#dedede', padding: 10, backgroundColor: '#ffffff', height: 40 },
+
+
+
   viewTest: {
     flex: 1,
     backgroundColor: 'red'
+  },
+  imagestyle: {
+    width: '100%',
+    height: '100%'
   },
 textStyle: {
   color: '#ff7417',
@@ -323,29 +312,29 @@ textSubRight: {
     {
         justifyContent: 'center',
         flex:1,
-  
+
         position: 'absolute',
         width: '100%',
         height: '100%',
-        
+
     },
- 
+
     SplashScreen_ChildView:
     {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
-       
+
         flex:1,
         margin: 0,
     },
 
     TouchableOpacity_Style:{
 
-        width:25, 
-        height: 25, 
-        top:9, 
-        right:9, 
+        width:25,
+        height: 25,
+        top:9,
+        right:9,
         position: 'absolute'
 
     },
@@ -354,9 +343,16 @@ textSubRight: {
      flex: 0,
  width: '100%',
         height: '100%',
-
-
-   },
+ },
+ 
+ pdf: {
+        flex:1,
+       
+ }
+ 
+ 
+ 
+ 
 
 };
 

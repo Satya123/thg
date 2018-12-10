@@ -12,51 +12,41 @@ class DependentSubData extends Component {
 
       };
     }
-componentWillMount() {
-
-  //console.log('SubCard');
-  //console.log(this.props.arrayDescription);
- // this.setData();
-
-}
-
-
-
-
+    
 renderView() {
 return this.props.arrayDescription.map((array, index) =>
  <View style={{ marginBottom: 10,backgroundColor: '#ffffff', }}>
   <View style={styles.textrow}>
-      <View style={{ width: '50%' }} >
+      <View style={styles.fiftypercent} >
           <Text style={styles.textSub} key={index}>Name</Text>
       </View>
-      <View style={{ width: '50%' }}>
+      <View style={styles.fiftypercent}>
           <Text style={styles.textSubRight} key={index}>{` ${array.fisrtName} ${array.lastName}`}</Text>
       </View>
  </View>
   <View style={styles.textrow}>
-      <View style={{ width: '50%' }} >
+      <View style={styles.fiftypercent} >
           <Text style={styles.textSub} key={index}>Gender</Text>
       </View>
-      <View style={{ width: '50%' }}>
+      <View style={styles.fiftypercent}>
           <Text style={styles.textSubRight} key={index}>{array.gender}</Text>
       </View>
  </View>
 
   <View style={styles.textrow}>
-      <View style={{ width: '50%' }} >
+      <View style={styles.fiftypercent} >
           <Text style={styles.textSub} key={index}>Birthdate</Text>
       </View>
-      <View style={{ width: '50%' }}>
+      <View style={styles.fiftypercent}>
           <Text style={styles.textSubRight} key={index}>{array.birthDate}</Text>
       </View>
  </View>
 
   <View style={styles.textrow}>
-      <View style={{ width: '50%' }} >
+      <View style={styles.fiftypercent} >
           <Text style={styles.textSub} key={index}>Relationship</Text>
       </View>
-      <View style={{ width: '50%' }}>
+      <View style={styles.fiftypercent}>
           <Text style={styles.textSubRight} key={index}>{array.memberRelation}</Text>
       </View>
  </View>
@@ -65,8 +55,7 @@ return this.props.arrayDescription.map((array, index) =>
   );
 }
 
-
-  render() {
+ render() {
 
     return (
       <ScrollView>
@@ -75,14 +64,10 @@ return this.props.arrayDescription.map((array, index) =>
 
     );
   }
-
-
 }
 
-
 const styles = {
-
-  cardStyle: {
+ cardStyle: {
     borderWidth: 1,
     borderRadius: 2,
     borderColor: 'red',
@@ -95,7 +80,7 @@ const styles = {
     marginLeft: 5,
     marginRight: 5,
     marginTop: 20
-  //  backgroundColor: 'blue'
+
   },
 
   viewTest: {
@@ -110,8 +95,9 @@ textStyle: {
 textSub: {
   color: 'black',
   fontSize: 14,
-
-
+},
+fiftypercent: {
+ width:'50%'
 },
 textrow: {
   color: 'black',
@@ -124,9 +110,7 @@ padding: 10
 textSubRight: {
   color: 'black',
   fontSize: 14,
-
   textAlign: 'right'
-
 },
 
 

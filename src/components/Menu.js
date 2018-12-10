@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
-import { Text, View ,ImageBackground, AsyncStorage} from 'react-native';
+import { Text, View, ImageBackground, AsyncStorage, SafeAreaView, TouchableOpacity} from 'react-native';
 import CustomFooter from './CustomFooter';
 import CustomHeader from './CustomHeader';
+import { Actions } from 'react-native-router-flux';
+import UserData from './UserData';
 
 class Menu extends Component {
+ constructor(props) {
+        super(props);
+        this.state = {
+            arrayValue: [],
+            isProfile: false,
+            isHome: false,
+            isMenu: true,
+            isNotification: false,
+        };
+    }
+    clickToLogOut = () => {
 
-  constructor(props) {
-      super(props);
-      this.state = {
-          arrayValue: [],
-              isProfile: false,
-              isHome: false,
-              isMenu: true,
-              isNotification: false,
-            };
+        UserData.saveData('token', '');
+        this.setState({isLogOut: true});
+        Actions.RouterComponent();
+
     }
 
-
     componentWillMount() {
-      //console.log('componentWillMount call Telemedicine');
+  AsyncStorage.getItem('profileArray')
+                .then((contacts) => {
+                    const value = contacts ? JSON.parse(contacts) : [];
 
-
-    AsyncStorage.getItem('profileArray')
-    .then((contacts) => {
-    const value = contacts ? JSON.parse(contacts) : [];
-
-    //console.log(value);
-    this.setState({ arrayValue: value })
-  });
+                    console.log(value);
+                    this.setState({arrayValue: value})
+                });
 
     }
 
@@ -36,8 +40,9 @@ class Menu extends Component {
         arrayValue
       } = this.state
       return (
+        <SafeAreaView style={styles.safeArea}>
         <View style={styles.MainContainer}>
-        <View style={{ width: '100%', height: 60 }}>
+        <View style={{ width: '100%',  }}>
               <CustomHeader
               headerText={'Menu'}
 
@@ -53,7 +58,13 @@ class Menu extends Component {
 
           </View>
 
+          <TouchableOpacity
+          onPress={this.clickToLogOut}>
+          <View style={{margin:10, backgroundColor:'white', height:50, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{color:'red',textAlign:'center'}}>Log out</Text>
+          </View>
 
+          </TouchableOpacity>
 
 
           </View>
@@ -81,7 +92,7 @@ class Menu extends Component {
 
   </View>
 
-
+</SafeAreaView>
 
       );
     }
@@ -89,6 +100,10 @@ class Menu extends Component {
 
 }
 const styles = {
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ddd'
+  },
   MainContainer:
    {
      flex: 1,
@@ -98,7 +113,7 @@ const styles = {
    },
    footerView: {
      width: '100%',
-      height: 45,
+      height: 50,
 
 
       position: 'absolute',

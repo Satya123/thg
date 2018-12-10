@@ -1,15 +1,17 @@
+/*
+ * @author satya
+ * Created by satya 16 Aug 2018
+ * Modified by  13 November 2018
+ * This is page for splash
+ */
 import React from 'react';
-import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert, ActivityIndicator, StatusBar } from 'react-native';
+import { View, Text,ImageBackground, Image, StyleSheet, Platform, Alert, ActivityIndicator, StatusBar,AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
 import ExtensionHelper from './ExtensionHelper';
-
-
-
- class VendorSplash extends React.Component {
-
-  constructor(props) {
+class VendorSplash extends React.Component {
+constructor(props) {
      super(props);
      this.state = {
         isVisible: true,
@@ -29,13 +31,13 @@ import ExtensionHelper from './ExtensionHelper';
 }
 
 
-      callAppDetails = (token) => {
-        //  debugger;
-          //console.log(token);
+  callAppDetails = (token) => {
+        const arrAppointment = [];
+         // console.log(token);
             this.setState({ loaded: true });
               ServiceClass.appDetails(token, 'appdetails').then((reData) => {
-
-                //console.log(reData);
+                //  debugger;
+               // console.log(reData);
                 const that = this;
 
                 if (reData.data.status === '1') {
@@ -43,22 +45,51 @@ import ExtensionHelper from './ExtensionHelper';
                   //console.log(reData.data.data.siteDetails[0].logoUrl);
                   this.setState({ dataUser: reData.data.data.users });
                   this.setState({ url: reData.data.data.siteDetails[0].logoUrl });
+                //  debugger;
+                  for (var item in reData.data.data.appointments[0].type){
+                   // console.log(reData.data.data.appointments[0].type[item]);
+                    arrAppointment.push({
+                    label: reData.data.data.appointments[0].type[item],
+                    value: reData.data.data.appointments[0].type[item]
+                   })
+                  }
+                  UserData.saveData('memberId', reData.data.data.users[0].ID);
+                   try {
+          AsyncStorage.setItem('profileArray', JSON.stringify(reData.data.data.users));
+          } catch (error) {
+
+          }
+                  
+                  try {
+                     AsyncStorage.setItem('AppointmentType', JSON.stringify(arrAppointment));
+                     } catch (error) {
+
+                     }
+
+                      UserData.saveData('PrimaryCare', reData.data.data.appointments[1].primaryCareText);
+
+                  //this.setState({ arrPatient: arrPatient });
                 //  Alert.alert(this.state.url);
                   this.setState({ loaded: false });
                     setTimeout(() => {
                         that.HideSplashScreen();
-                      }, 5000);
+                      }, 2000);
                 } else {
                     this.setState({ loaded: false });
-                  Alert.alert(reData.data.message);
+                  //Alert.alert(reData.data.message);
 
                   setTimeout(() => {
                       that.HideSplashScreen();
-                    }, 5000);
+                    }, 2000);
                 }
               }).catch((error) => {
-                  //console.log(error);
-                  Alert.alert(error);
+                //debugger
+                  console.log(error);
+                    this.setState({ loaded: false });
+                    setTimeout(() => {
+                        that.HideSplashScreen();
+                      }, 100);
+                 // Alert.alert(error);
               });
     }
        HideSplashScreen= () => {

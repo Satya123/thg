@@ -20,7 +20,6 @@ class BottomNav extends Component {
   }
 }
 
-
 export default createMaterialBottomTabNavigation({
   Home: { screen: BottomNav },
   Settings: { screen: SettingsScreen }

@@ -74,9 +74,6 @@ class MainPage extends Component {
       });
     }
 
-    // topic example
-    // FCM.subscribeToTopic('sometopic')
-    // FCM.unsubscribeFromTopic('sometopic')
   }
 
   showLocalNotification() {
@@ -211,7 +208,7 @@ class MainPage extends Component {
           <Text style={styles.feedback}>{this.state.tokenCopyFeedback}</Text>
 
           <Text style={styles.feedback}>
-            Remote notif won't be available to iOS emulators i know
+            Remote notif wont be available to iOS emulators i know
           </Text>
 
           <TouchableOpacity
