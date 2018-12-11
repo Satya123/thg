@@ -54,7 +54,9 @@ export default class ServiceClass extends React.Component {
 
       let axiosConfig = {
         headers: {
-            'Content-Type': 'application/json',
+          Accept: 'application/json',
+         'Content-Type': 'application/x-www-form-urlencoded',
+         
             'Token': token
         }
       };
@@ -70,6 +72,8 @@ export default class ServiceClass extends React.Component {
         providerAddress: providerAddress,
         dependentID:dependentID,
 };
+
+
 debugger;
 console.log(baseUrl + lastUrl);
 console.log(postData);

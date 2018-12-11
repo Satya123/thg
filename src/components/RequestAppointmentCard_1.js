@@ -208,36 +208,37 @@ import React, { Component } from 'react';
         }
 
     clickToRequest = (strProvider) => {
-        
 
-
-const body = new FormData();
- 
         
         this.setState({ loaded : true }, () =>
         {
             fetch('https://appdev.transparenthealth.co/api/appointments/280400',
             {
                 method: 'POST',
+                mode:'no-cors',
                 headers: 
                 {
-                   
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                     'Token':'884050492455f806bfd1e3594acab0aaecd244a7a60cf543912e4a09d37ec992'
                 },
                 body: JSON.stringify(
-              {"appointmentType": "Vision",
-                          "dependentID": "280401",
-                          "providerAddress": "87 H",
-                          "providerName": "Ankleshwar",
-                          "providerOption": "Enter Preferred Provider",
-                          "providerPhone": "7503732194",
-                          "visitReason": "Hi",
-                          "appointmentSchedule": {
-                          "dates": ["12/30/2018","12/25/2018"],
-                          "timeZone": "Asia/Kolkata",
-                          "times": ["20:10","09:15"]}})
+                {
+              
+                            "appointmentSchedule":{
+                            "dates": ["12/30/2018","12/25/2018"],
+                            "timeZone": "Asia/Kolkata",
+                            "times": ["20:10","09:15"]},
+                            "appointmentType": "Vision",
+                            "dependentID": "280401",
+                            "providerAddress": "87 H ",
+                            "providerName": "Ankleshwar",
+                            "providerOption": "Enter Preferred Provider",
+                            "providerPhone": "7503732194",
+                            "schedulingNote": "Hi",
+                            "visitReason": "Hi"
+
+})
  
             }).then((response) => response.json()).then((responseJsonFromServer) =>
             {
@@ -250,7 +251,7 @@ const body = new FormData();
                         }
                         else {
                           debugger;
-                           alert(responseJsonFromServer);
+                          
                             this.setState({ loaded: false });
                             console.log(responseJsonFromServer.data.message);
                             if (responseJsonFromServer.data.message === 'Invalid date time provided.'){

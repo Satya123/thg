@@ -212,7 +212,24 @@ import React, { Component } from 'react';
 
 
 const body = new FormData();
- 
+    body.append(
+                   {
+              
+                            "appointmentSchedule":{
+                            "dates": ["12/30/2018","12/25/2018"],
+                            "timeZone": "Asia/Kolkata",
+                            "times": ["20:10","09:15"]},
+                            "appointmentType": "Vision",
+                            "dependentID": "280401",
+                            "providerAddress": "87 H ",
+                            "providerName": "Ankleshwar",
+                            "providerOption": "Enter Preferred Provider",
+                            "providerPhone": "7503732194",
+                            "schedulingNote": "Hi",
+                            "visitReason": "Hi"
+
+})
+
         
         this.setState({ loaded : true }, () =>
         {
@@ -222,22 +239,10 @@ const body = new FormData();
                 headers: 
                 {
                    
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Token':'884050492455f806bfd1e3594acab0aaecd244a7a60cf543912e4a09d37ec992'
+                    "Content-Type": "multipart/form-data",
+                    "Token":"884050492455f806bfd1e3594acab0aaecd244a7a60cf543912e4a09d37ec992"
                 },
-                body: JSON.stringify(
-              {"appointmentType": "Vision",
-                          "dependentID": "280401",
-                          "providerAddress": "87 H",
-                          "providerName": "Ankleshwar",
-                          "providerOption": "Enter Preferred Provider",
-                          "providerPhone": "7503732194",
-                          "visitReason": "Hi",
-                          "appointmentSchedule": {
-                          "dates": ["12/30/2018","12/25/2018"],
-                          "timeZone": "Asia/Kolkata",
-                          "times": ["20:10","09:15"]}})
+                body
  
             }).then((response) => response.json()).then((responseJsonFromServer) =>
             {
@@ -250,7 +255,7 @@ const body = new FormData();
                         }
                         else {
                           debugger;
-                           alert(responseJsonFromServer);
+                          
                             this.setState({ loaded: false });
                             console.log(responseJsonFromServer.data.message);
                             if (responseJsonFromServer.data.message === 'Invalid date time provided.'){

@@ -207,74 +207,90 @@ import React, { Component } from 'react';
                 return selctedDate;
         }
 
-    clickToRequest = (strProvider) => {
-        
+        clickToRequest = (strProvider) => {
 
 
-const body = new FormData();
- 
-        
-        this.setState({ loaded : true }, () =>
+
+        const { appointmentTimeOne } = this.state;
+                const { appointmentDateOne } = this.state;
+                const { SelectdAppointment } = this.state;
+                const { txtReasonData } = this.state;
+                const { txtName } = this.state;
+                const { txtPhone } = this.state;
+                const { txtAddress } = this.state;
+                const { SelectdTimeZone } = this.state;
+                const { txtAditionalInfo } = this.state;
+                if (this.state.SelectdAppointment === ''){
+        alert("Please Select Valid Appointment");
+        } else if (this.state.SelectdPatient === '') {
+        alert("Please Select Valid Patient");
+        } else if (this.state.txtReasonData === '') {
+        alert("Please enter reason to visit");
+        } else  if (this.state.appointmentDateOne === ''){
+        alert("Please Select Appointment Date ");
+        } else if (this.state.appointmentTimeOne === ''){
+        alert("Please Select Appointment Time ");
+        } else{
+        if (strProvider === 'Enter Preferred Provider') {
+        if (this.state.txtName === ' '){
+        alert("Please Enter Preferred Provider Name");
+        } else if (this.state.txtPhone === ''){
+        alert("Please Enter Preferred Provider Phone Number");
+        } else if (this.state.txtAddress === ''){
+        alert("Please Enter Preferred Provider Address");
+        } else {
+        if (this.state.arrDate.length < 3){
+        this.state.arrDate.push(appointmentDateOne);
+                this.state.arrTime.push(appointmentTimeOne);
+        }
+        const { arrDate } = this.state;
+                const { arrTime } = this.state;
+                appointmentSchedule = {"timeZone": DeviceInfo.getTimezone(), "dates": arrDate, "times": arrTime};
+                console.log(appointmentSchedule);
+                NetInfo.isConnected.fetch().done((isConnected) => {
+        if (isConnected)
         {
-            fetch('https://appdev.transparenthealth.co/api/appointments/280400',
-            {
-                method: 'POST',
-                headers: 
-                {
-                   
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Token':'884050492455f806bfd1e3594acab0aaecd244a7a60cf543912e4a09d37ec992'
-                },
-                body: JSON.stringify(
-              {"appointmentType": "Vision",
-                          "dependentID": "280401",
-                          "providerAddress": "87 H",
-                          "providerName": "Ankleshwar",
-                          "providerOption": "Enter Preferred Provider",
-                          "providerPhone": "7503732194",
-                          "visitReason": "Hi",
-                          "appointmentSchedule": {
-                          "dates": ["12/30/2018","12/25/2018"],
-                          "timeZone": "Asia/Kolkata",
-                          "times": ["20:10","09:15"]}})
- 
-            }).then((response) => response.json()).then((responseJsonFromServer) =>
-            {
-         
-                if (responseJsonFromServer.data.status === '1') {
-                          console.log(responseJsonFromServer.data.data);
-                          this.setState({ loaded: false });
-                          alert("Your appointment request is submitted successfully");
-                           Actions.Appointments({isRequestAppointment:true})
-                        }
-                        else {
-                          debugger;
-                           alert(responseJsonFromServer);
-                            this.setState({ loaded: false });
-                            console.log(responseJsonFromServer.data.message);
-                            if (responseJsonFromServer.data.message === 'Invalid date time provided.'){
-                               this.state.appointmentDateOne = '',
-                               this.state.appointmentTimeOne = '',
-                               this.state.arrDate = [],
-                               this.state.arrTime = [],
-                                 this.defaultDateTime()
-                            }
-                        }
 
-
-                
-                
-
-            }).catch((error) =>
-            {
-                console.error(error);
-                  alert(error);
-                this.setState({ loaded : false});
-            });
+        UserData.retriveData('token').then((resToken) => {
+        UserData.retriveData('memberId').then((res) => {
+        this.requestAppointment(resToken, res, SelectdAppointment, txtReasonData, appointmentSchedule, txtAditionalInfo, strProvider, txtName, txtPhone, txtAddress, this.state.SelectdPatient);
         });
-    }
+        })
 
+
+
+        }
+        });
+        }
+        } else{
+        if (this.state.arrDate.length < 3){
+        this.state.arrDate.push(appointmentDateOne);
+                this.state.arrTime.push(appointmentTimeOne);
+        }
+        const { arrDate } = this.state;
+                const { arrTime } = this.state;
+                appointmentSchedule = {"timeZone": DeviceInfo.getTimezone(), "dates": arrDate, "times": arrTime};
+                console.log(appointmentSchedule);
+                NetInfo.isConnected.fetch().done((isConnected) => {
+        if (isConnected)
+        {
+
+        UserData.retriveData('token').then((resToken) => {
+        UserData.retriveData('memberId').then((res) => {
+        this.requestAppointment(resToken, res, SelectdAppointment, txtReasonData, appointmentSchedule, txtAditionalInfo, strProvider, txtName, txtPhone, txtAddress, this.state.SelectdPatient);
+        });
+        })
+
+
+
+        }
+        });
+        }
+
+
+        }
+
+        }
 
         requestAppointment = (token, memberID, appointmentType, visitReason, appointmentSchedule, schedulingNote, providerOption, providerName, providerPhone, providerAddress, dependentID) => {
         this.setState({ loaded: true });
@@ -290,7 +306,7 @@ const body = new FormData();
         else {
         // debugger;
        // console.log(reData.data);
-       alert("my alert");
+       //alert("my alert");
                 this.setState({ loaded: false });
                 Alert.alert(reData.data.message);
         }
