@@ -16,6 +16,8 @@ target 'THG' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
+  pod 'ReactNativeFabric', :path => '../node_modules/react-native-fabric'
+
   target 'THGTests' do
     inherit! :search_paths
     # Pods for testing

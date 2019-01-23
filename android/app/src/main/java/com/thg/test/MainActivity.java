@@ -1,7 +1,7 @@
 package com.thg.test;
 
 import com.facebook.react.ReactActivity;
-
+import com.smixx.fabric.FabricPackage;
 public class MainActivity extends ReactActivity {
 
     /**

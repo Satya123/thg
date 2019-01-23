@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, NetInfo, Dimensions, StyleSheet, SafeAreaView } from 'react-native';
 import axios from 'axios';
-const baseUrl = 'https://appdev.transparenthealth.co/api/';
-
+const baseUrl = 'http://appdev.transparenthealth.co/api/';
+//52.5.103.12
 export default class ServiceClass extends React.Component {
     state = {
         isConnected: true
@@ -54,9 +54,10 @@ export default class ServiceClass extends React.Component {
 
       let axiosConfig = {
         headers: {
-          Accept: 'application/json',
-         'Content-Type': 'application/x-www-form-urlencoded',
-         
+            //'Content-Type': 'application/json',
+            'Accept': 'application/json, text/plain',
+            'Content-Type': 'application/json',
+            // mode:'cors',
             'Token': token
         }
       };
@@ -72,12 +73,10 @@ export default class ServiceClass extends React.Component {
         providerAddress: providerAddress,
         dependentID:dependentID,
 };
-
-
-debugger;
-console.log(baseUrl + lastUrl);
-console.log(postData);
-console.log(axiosConfig);
+//debugger;
+//console.log(baseUrl + lastUrl);
+//console.log(postData);
+//console.log(axiosConfig);
 
 
           return axios.post(baseUrl + lastUrl, postData,axiosConfig);
@@ -108,9 +107,9 @@ console.log(axiosConfig);
           dependentID:dependentID,
   };
 
-  console.log(baseUrl + lastUrl);
-  console.log(postData);
-  console.log(axiosConfig);
+//  console.log(baseUrl + lastUrl);
+//  console.log(postData);
+//  console.log(axiosConfig);
 
 
             return axios.put(baseUrl + lastUrl, postData,axiosConfig);

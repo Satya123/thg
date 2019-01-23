@@ -60,7 +60,7 @@ class RouterComponent extends Component {
       } = this.state;
 
       return (
-      <Router>
+  <Router>
    <Scene key='root' >
      <Scene hideNavBar>
      {
@@ -89,9 +89,6 @@ class RouterComponent extends Component {
      </Scene>
      </Scene>
      </Router>
-
-
-
       );
       
       

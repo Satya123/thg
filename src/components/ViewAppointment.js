@@ -179,7 +179,7 @@ const styles = {
 
     mainRowPopUp: {
         width: '96%',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#0f0',
         zIndex: 100,
         position: 'absolute',
          margin:10,

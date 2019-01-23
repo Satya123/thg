@@ -120,10 +120,6 @@ import DeviceInfo from 'react-native-device-info';
                             this.setState({arrayValue: value})
                         });
 
-
-
-
-
                 }
                 componentWillUnmount() {
                   this.keyboardWillShowSub.remove();
@@ -164,7 +160,7 @@ import DeviceInfo from 'react-native-device-info';
           AsyncStorage.getItem('editDetailsData')
                   .then((contacts) => {
                       const value = contacts ? JSON.parse(contacts) : [];
-                      debugger;
+                     // debugger;
 
                         if(value[0].providerOption === 'First Provider Available'){
                               valuenew = 0;
@@ -198,12 +194,6 @@ import DeviceInfo from 'react-native-device-info';
 
             });
       });
-
-
-
-
-
-
 
 
         NetInfo.isConnected.fetch().done((isConnected) => {
@@ -298,7 +288,7 @@ import DeviceInfo from 'react-native-device-info';
             this.state.SelectdAppointment =   this.state.SelectdAppointment.replace('*', '');
             this.state.SelectdPatient =   this.state.SelectdPatient.replace('*', '');
 
-            debugger;
+            //debugger;
 
               if (this.state.SelectdAppointment === ''){
                 alert("Please Select Valid Appointment");
@@ -402,7 +392,7 @@ import DeviceInfo from 'react-native-device-info';
                            console.log(reData.data.data);
                            this.setState({ loaded: false });
                            alert("Your appointment updated successfully");
-                           Actions.Appointments();
+                           Actions.Appointments({isViewAppointments:true});
 
 
                          }
@@ -429,7 +419,7 @@ import DeviceInfo from 'react-native-device-info';
 
                this.animatedValue.setValue(0);
                //debugger;
-               console.log(this.state.arrDate);
+              // console.log(this.state.arrDate);
                //  if (this.Array_Value_Index === 1){
                //    this.setState({arrDate: ['']});
                //    this.setState({arrTime: ['']});

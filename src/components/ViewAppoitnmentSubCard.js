@@ -149,9 +149,9 @@ class ViewAppoitnmentSubCard extends Component {
                    console.log(token);
                      this.setState({ loaded: true });
                        ServiceClass.deleteDetails(token, `appointments/${ memberID}/appointment/${appointmentID}`).then((reData) => {
-                         debugger;
+                       //  debugger;
                          if (reData.data.status === '1') {
-                           debugger;
+                         //  debugger;
                            console.log(reData.data.data[0].data);
                            this.setState({ arrayDescription: reData.data.data[0].data });
                            this.setState({ loaded: false });
@@ -175,7 +175,7 @@ class ViewAppoitnmentSubCard extends Component {
         viewAppointmentDetails() {
 
           return(
-            <ScrollView>
+          
           <View style={styles.mainRowPopUp}>
 
           <View style={styles.mainRowHeading} >
@@ -277,7 +277,7 @@ class ViewAppoitnmentSubCard extends Component {
 
 
           </View>
-          </ScrollView>
+         
             )
 
         }

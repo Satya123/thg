@@ -19,12 +19,11 @@ import DeviceInfo from 'react-native-device-info';
 import NotificationPermission from './NotificationPermission';
 import FCM, { NotificationActionType } from "react-native-fcm";
 import { Picker} from 'react-native-wheel-pick';
+
 class Login extends React.Component {
     static navigationOptions = {title: '', header: null, navigationBarHidden: true};
-
     constructor(props) {
         super(props);
-
         this.state = {
             loaded: false,
             txtMemberID: '',
@@ -32,9 +31,7 @@ class Login extends React.Component {
             tokenCopyFeedback: "",
             isVisible: true,
             Login: false,
-            date: '',
-            //date: '07/01/1997',
-
+            date: ''
         };
 //this.state = {date:"2016-05-15"}
     }
@@ -43,15 +40,11 @@ class Login extends React.Component {
     componentDidMount() {
         //  ServiceClass.SecondClassFunction();
         var that = this;
-          //  alert(DeviceInfo.getDeviceId());
-
-        setTimeout(function () {
-
-            that.HideSplashScreen();
-
-        }, 3000);
-
-        setTimeout(() => {
+        //  alert(DeviceInfo.getDeviceId());
+       setTimeout(function () {
+       that.HideSplashScreen();
+      }, 3000);
+    setTimeout(() => {
             this.setState({Login: true});
         }, 2000);
     }
@@ -72,14 +65,12 @@ class Login extends React.Component {
         } else if (date === '') {
             Alert.alert('Please enter Date of Birth.');
         } else {
-            
-       //alert("hi")
+
+            //alert("hi")
             this.setState({loaded: true})
-            ServiceClass.loginData(txtMemberID, date,DeviceInfo.getDeviceId() ,'login').then((reData) => {
-              // debugger;
-           
-                
-                if (reData.data.status === '1') {
+            ServiceClass.loginData(txtMemberID, date, DeviceInfo.getDeviceId(), 'login').then((reData) => {
+                debugger;
+              if (reData.data.status === '1') {
                     UserData.saveData('token', reData.data.data.token);
                     UserData.retriveData('token').then((resToken) => {
                     })
@@ -87,12 +78,14 @@ class Login extends React.Component {
                     Actions.VendorSplash();
 
                 } else {
+                    
+                Alert.alert(reData.data.message);
                     this.setState({loaded: false});
                 }
             }).catch((error) => {
                 //console.log(error);
                 this.setState({loaded: false});
-                  //alert(error)
+                alert(error)
             });
         }
     }
@@ -109,10 +102,7 @@ class Login extends React.Component {
                 <View style={styles.SplashScreen_RootView}>
                     <Image source={require('../../assets/splash-screen.jpg')}
                            style={{width: '100%', height: '100%', resizeMode: 'contain'}} />
-                
                 </View>);
-
-
             return (
                     <View style={styles.container}>
                     
@@ -175,7 +165,10 @@ class Login extends React.Component {
                                                             cancelBtnText="Cancel"
                                         
                                                             onDateChange={(date) => {
-                                                                                    this.setState({date: date})}}   />
+                                                                                    this.setState({date: date})}} 
+                                        
+                                        
+                                                            />
                                         
                                                 </View>
                                         
@@ -206,11 +199,9 @@ class Login extends React.Component {
                         />
                     <OfflineNotice />
                     </View>
-                                                      );
+                                                                    );
                                                     }
                                                 }
-
-
 
 const navigateData = createStackNavigator({
     Login: {
@@ -238,7 +229,7 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         //  paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
     },
-    MainContainer:
+MainContainer:
             {
                 flex: 1,
                 justifyContent: 'center',
@@ -247,7 +238,7 @@ const styles = StyleSheet.create({
                 paddingTop: (Platform.OS === 'ios') ? 20 : 0
             },
 
-    container_logo: {
+container_logo: {
         //  margin: 0,
         marginBottom: 20,
         padding: 0,
@@ -415,4 +406,4 @@ const styles = StyleSheet.create({
 
 
 });
- export default Login;
+export default Login;
