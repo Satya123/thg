@@ -45,6 +45,7 @@ constructor(props) {
                   //console.log(reData.data.data.siteDetails[0].logoUrl);
                   this.setState({ dataUser: reData.data.data.users });
                   this.setState({ url: reData.data.data.siteDetails[0].logoUrl });
+                  this.setState({telemadicineOpen: reData.data.data.siteDetails[0].isTelemedicineEnable});
                 //  debugger;
                   for (var item in reData.data.data.appointments[0].type){
                    // console.log(reData.data.data.appointments[0].type[item]);
@@ -104,7 +105,8 @@ constructor(props) {
 
     } = this.state;
       if (isVisible === false) {
-         Actions.HomeScreen({ profileData: this.state.dataUser });
+         Actions.HomeScreen({profileData: this.state.dataUser,telemedicine:this.state.telemadicineOpen});
+
       }
     }
 

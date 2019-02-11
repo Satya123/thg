@@ -23,11 +23,7 @@ class ViewAppoitnmentSubCard extends Component {
         };
     }
 
-
-
-
-
-      clickToClose = () => {
+  clickToClose = () => {
 
 
           this.setState({ isViewDetails: false });
@@ -95,7 +91,8 @@ class ViewAppoitnmentSubCard extends Component {
                                       }
                                    this.setState({ loaded: false });
                                    if (isEdit === true){
-                                     Actions.RequestAppointmentEdit();
+                                    // Actions.RequestAppointmentEdit({isEnableTele={this.props.isEnableTele}});
+                                     Actions.RequestAppointmentEdit({isEnableTele:this.props.isEnableTele});
                                    }else{
 
                                      this.setState({
@@ -210,7 +207,8 @@ class ViewAppoitnmentSubCard extends Component {
                       <Text style={styles.textSub}>Provider Name</Text>
                   </View>
                   <View style={styles.viewText} >
-                      <Text style={styles.textSub}>{(this.state.detailsArray[0].providerName === '')?"N/A":this.state.detailsArray[0].providerName}</Text>
+                      <Text style={styles.textSub}>{ (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderName === '')? "N/A":this.state.detailsArray[0].selectedProviderName
+                       :(this.state.detailsArray[0].providerName === '')? "N/A":this.state.detailsArray[0].providerName}</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -219,8 +217,9 @@ class ViewAppoitnmentSubCard extends Component {
                   </View>
                   <View style={styles.viewText} >
                       <Text style={styles.textSub}>{
+                       (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderType === '')? "N/A":this.state.detailsArray[0].selectedProviderType
 
-                        (this.state.detailsArray[0].providerOption === '' )?"N/A":this.state.detailsArray[0].providerOption}</Text>
+                     :  (this.state.detailsArray[0].providerOption === '' )? "N/A":this.state.detailsArray[0].providerOption}</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -289,7 +288,7 @@ reRanderViewInDetails(arrayShow){
   );
 }
 
-    renderView() {
+renderView() {
 
         return this.props.arrayDescription.map((array, index) =>
             <View style={[(array.status === 'Cancelled')? styles.mainRowDateExpire : styles.mainRowTop]}>
@@ -311,10 +310,34 @@ reRanderViewInDetails(arrayShow){
                 </View>
                 <View style={styles.mainRow}>
                     <View style={styles.viewContent} >
-                        <Text style={styles.textSub}>Date Time</Text>
+                        <Text style={styles.textSub}>Date & Time</Text>
                     </View>
                     <View style={styles.viewText} >
                         <Text style={styles.textSub}>{array.appointmentDate} {array.appointmentTime}</Text>
+                    </View>
+                </View>
+                <View style={styles.mainRow}>
+                    <View style={styles.viewContent} >
+                        <Text style={styles.textSub}>Status</Text>
+                    </View>
+                    <View style={styles.viewText} >
+                        <Text style={styles.textSub}>{array.status}</Text>
+                    </View>
+                </View>
+                <View style={styles.mainRow}>
+                    <View style={styles.viewContent} >
+                        <Text style={styles.textSub}>Provider Name</Text>
+                    </View>
+                    <View style={styles.viewText} >
+                        <Text style={styles.textSub}>{array.selectedProviderName}</Text>
+                    </View>
+                </View>
+                <View style={styles.mainRow}>
+                    <View style={styles.viewContent} >
+                        <Text style={styles.textSub}>Provider Type</Text>
+                    </View>
+                    <View style={styles.viewText} >
+                        <Text style={styles.textSub}>{array.selectedProviderType}</Text>
                     </View>
                 </View>
                 <View style={styles.mainRowHeadSub}>
@@ -329,7 +352,7 @@ reRanderViewInDetails(arrayShow){
                         <ResponsiveImage  source={require('../../assets/view-appointments_view.jpeg')}  initWidth="38" initHeight="33" style={{marginRight: 5}}/>
                     </TouchableOpacity>
                     {
-                      (array.status === 'Pending') ? <TouchableOpacity onPress={() => this.appointmentEdit(array.appointmentID)}><ResponsiveImage  source={require('../../assets/view-appointments_edit.jpeg')}  initWidth="36" initHeight="33" style={{marginRight: 5}}/></TouchableOpacity> : null
+                      (array.status === 'Pending'  || array.status === 'Scheduled' || array.status === 'Update Requested') ? <TouchableOpacity onPress={() => this.appointmentEdit(array.appointmentID)}><ResponsiveImage  source={require('../../assets/view-appointments_edit.jpeg')}  initWidth="36" initHeight="33" style={{marginRight: 5}}/></TouchableOpacity> : null
                     }
 
                     <TouchableOpacity onPress={() => this.cancleAppointMent(array.appointmentID)}>
@@ -345,7 +368,6 @@ reRanderViewInDetails(arrayShow){
 
                                             );
           }
-
                 render() {
                   const {
 

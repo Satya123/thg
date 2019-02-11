@@ -16,9 +16,8 @@
         export const IMAGE_HEIGHT_SMALL = window.width /7;
         import ResponsiveImage from 'react-native-responsive-image';
         import DeviceInfo from 'react-native-device-info';
-
+        import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
         class RequestAppointmentCard extends Component {
-
         constructor(props) {
         super(props);
                 this.animatedValue = new Animated.Value(0);
@@ -38,6 +37,7 @@
                         SelectdProvider:'',
                         txtPhone:'',
                         txtName:'',
+                       
                         txtAddress:'',
                         txtAditionalInfo:'',
                         dataRadio: [
@@ -287,7 +287,8 @@
                   }
                   const { arrDate }  = this.state;
                   const { arrTime }  = this.state;
-
+//debugger;
+//console.log(DeviceInfo.getTimezone());
                   appointmentSchedule = {"timeZone": DeviceInfo.getTimezone(),"dates": arrDate,"times": arrTime};
 
                   console.log(appointmentSchedule);
@@ -337,6 +338,7 @@
                            //console.log(reData.data.data);
                            this.setState({ loaded: false });
                            alert("Your appointment request is submitted successfully");
+                             //this.setState({ isRequestAppointment: true });
                             Actions.Appointments({isRequestAppointment:true})
                          }
                          else {
@@ -694,6 +696,7 @@ render() {
   let Render_Animated_View = this.state.ViewArray.map(( item, key ) =>
     {
  return(
+       
  <View style={{ flexDirection: 'row',marginBottom: 10}}>
                             <DatePicker
                             style={styles.datePic1}
@@ -753,7 +756,7 @@ render() {
   @render: this function use to present the UI of RequestAppointmentCard components.
 */
  return (
-
+  <KeyboardAwareScrollView>
  <ScrollView >
 {/***************************************/}
      <View  style={styles.mainRow}>
@@ -853,7 +856,7 @@ render() {
     {
         (this.state.isPrimary === true) ? null :
 
-      (this.state.SelectdAppointment === 'Primary Care') ?  <View style={styles.mainPopUp}>{this.primaryView()}</View> : null
+      (this.state.SelectdAppointment === 'Primary Care'  && this.props.isEnableTele == "1") ?  <View style={styles.mainPopUp}>{this.primaryView()}</View> : null
     }
     {/*Additional Date and time field added*/}
 
@@ -976,7 +979,7 @@ render() {
       </View>
     </ScrollView>
 
-
+  </KeyboardAwareScrollView>
     );
   }
 

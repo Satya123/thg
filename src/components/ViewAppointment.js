@@ -139,7 +139,7 @@ handler(data) {
     }
 
     <View style={{ width: '99%' }}>
-      <ViewAppoitnmentSubCard arrayDescription={dataArray} handler = {this.handler} />
+      <ViewAppoitnmentSubCard arrayDescription={dataArray} handler = {this.handler} isEnableTele={this.props.isEnableTele} /> 
     </View>
     </ImageBackground>
 

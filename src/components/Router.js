@@ -16,7 +16,7 @@ import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import Chat from './Chat';
 import VendorSplash from './VendorSplash';
-import CustomServiecs from './CustomServiecs';
+import CustomerServices from './CustomerServices';
 import Appointments from './Appointments';
 import NotificationPermission from './NotificationPermission';
 import { Alert, StatusBar } from 'react-native';
@@ -79,7 +79,7 @@ class RouterComponent extends Component {
        <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
        <Scene key='Dependents' component={Dependents} title='' />
        <Scene key='Policies' component={Policies} title='' />
-       <Scene key='CustomServiecs' component={CustomServiecs} title='' />
+       <Scene key='CustomerServices' component={CustomerServices} title='' />
        <Scene key='ServiceClass' component={ServiceClass} title='' />
        <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
        <Scene key='Chat' component={Chat} title=''  />

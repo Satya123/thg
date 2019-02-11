@@ -7,7 +7,7 @@ import Policies from './Policies';
 import CustomHeader from './CustomHeader';
 export const AccountInfoProfile = '100';
 import { Actions } from 'react-native-router-flux';
-import CustomServiecs from './CustomServiecs';
+import CustomerServices from './CustomerServices';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 export default class IDCard extends Component {
 constructor(props) {

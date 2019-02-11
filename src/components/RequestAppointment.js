@@ -32,7 +32,7 @@ class RequestAppointment extends Component {
                         source={require('../../assets/backgroundBlue.png')} >
                         <View style={{height: '95%', width: '100%' }}>
                             <View style={{margin: 10 }}>
-                                <RequestAppointmentCard />
+                                <RequestAppointmentCard isEnableTele={this.props.isEnableTele} />
                             </View>
                         </View>
                     </ImageBackground>

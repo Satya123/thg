@@ -13,7 +13,7 @@ import Chat from './Chat';
 import { Actions } from 'react-native-router-flux';
 import ResponsiveImage from 'react-native-responsive-image';
 
-class CustomServiecs extends Component {
+class CustomerServices extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -339,4 +339,4 @@ textStyle: {
 };
 
 
-export default CustomServiecs;
+export default CustomerServices;

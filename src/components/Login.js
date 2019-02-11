@@ -69,7 +69,7 @@ class Login extends React.Component {
             //alert("hi")
             this.setState({loaded: true})
             ServiceClass.loginData(txtMemberID, date, DeviceInfo.getDeviceId(), 'login').then((reData) => {
-                debugger;
+                //debugger;
               if (reData.data.status === '1') {
                     UserData.saveData('token', reData.data.data.token);
                     UserData.retriveData('token').then((resToken) => {

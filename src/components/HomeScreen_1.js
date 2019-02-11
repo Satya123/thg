@@ -1,6 +1,9 @@
-/*
-* @This is home link app page of App
- */
+/* CustomHeader.js
+  THG App
+  This File use for Dashboard .
+  @Created by Pulkit Arora
+*/
+
 import React from 'react';
 import { StyleSheet, TextInput, View, Alert, Button, Text,Platform,Image, TouchableOpacity,ImageBackground,AsyncStorage,SafeAreaView} from 'react-native';
 import { createStackNavigator, } from 'react-navigation';
@@ -17,44 +20,58 @@ import UserData from './UserData';
 import OfflineNotice from './OfflineNotice';
 import ResponsiveImage from 'react-native-responsive-image';
 
+  class HomeScreen extends React.Component {
+            constructor(props) {
+                 super(props);
+                 this.state = {
+                      isProfile: false,
+                      isHome: true,
+                      isMenu: false,
+                      isNotification: false,
+                    };
+                 }
+    /**
+        @Save User Profile Data In loacl Secure File
+        @Save User MemberId In AsyncStorage
+    **/
+    componentDidMount() {
+    //  debugger;
+    // console.log(this.props.telemedicine);
+               UserData.saveData('memberId', this.props.profileData[0].ID);
+           try {
+               AsyncStorage.setItem('profileArray', JSON.stringify(this.props.profileData));
+              }
+           catch (error) {
+              }
+        }
+    /*
+        @clickToCustomerServies:Call customer services class passing helper phone number
+    */
+        clickToCustomerServies(){
+            Actions.CustomerServices({phoneNumber: this.props.profileData[0].customerServicePhone});
+        }
+    /*
+      @clickToAppointments:Call appointment class passing user data
+    */
 
-class HomeScreen extends React.Component {
- constructor(props) {
-     super(props);
-     this.state = {
+        clickToAppointments(){
+            Actions.Appointments({isViewAppointments:true});
+        }
+    /*
+      @clickToAccountInfo:Call AccountInfo class passing user data
+    */
+        clickToAccountInfo() {
+            Actions.AccountInfo({ userData: this.props.profileData });
+        }
+  /*
+    @clickToIDCard:Call IDCard class passing user verification card
+  */
 
-          isProfile: false,
-          isHome: true,
-          isMenu: false,
-          isNotification: false,
-        };
-     }
-
-
-componentDidMount() {
-  AsyncStorage.getItem('profileArray')
-   .then((contacts) => {
-   const value = contacts ? JSON.parse(contacts) : [];
-   //console.log(value);
-   this.setState({ arrayValue: value })
- });
-
- }
-clickToCustomerServies(){
-    Actions.CustomerServices({phoneNumber: this.state.arrayValue[0].customerServicePhone});
-}
-clickToAppointments(){  
-  //Actions.Appointments({isViewAppointments:true});
-  Actions.Appointments({isViewAppointments:true,isEnableTele:this.props.telemedicine});
-}
-clickToAccountInfo() {
-    Actions.AccountInfo({ userData: this.state.arrayValue });
-}
-clickToIDCard() {
-    Actions.IDCard({ cardData: this.state.arrayValue[0].membershipCard });
-}
-
-render() {
+        clickToIDCard() {
+            Actions.IDCard({ cardData: this.props.profileData[0].membershipCard });
+        }
+    //MARK:- HomeScreen design
+        render() {
             return (
               <SafeAreaView style={styles.safeArea}>
                <ImageBackground style={ styles.imgBackground } resizeMode='cover' source={require('../../assets/backgroundBlue.png')}>
@@ -101,7 +118,7 @@ render() {
                                  onPress={() => { this.clickToCustomerServies(); }} >
                                  <View style={{justifyContent:'center',alignItems:'center'}}>
                                  <ResponsiveImage  source={require('../../assets/customer-service.png')}  initWidth="66" initHeight="66"/>
-                                   <Text style={{fontSize:18,color:'white',marginRight:10}}>Customer Services</Text>
+                                   <Text style={{fontSize:18,color:'white'}}>Customer Services</Text>
                                  </View>
                                  </TouchableOpacity>
                         }
@@ -115,13 +132,16 @@ render() {
                             onPress={() => { this.clickToCustomerServies(); }} >
                             <View style={{justifyContent:'center',alignItems:'center'}}>
                             <ResponsiveImage  source={require('../../assets/customer-service.png')}  initWidth="66" initHeight="66"/>
-                              <Text style={{fontSize:18,color:'white',marginRight:10}}>Customer Services</Text>
+                              <Text style={{fontSize:18,color:'white'}}>Customer Services</Text>
                             </View>
                             </TouchableOpacity>:null
                         }
 
-                           <View></View>
+   
                    </View>
+                   
+                   
+                   
                   <View style={styles.footerView}>
                                <CustomFooter
                                isProfile={this.state.isProfile}
@@ -147,7 +167,6 @@ const styles = StyleSheet.create({
          flex: 1,
          flexDirection: 'row',
          justifyContent: 'space-around',
-         paddingRight:10,
                  },
     appointments: {
          flexDirection: 'row',

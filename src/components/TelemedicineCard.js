@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, ScrollView } from 'react-native';
-
+import HTML from 'react-native-render-html';
 
 class TelemedicineCard extends Component {
 
@@ -24,7 +24,9 @@ return this.props.arrayDescription.map(array =>
        
       </View>
       <View>
-          <Text style={styles.textSub} key={keyId}>{array}</Text>
+          
+                  <HTML html={array}  />
+                 
 
       </View>
     </View>

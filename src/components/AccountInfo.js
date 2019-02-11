@@ -18,7 +18,6 @@ import OfflineNotice from './OfflineNotice';
 var isProfile = true;
 var isDependents = false;
 var isPolicies = false;
-
 class AccountInfo extends Component {
 
   static callByChild = (profile, dependents, policie) => {
@@ -85,7 +84,7 @@ class AccountInfo extends Component {
         <View style={styles.MainContainer}>
         <View style={{ width: '100%' }}>
               <CustomHeader
-              headerText={'AccountInfo'}
+              headerText={'Account Info'}
 
               />
         </View>

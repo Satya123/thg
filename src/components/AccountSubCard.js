@@ -12,7 +12,7 @@ import React, { Component } from 'react';
         return (
 <ScrollView>
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>Name</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -21,7 +21,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>ID Number</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -30,7 +30,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>Primary Language</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -39,8 +39,8 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
-            <Text style={styles.textSub}>email</Text>
+        <View style={styles.fiftypercentLeft} >
+            <Text style={styles.textSub}>Email</Text>
         </View>
         <View style={styles.fiftypercent}>
             <Text style={styles.textSubRight}>{this.props.arrayDescription[0].email}</Text>
@@ -48,7 +48,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>Address</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -57,7 +57,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>City</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -66,7 +66,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>State</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -75,7 +75,7 @@ import React, { Component } from 'react';
     </View>
     {/*End row */}
     <View style={styles.maniRow}>
-        <View style={styles.fiftypercent} >
+        <View style={styles.fiftypercentLeft} >
             <Text style={styles.textSub}>Zip Code</Text>
         </View>
         <View style={styles.fiftypercent}>
@@ -107,8 +107,11 @@ borderWidth: 1,
         flex: 1,
                 backgroundColor: 'red'
         },
+        fiftypercentLeft: {
+        width:'40%'
+        },
         fiftypercent: {
-        width:'50%'
+        width:'60%'
         },
         textStyle: {
         color: '#ff7417',

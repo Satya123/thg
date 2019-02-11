@@ -1,42 +1,33 @@
-/*@ RequestAppointmentEdit.js
-  THG App
-  This file use for edit appontment  .
-  Created by Pulkit Arora
-@*/
+  /*@ RequestAppointmentCard.js
+    THG App
+    This file is  used to show the request appontment details .
+    Created by Pulkit Arora
+  @*/
+        import React, { Component } from 'react';
+        import { View, Image, Text, ScrollView, KeyboardAvoidingView, Keyboard, TextInput, StyleSheet, Animated, ActivityIndicator, AsyncStorage, Alert, TouchableOpacity, NetInfo} from 'react-native';
+        import ServiceClass from './ServiceClass';
+        import DatePicker from 'react-native-datepicker';
+        import { Dropdown } from 'react-native-material-dropdown';
+        import RNPickerSelect from 'react-native-picker-select';
+        import RadioGroup from 'react-native-radio-buttons-group';
+        import { Actions } from 'react-native-router-flux';
+        import UserData from './UserData';
+        export const IMAGE_HEIGHT = window.width / 2;
+        export const IMAGE_HEIGHT_SMALL = window.width /7;
+        import ResponsiveImage from 'react-native-responsive-image';
+        import DeviceInfo from 'react-native-device-info';
 
-
-import React, { Component } from 'react';
-        import { View, Image, Text, ScrollView, KeyboardAvoidingView, ImageBackground,SafeAreaView,Keyboard, TextInput, StyleSheet, Animated, ActivityIndicator, AsyncStorage, Alert, TouchableOpacity, NetInfo} from 'react-native';
-//import Dropdown from 'react-native-modal-dropdown';
-import ServiceClass from './ServiceClass';
-import DatePicker from 'react-native-datepicker';
-import { Dropdown } from 'react-native-material-dropdown';
-import RNPickerSelect from 'react-native-picker-select';
-//import RadioGroup from 'react-native-radio-buttons-group';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import { Actions } from 'react-native-router-flux';
-import UserData from './UserData';
-import CustomFooter from './CustomFooter';
-import CustomHeader from './CustomHeader';
-export const IMAGE_HEIGHT = window.width / 2;
-export const IMAGE_HEIGHT_SMALL = window.width /7;
-import ResponsiveImage from 'react-native-responsive-image';
-import DeviceInfo from 'react-native-device-info';
-
-  class RequestAppointmentEdit extends Component {
-
+        class RequestAppointmentCard extends Component {
         constructor(props) {
         super(props);
                 this.animatedValue = new Animated.Value(0);
                 this.Array_Value_Index = 0;
-                this.selectValueInArray = 0;
                 this.props = props;
                 this.inputRefs = {};
                 this.today = new Date();
                 loaded: false,
                 this.keyboardHeight = new Animated.Value(0);
                 this.imageHeight = new Animated.Value(IMAGE_HEIGHT);
-
                 this.state = {
                 arrDate:[],
                         appointmentDateOne:'',
@@ -47,27 +38,21 @@ import DeviceInfo from 'react-native-device-info';
                         txtPhone:'',
                         txtName:'',
                         txtAddress:'',
-                         previousName:'',
                         txtAditionalInfo:'',
-                        previousAppointment:'',
-                        previousPaitent:'',
-                        isEdit:true,
-                        count : 78,
                         dataRadio: [
-                          {
-                          label: 'First Provider Available',
-                                  value: "First Provider Available",
-                                  color:'#ff7417',
-                                  size: 20,
-                          },
 
+                        {
+                        label: 'First Provider Available',
+                                value: "First Provider Available",
+                                color:'#ff7417',
+                                size: 20,
+                        },
                         {
                         label: 'Choose a Past Provider',
                                 value: 'Choose a Past Provider',
                                 color:'#ff7417',
                                 size: 20,
-                        },
-                      {
+                        }, {
                         label: 'Enter Preferred Provider',
                                 value: 'Enter Preferred Provider',
                                 color:'#ff7417',
@@ -80,49 +65,63 @@ import DeviceInfo from 'react-native-device-info';
                         ViewArray: [],
                         date:"",
                         time:'',
-                        SelectdAppointment: 'xyz',
+                        SelectdAppointment: '',
                         arrPatient: [],
                         SelectdPatient: '',
                         arrTimeZone: [
-
+                          {
+                          label: 'AKST (UTC -5)',
+                          value: 'AKST'
+                        },
+                          {
+                          label: 'HST (UTC -5)',
+                          value: 'HST'
+                        },
+                          {
+                          label: 'PST (UTC -5)',
+                          value: 'PST'
+                        },
+                        {
+                        label: 'MST (UTC -5)',
+                        value: 'MST'
+                      },
+                      {
+                        label: 'CST (UTC -5)',
+                        value: 'CST'
+                      },
+                    {
+                      label: 'EST (UTC -5)',
+                      value: 'EST'
+                  },
                         ],
 
                         txtReasonData:''
                 };
         }
+/*
+    @componentWillMount: In this function we retrive  appointment type list which we get on App Details Api,
+      and PrimaryCare text which are also provided in same Api.
 
-
-        /*
-            @componentWillMount: In this function we retrive  appointment type list which we get on App Details Api,
-              and PrimaryCare text which are also provided in same Api.
-
-        */
-
+*/
 
 
         componentWillMount() {
+
           this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
           this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
-        AsyncStorage.getItem('AppointmentType')
+          AsyncStorage.getItem('AppointmentType')
                 .then((contacts) => {
                 const value = contacts ? JSON.parse(contacts) : [];
                         console.log(value);
                         this.setState({ arrayAppointment: value })
                         });
                 UserData.retriveData('PrimaryCare').then((value) => {
-        console.log(value);
+                  console.log(value);
                 this.setState({ strPrimaryType: value })
                 })
 
-                AsyncStorage.getItem('profileArray')
-                        .then((contacts) => {
-                            const value = contacts ? JSON.parse(contacts) : [];
-                            console.log(value);
-                            this.setState({arrayValue: value})
-                        });
-
                 }
-                componentWillUnmount() {
+              componentWillUnmount() {
                   this.keyboardWillShowSub.remove();
                   this.keyboardWillHideSub.remove();
                 }
@@ -152,83 +151,28 @@ import DeviceInfo from 'react-native-device-info';
                     }),
                   ]).start();
                 };
+
     /*
         @componentDidMount: In this function we get all Dependents .
 
     */
+  componentDidMount() {
+          NetInfo.isConnected.fetch().done((isConnected) => {
+                        if (isConnected)
+                        {
 
-        componentDidMount() {
-          AsyncStorage.getItem('editDetailsData')
-                  .then((contacts) => {
-                      const value = contacts ? JSON.parse(contacts) : [];
-                     // debugger;
+                        UserData.retriveData('token').then((resToken) => {
+                        UserData.retriveData('memberId').then((res) => {
+                        this.getDependant(resToken, res);
+                        });
+                        })
 
-                        if(value[0].providerOption === 'First Provider Available'){
-                              valuenew = 0;
-
-                        }else if (value[0].providerOption === 'Choose a Past Provider') {
-                              valuenew = 1
-                        }else{
-                            valuenew = 2
                         }
-                        console.log(valuenew);
+                        else
+                        {
 
-                      this.setState({
-              previousAppointment:value[0].appointmentType + "*",
-              SelectdTimeZone:value[0].timeZone,
-             previousName:value[0].patientName + "*",
-             previousPaitent:value[0].dependentID,
-              selectedAppointmentID:value[0].appointmentID,
-             txtName: value[0].providerName,
-             txtPhone: value[0].providerPhone,
-             txtAddress: value[0].providerAddress.street + value[0].providerAddress.city + value[0].providerAddress.state + value[0].providerAddress.zip,
-             txtReasonData:value[0].visitReason,
-             appointmentDateOne:value[0].appointmentDate,
-             appointmentTimeOne:value[0].appointmentTime,
-             textProvider:value[0].providerOption,
-             txtAditionalInfo:value[0].schedulingNote,
-             arrDate:value[0].appointmentSchedule.dates.reverse(),
-             arrTime:value[0].appointmentSchedule.times.reverse(),
-             isEdit: true,
-             count: valuenew
-
-
-
-            });
-      });
-
-
-        NetInfo.isConnected.fetch().done((isConnected) => {
-        if (isConnected)
-        {
-
-          UserData.retriveData('token').then((resToken) => {
-            UserData.retriveData('memberId').then((res) => {
-                this.getDependant(resToken, res);
-              });
-        })
-
-        }
-        else
-        {
-
-        }
-        });
-
-
-  }
-
-
-
-  /*
-    @handleKeyDown: this function called on keyboard return press.
-
-  */
-
-          handleKeyDown = (e) => {
-             if(e.nativeEvent.key == "Enter"){
-                Keyboard.dismiss();
-             }
+                        }
+                  });
           }
   /*
       @getDependant: In this function we call Api for getting data of Depandents  .
@@ -238,56 +182,51 @@ import DeviceInfo from 'react-native-device-info';
   */
 
         getDependant = (token, memberID) => {
-          const arrPatient = [];
-                  console.log(token);
-                  this.setState({ loaded: true });
-                  ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
-          if (reData.data.status === '1') {
-          this.setState({ dataArray: reData.data.data });
+        const arrPatient = [];
+                console.log(token);
+                this.setState({ loaded: true });
+                ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
+        if (reData.data.status === '1') {
+        this.setState({ dataArray: reData.data.data });
 
-          console.log(this.state.dataArray);
-                  this.setState({ loaded: false });
-                  for (var item in this.state.dataArray){
+        console.log(this.state.dataArray);
+                this.setState({ loaded: false });
+                for (var item in this.state.dataArray){
 
-                  arrPatient.push({
-                  label: this.state.dataArray[item].fisrtName + " " + this.state.dataArray[item].lastName,
-                  value: this.state.dataArray[item].dependentID
-                  })
+                arrPatient.push({
+                label: this.state.dataArray[item].fisrtName + " " + this.state.dataArray[item].lastName,
+                value: this.state.dataArray[item].dependentID
+                })
 
-          }
-          this.setState({ arrPatient: arrPatient });
-                  console.log(this.state.arrPatient);
-
-
-          }
-          else {
-              
-                if (reData.data.message === 'Invalid date time provided.'){
-
-                               this.state.appointmentDateOne = '',
-                               this.state.appointmentTimeOne = '',
-                               this.state.arrDate = [],
-                               this.state.arrTime = [],
-                                 this.defaultDateTime()
-                            }
-          
-          this.setState({ loaded: false });
-                  Alert.alert(reData.data.message);
-          }
-
-          }).catch((error) => {
-          //console.log(error);
-          Alert.alert(error);
-          });
         }
+        this.setState({ arrPatient: arrPatient });
+                console.log(this.state.arrPatient);
+
+
+        }
+        else {
+        this.setState({ loaded: false });
+               // Alert.alert(reData.data.message);
+        }
+
+        }).catch((error) => {
+        //console.log(error);
+        //Alert.alert(error);
+        });
+        }
+
         /*
             @clickToRequest: In this function we submit details in request appointment Api.
             @strProvider: this parameter pass through view, it is used to get current Provider type.
         */
 
-        clickToRequest = () => {
-          const { appointmentTimeOne }  = this.state;
-          const { appointmentDateOne }  = this.state;
+
+        clickToRequest = (strProvider) => {
+
+
+
+            const { appointmentTimeOne }  = this.state;
+            const { appointmentDateOne }  = this.state;
             const { SelectdAppointment }  = this.state;
             const { txtReasonData }  = this.state;
             const { txtName }  = this.state;
@@ -295,13 +234,6 @@ import DeviceInfo from 'react-native-device-info';
             const { txtAddress }  = this.state;
             const { SelectdTimeZone }  = this.state;
             const { txtAditionalInfo }  = this.state;
-            const { textProvider }  = this.state;
-
-            this.state.SelectdAppointment =   this.state.SelectdAppointment.replace('*', '');
-            this.state.SelectdPatient =   this.state.SelectdPatient.replace('*', '');
-
-            //debugger;
-
               if (this.state.SelectdAppointment === ''){
                 alert("Please Select Valid Appointment");
 
@@ -313,10 +245,8 @@ import DeviceInfo from 'react-native-device-info';
                 alert("Please Select Appointment Date ");
                 } else if (this.state.appointmentTimeOne === ''){
                 alert("Please Select Appointment Time ");
-                }
-                else{
-
-                 if (textProvider === 'Enter Preferred Provider') {
+                }else{
+                 if (strProvider === 'Enter Preferred Provider') {
                     if(this.state.txtName === ' ' ){
                       alert("Please Enter Preferred Provider Name");
                     }else if(this.state.txtPhone === ''){
@@ -340,7 +270,7 @@ import DeviceInfo from 'react-native-device-info';
 
                                      UserData.retriveData('token').then((resToken) => {
                                          UserData.retriveData('memberId').then((res) => {
-                                             this.requestAppointment(resToken, res,this.state.SelectdAppointment,txtReasonData,appointmentSchedule,txtAditionalInfo,textProvider,txtName,txtPhone,txtAddress,this.state.SelectdPatient);
+                                             this.requestAppointment(resToken, res,SelectdAppointment,txtReasonData,appointmentSchedule,txtAditionalInfo,strProvider,txtName,txtPhone,txtAddress,this.state.SelectdPatient);
                                          });
                                      })
 
@@ -366,7 +296,7 @@ import DeviceInfo from 'react-native-device-info';
 
                                UserData.retriveData('token').then((resToken) => {
                                    UserData.retriveData('memberId').then((res) => {
-                                       this.requestAppointment(resToken, res,this.state.SelectdAppointment,txtReasonData,appointmentSchedule,txtAditionalInfo,textProvider,txtName,txtPhone,txtAddress,this.state.SelectdPatient);
+                                       this.requestAppointment(resToken, res,SelectdAppointment,txtReasonData,appointmentSchedule,txtAditionalInfo,strProvider,txtName,txtPhone,txtAddress,this.state.SelectdPatient);
                                    });
                                })
 
@@ -381,8 +311,9 @@ import DeviceInfo from 'react-native-device-info';
 
         }
 
+
         /*
-          @requestAppointment: This  function used for Update Appointment.
+          @requestAppointment: This  function used for Request Appointment.
           @token: This parameter hold the token value, which is used in Api headers.
           @lastUrl: Subpath of Api.
           @appointmentType: Type of Appointment.
@@ -396,141 +327,148 @@ import DeviceInfo from 'react-native-device-info';
           @dependentID: Selected Patient Id .
 
         */
-        requestAppointment = (token, memberID,appointmentType, visitReason, appointmentSchedule,schedulingNote, providerOption,providerName,providerPhone,providerAddress,dependentID) => {
+
+    requestAppointment = (token, memberID,appointmentType, visitReason, appointmentSchedule,schedulingNote, providerOption,providerName,providerPhone,providerAddress,dependentID) => {
                         this.setState({ loaded: true });
-                       ServiceClass.updateAppointment(token, `appointments/${ memberID}/appointment/${this.state.selectedAppointmentID}`,appointmentType, visitReason, appointmentSchedule,schedulingNote ,providerOption,providerName,providerPhone,providerAddress,dependentID).then((reData) => {
+                       ServiceClass.requestAppointment(token, `appointments/${ memberID}`,appointmentType, visitReason, appointmentSchedule,schedulingNote ,providerOption,providerName,providerPhone,providerAddress,dependentID).then((reData) => {
 
                          if (reData.data.status === '1') {
-                           console.log(reData.data.data);
+                           //console.log(reData.data.data);
                            this.setState({ loaded: false });
-                           alert("Your appointment updated successfully");
-                           Actions.Appointments({isViewAppointments:true});
-
-
+                           alert("Your appointment request is submitted successfully");
+                             //this.setState({ isRequestAppointment: true });
+                            Actions.Appointments({isRequestAppointment:true})
                          }
                          else {
-                        //   debugger;
-                            console.log(reData.data);
+                          // debugger;
+                           // console.log(reData.data);
                              this.setState({ loaded: false });
-                             Alert.alert(reData.data.message);
+                           Alert.alert(reData.data.message);
+                             if (reData.data.message === 'Invalid date time provided.'){
 
+                                this.state.appointmentDateOne = '',
+                                this.state.appointmentTimeOne = '',
+                                this.state.arrDate = [],
+                                this.state.arrTime = [],
+                                  this.defaultDateTime()
+                             }
 
 
                          }
 
                        }).catch((error) => {
                         //   debugger;
-                           Alert.alert(error);
+                          Alert.alert(error);
                        });
              }
+
 
  /*
    @removeAdditionalDateTime: this function is used for removing additional date and time text field.
  */
-     removeAdditionalDateTime = () =>{
+ removeAdditionalDateTime = () =>{
 
-               this.animatedValue.setValue(0);
-               //debugger;
-              // console.log(this.state.arrDate);
-               //  if (this.Array_Value_Index === 1){
-               //    this.setState({arrDate: ['']});
-               //    this.setState({arrTime: ['']});
-               //
-               // } else if (this.Array_Value_Index === 2) {
-               //   this.setState({arrDate: [this.state.arrDate[0],'']});
-               //     this.setState({arrTime: [this.state.arrTime[0],'']});
-               // }
+   this.animatedValue.setValue(0);
+   //debugger;
+   console.log(this.state.arrDate);
+    if (this.Array_Value_Index === 1){
+      this.setState({arrDate: ['']});
+      this.setState({arrTime: ['']});
 
-               //console.log();
-               this.setState({ Disable_Button: false, ViewArray: this.state.ViewArray.splice(1,1) }, () =>
-               {
-               Animated.timing(
-                       this.animatedValue,
-               {
-               toValue: 1,
-                       duration: 200,
-                       useNativeDriver: true
-               }
-               ).start(() =>
-               {
-               this.Array_Value_Index = this.Array_Value_Index - 1;
-                       this.setState({ Disable_Button: false });
-               });
-               });
-    }
+   } else if (this.Array_Value_Index === 2) {
+     this.setState({arrDate: [this.state.arrDate[0],'']});
+       this.setState({arrTime: [this.state.arrTime[0],'']});
+   }
 
+   //console.log();
+   this.setState({ Disable_Button: false, ViewArray: this.state.ViewArray.splice(1,1) }, () =>
+   {
+   Animated.timing(
+           this.animatedValue,
+   {
+   toValue: 1,
+           duration: 200,
+           useNativeDriver: true
+   }
+   ).start(() =>
+   {
+   this.Array_Value_Index = this.Array_Value_Index - 1;
+           this.setState({ Disable_Button: false });
+   });
+   });
 
-    /*
-      @selcteAdditionalDateTime: this function is used for adding additional date and time text field.
-    */
+ }
 
 
-        selcteAdditionalDateTime = () =>
-                {
-                  if (this.state.appointmentDateOne === ''){
-                  alert("Please Select Appointment Date ");
-                  } else if (this.state.appointmentTimeOne === ''){
-                  alert("Please Select Appointment Time ");
-                  } else if (this.Array_Value_Index == 1){
-                  if (this.state.arrDate.length === 0 || this.state.arrDate[0] === ''){
-                  alert("Please Select Appointment Date ");
-                } else if (this.state.arrTime[0] === '' || this.state.arrTime.length === 0){
-                  alert("Please Select Appointment Time ");
-                  } else{
-                this.animatedValue.setValue(0);
-                        let New_Added_View_Value = { Array_Value_Index: this.Array_Value_Index }
 
-                this.setState({ Disable_Button: true, ViewArray: [ ...this.state.ViewArray, New_Added_View_Value ] }, () =>
-                {
-                Animated.timing(
-                        this.animatedValue,
-                {
-                toValue: 1,
-                        duration: 200,
-                        useNativeDriver: true
-                }
-                ).start(() =>
-                {
-                this.Array_Value_Index = this.Array_Value_Index + 1;
-                        this.setState({ Disable_Button: false });
-                });
-                });
-                }
-                }
-                else{
-                this.animatedValue.setValue(0);
-                        let New_Added_View_Value = { Array_Value_Index: this.Array_Value_Index }
+ /*
+   @selcteAdditionalDateTime: this function is used for adding additional date and time text field.
+ */
 
-                this.setState({ Disable_Button: true, ViewArray: [ ...this.state.ViewArray, New_Added_View_Value ] }, () =>
-                {
-                Animated.timing(
-                        this.animatedValue,
-                {
-                toValue: 1,
-                        duration: 200,
-                        useNativeDriver: true
-                }
-                ).start(() =>
-                {
-                this.Array_Value_Index = this.Array_Value_Index + 1;
-                        this.setState({ Disable_Button: false });
-                });
-                });
-                }
 
-                this.selectValueInArray = this.selectValueInArray + 1;
+selcteAdditionalDateTime = () =>{
+
+
+        if (this.state.appointmentDateOne === ''){
+        alert("Please Select Appointment Date ");
+        } else if (this.state.appointmentTimeOne === ''){
+        alert("Please Select Appointment Time ");
+        } else if (this.Array_Value_Index == 1){
+        if (this.state.arrDate.length === 0 || this.state.arrDate[0] === ''){
+        alert("Please Select Appointment Date ");
+      } else if (this.state.arrTime[0] === '' || this.state.arrTime.length === 0){
+        alert("Please Select Appointment Time ");
+        } else{
+        this.animatedValue.setValue(0);
+                let New_Added_View_Value = { Array_Value_Index: this.Array_Value_Index }
+
+        this.setState({ Disable_Button: false, ViewArray: [ ...this.state.ViewArray, New_Added_View_Value ] }, () =>
+        {
+        Animated.timing(
+                this.animatedValue,
+        {
+        toValue: 1,
+                duration: 200,
+                useNativeDriver: true
+        }
+        ).start(() =>
+        {
+        this.Array_Value_Index = this.Array_Value_Index + 1;
+                this.setState({ Disable_Button: false });
+        });
+        });
+        }
+        }
+        else{
+        this.animatedValue.setValue(0);
+                let New_Added_View_Value = { Array_Value_Index: this.Array_Value_Index }
+
+        this.setState({ Disable_Button: false, ViewArray: [ ...this.state.ViewArray, New_Added_View_Value ] }, () =>
+        {
+        Animated.timing(
+                this.animatedValue,
+        {
+        toValue: 1,
+                duration: 200,
+                useNativeDriver: true
+        }
+        ).start(() =>
+        {
+        this.Array_Value_Index = this.Array_Value_Index + 1;
+                this.setState({ Disable_Button: false });
+        });
+        });
+        }
+
 }
 
 /*
   @defaultDateTime: this function is used to show by default date and time text field.
 */
 
-
 defaultDateTime()  {
 const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getDate() +"/"+   this.today.getFullYear();
-// const stringDateTime = new Date().toLocaleString();
-// const arrFindTime  = stringDateTime.split(',');
-// const strWithPM =  arrFindTime[1].split(' ');
+
  return(
     <View style={styles.mainRow}>
       <View style={styles.viewContent} >
@@ -552,7 +490,6 @@ const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getD
                placeholder="Date"
                confirmBtnText="OK"
                cancelBtnText="Cancel"
-               value={this.state.appointmentDateOne}
                showIcon={false}
                onDateChange={(date) => {
                 this.setState({appointmentDateOne: date})
@@ -563,7 +500,6 @@ const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getD
                customStyles={styles.dateCustomStyle}
                date={this.state.appointmentTimeOne}
                showIcon={false}
-               value={this.state.appointmentTimeOne}
                mode="time"
                placeholder="Time"
                format="HH:mm"
@@ -585,14 +521,15 @@ const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getD
 }
 
 onPress = selectedRaidodata => this.setState({ selectedRaidodata });
+
 /*
 @selctedThirdProviderType: this function is used to call when user selected Preferred Provider.
 */
 
-thirdOptionSelectd(){
+selctedThirdProviderType(){
   return(
 
-      <Animated.View style={{ paddingBottom: this.keyboardHeight }}>
+      <Animated.View style={[ { paddingBottom: this.keyboardHeight }]}>
       <View style={styles.mainRow}>
          <View style={styles.viewContent} >
            <Text style={styles.textSub}>Name</Text>
@@ -600,7 +537,6 @@ thirdOptionSelectd(){
      <View style={styles.viewText} >
          <TextInput
     style={styles.textBox}
-    value={this.state.txtName}
     onChangeText={txtName => this.setState({txtName:txtName})}
     underlineColorAndroid="transparent"
 />
@@ -618,7 +554,6 @@ thirdOptionSelectd(){
       style={styles.textBox}
      keyboardType="number-pad"
      returnKeyType='done'
-     value={this.state.txtPhone}
      onChangeText={txtPhone => this.setState({txtPhone:txtPhone})}
      underlineColorAndroid="transparent"
 
@@ -634,7 +569,6 @@ thirdOptionSelectd(){
      <View style={styles.viewText} >
          <TextInput
     style={styles.textBox}
-    value={this.state.txtAddress}
     onChangeText={txtAddress => this.setState({txtAddress:txtAddress})}
     underlineColorAndroid="transparent"
 
@@ -645,28 +579,40 @@ thirdOptionSelectd(){
 
 )
 }
+/*
+  @handleKeyDown: this function used to close the keyboard on return click.
+*/
+handleKeyDown = (e) => {
+   if(e.nativeEvent.key == "Enter"){
+      Keyboard.dismiss();
+   }
+}
 
 clickToClose = () => {
- this.setState({ isPrimary: true });
+this.setState({ isPrimary: true });
 }
+
 /*
   @clickToCannectTelimedcine: this function used to close the PrimaryCare Pop-up.
 */
 clickToCancle = () => {
 this.setState({ isPrimary: true });
 }
+
 /*
   @clickToCannectTelimedcine: this function used to redirect on Telemedicine page.
 */
+
 clickToCannectTelimedcine = () => {
    Actions.Telemedicine();
   this.setState({ isPrimary: true });
 }
+
 /*
   @primaryView: this function used to present Primary Care description.
 */
-primaryView() {
 
+primaryView() {
     return(
  <View  style={styles.mainPrimaryCarePopUp}>
       <View style={{width:'100%', height:50, flexDirection:'row', borderBottomWidth:2, borderColor:'#f2f2f2'}} >
@@ -732,44 +678,24 @@ setProvider(str){
     this.setState({SelectdProvider:str});
 }
 
-/*
-  @Main RenderView All SubPart are added here.
-
-*/
-
-
-
-onSelect(index, value){
- this.setState({
-   textProvider: value
- })
-}
-
-
-
-
+/*  @Main RenderView All SubPart are added here.*/
 
 render() {
-
   const {
-    isEdit,
     dataArray,
     loaded
   } = this.state;
-/*
-    Radio Button Value Get here.
-*/
- const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getDate() +"/"+   this.today.getFullYear();
-
-/*
-    On Click of extra Date Time field added here.
-*/
- let Render_Animated_View = this.state.ViewArray.map(( item, key ) =>
+/*Radio Button Value Get here.*/
+    let selectedButton = this.state.dataRadio.find(e => e.selected == true);
+        selectedButton = selectedButton ? selectedButton.value : this.state.dataRadio[0].label;
+      //  alert(selectedButton);
+     const  dateCurrent =  parseInt(  this.today.getMonth()+1) + "/"+ this.today.getDate() +"/"+   this.today.getFullYear();
+/*On Click of extra Date Time field added here.*/
+  let Render_Animated_View = this.state.ViewArray.map(( item, key ) =>
     {
-
  return(
- <View style={{ flexDirection: 'row',marginBottom: 10,width:'98%'}}>
- <DatePicker
+ <View style={{ flexDirection: 'row',marginBottom: 10}}>
+                            <DatePicker
                             style={styles.datePic1}
                             customStyles={styles.dateCustomStyle}
                             ref='datepicker'
@@ -782,18 +708,18 @@ render() {
                             placeholder="Date"
                             confirmBtnText="OK"
                             cancelBtnText="Cancel"
-                            value={this.state.arrDate[2]}
                             showIcon={false}
                             onDateChange={(date) => {
                                                 const arrDate = this.state.arrDate;
                                                         arrDate[key] = date;
                                                         this.setState({
-                                                        arrDate,
+                                                        arrDate
                                  });
+                                 this.setState({
+                                 isPlusClick: false
+                                });
 
                               }}   />
-
-
                          <DatePicker
                              style={styles.datePic2}
                              customStyles={styles.dateCustomStyle}
@@ -805,9 +731,9 @@ render() {
                              minDate={new Date().toLocaleString()}
                              format="HH:mm"
                              confirmBtnText="OK"
+                             value=""
                              cancelBtnText="Cancel"
                              minuteInterval={1}
-                             value={this.state.arrTime[2]}
                              onDateChange={(time) => {
                                                         const arrTime = this.state.arrTime;
                                                                 arrTime[key] = time;
@@ -817,8 +743,6 @@ render() {
                              }}
                               />
      </View>
-
-
        );
 
     });
@@ -826,21 +750,11 @@ render() {
 
 
 /*
-  @render: this function use to present the UI of RequestAppointmentEdit components.
+  @render: this function use to present the UI of RequestAppointmentCard components.
 */
-
  return (
-   <SafeAreaView style={styles.safeArea}>
-       <View style={styles.MainContainer}>
-           <View style={{width: '100%', height: 60 }}>
-               <CustomHeader
-                   headerText={'Edit Appointments'}
 
-                   />
-           </View>
-<ImageBackground style={styles.imgBackground} resizeMode='cover' source={require('../../assets/backgroundBlue.png')} >
-<View style={{height: '85%', width: '96%',margin:10,backgroundColor:'0f0' }}>
- <ScrollView>
+ <ScrollView >
 {/***************************************/}
      <View  style={styles.mainRow}>
       <View style={styles.viewContent} >
@@ -849,8 +763,8 @@ render() {
        <View style={styles.viewText} >
      <RNPickerSelect
                         placeholder={{
-                            label: this.state.previousAppointment,
-                            value: this.state.previousAppointment,
+                            label: 'Select Appointment Type',
+                            value: null,
                         }}
                         items={this.state.arrayAppointment}
                         onValueChange={(value) => {
@@ -865,13 +779,12 @@ render() {
                                     isPrimary: true,
 
                                 });
+
                         }}
 
                         style={{ ...pickerSelectStyles }}
                         value={this.state.SelectdAppointment}
-                        ref={(el) => {
-                            this.inputRefs.picker = el;
-                        }}
+
                     />
       </View>
         </View>
@@ -888,22 +801,22 @@ render() {
            </View>
             <View style={styles.viewText} >
             <RNPickerSelect
-                                placeholder={{
-                                    label: this.state.previousName,
-                                   value: this.state.previousPaitent,
-                                }}
-                                items={this.state.arrPatient}
-                                onValueChange={(value) => {
-                                    this.setState({
-                                        SelectdPatient: value,
-                                    });
-                                }}
+                              placeholder={{
+                                  label: 'Select Patient Type',
+                                  value: null,
+                              }}
+                              items={this.state.arrPatient}
+                              onValueChange={(value) => {
+                                  this.setState({
+                                      SelectdPatient: value,
+                                  });
+                              }}
 
-                                style={{ ...pickerSelectStyles }}
-                                value={this.state.SelectdPatient}
-                                ref={(el) => {
-                                    this.inputRefs.picker = el;
-                                }}
+                              style={{ ...pickerSelectStyles }}
+                              value={this.state.SelectdPatient}
+                              ref={(el) => {
+                                  this.inputRefs.picker = el;
+                              }}
                           />
 
            </View>
@@ -924,7 +837,6 @@ render() {
       numberOfLines={10}
       returnKeyType="done"
       onKeyPress={this.handleKeyDown}
-      value={this.state.txtReasonData}
       onChangeText={txtReason => this.setState({txtReasonData:txtReason})}
       multiline={true} />
 
@@ -934,19 +846,20 @@ render() {
 {/************************************/}
 
 
-{/*******************************************/}
 
-     {/*******************************************/}
 
 
     {/*******************************************/}
     {
         (this.state.isPrimary === true) ? null :
 
-      (this.state.SelectdAppointment === 'Primary Care' && this.props.isEnableTele === "1") ?  <View style={styles.mainPopUp}>{this.primaryView()}</View> : null
+      (this.state.SelectdAppointment === 'Primary Care') ?  <View style={styles.mainPopUp}>{this.primaryView()}</View> : null
     }
     {/*Additional Date and time field added*/}
+
       {this.defaultDateTime()}
+
+
         {/*******************************************/}
         <View  style={styles.mainRowSub}>
          <View style={styles.viewContent} >
@@ -955,25 +868,25 @@ render() {
            fontSize: 13,
          }}>Add (+) | Remove (-)</Text>
          </View>
-        <View style={{width:'67%'}}>
-          <View style={{width:'100%'}}>
+       <View style={{width:'67%'}}>
+          <View style={{width:'93%'}}>
             {Render_Animated_View}
           </View>
           <View style={{width:'100%',flexDirection:'row'}}>
            <View style={{width:'30%'}}>
 
 
-        {
-        (this.Array_Value_Index === 2)? null :         <TouchableOpacity
+{
+  (this.Array_Value_Index === 2)? null :         <TouchableOpacity
               activeOpacity = { 0.7 }
               style = { styles.TouchableOpacityStyle }
               disabled = { this.state.Disable_Button }
               onPress = { this.selcteAdditionalDateTime }>
               <View style={{flexDirection:'row',marginBottom:10,height:40}}>
-        <Text style={{fontSize:36,color:'#ff7417',textAlign:'left',paddingRight:5,paddingLeft:5,marginTop:-10}}>+</Text>
+    <Text style={{fontSize:36,color:'#ff7417',textAlign:'left',paddingRight:5,paddingLeft:5,marginTop:-10}}>+</Text>
                     </View>
               </TouchableOpacity>
-        }
+}
 
 
 
@@ -995,15 +908,15 @@ render() {
 
               }
 
-        </View>
-        </View>
-        </View>
+  </View>
+</View>
+ </View>
            </View>
 
   {/*******************************************/}
 
-            {/*******************************************/}
 
+            {/*******************************************/}
         <View style={styles.mainRow}>
            <View style={styles.viewContent} >
              <Text style={styles.textSub}>Additional Info</Text>
@@ -1015,14 +928,11 @@ render() {
       underlineColorAndroid="transparent"
       placeholder="Type something"
       placeholderTextColor="grey"
-      numberOfLines={10}
-      value={this.state.txtAditionalInfo}
       returnKeyType="done"
       onKeyPress={this.handleKeyDown}
       onChangeText={txtAditionalInfo => this.setState({txtAditionalInfo:txtAditionalInfo})}
       multiline={true}
     />
-
 
       </View>
       </View>
@@ -1033,74 +943,39 @@ render() {
           <Text style={styles.textSub}>Is there a specific provider?</Text>
       </View>
        <View style={styles.viewText} >
-
-
+    <View style={styles.container}>
                 <RadioGroup
-                    size={24}
-                    thickness={2}
-                    color='#ff7417'
+                radioButtons={this.state.dataRadio}
+                label={false}
+                 onPress={selectedRaidodata => this.setState({
+                    selectedRaidodata
 
-                    selectedIndex={this.state.count}
-                    onSelect = {(index, value) => this.onSelect(index, value)}
-                >
-                    <RadioButton
-                        value='First Provider Available'
-                    >
-                        <Text  style={{color:'#fff'}}>First Provider Available</Text>
-                    </RadioButton>
-
-                    <RadioButton
-                        value='Choose a Past Provider'
-                       color='#ff7417'
-                    >
-                        <Text  style={{color:'#fff'}}>Choose a Past Provider</Text>
-                    </RadioButton>
-
-                    <RadioButton
-                        value='Enter Preferred Provider'
-                        color='#ff7417'
-                    >
-                        <Text style={{color:'#fff'}}>Enter Preferred Provider</Text>
-                    </RadioButton>
-
-
-                </RadioGroup>
-
-
+                   }) }
+                 color={'#ffffff'}
+                 style={{color:'white'}} />
             </View>
+
+      </View>
         </View>
 
         {/*******************************************/}
 
         {
-          (this.state.textProvider == 'Enter Preferred Provider') ? <View>{this.thirdOptionSelectd()}</View> : null
+            //alert(selectedButton);
+          (selectedButton == 'Enter Preferred Provider') ? <View>{this.selctedThirdProviderType()}</View> : null
         }
      <View style={styles.mainRow}>
            <View style={styles.viewContent} >
 
           </View>
-
-       <TouchableOpacity
-          activeOpacity = { 0.7 }
-          onPress = { this.clickToRequest.bind(this) }>
-            <ResponsiveImage  source={require('../../assets/UpdateAppointmentBtn.png')}   initWidth="257" initHeight="50"/>
-      </TouchableOpacity>
-
+          <TouchableOpacity
+             activeOpacity = { 0.7 }
+             onPress = { this.clickToRequest.bind(this,selectedButton) }>
+               <ResponsiveImage  source={require('../../assets/request-appointment-btn.png')}   initWidth="257" initHeight="50"/>
+         </TouchableOpacity>
       </View>
     </ScrollView>
-    </View>
-      </ImageBackground>
-      <View style={styles.footerView}>
-      <CustomFooter
 
-          isHome={this.state.isHome}
-          isMenu={this.state.isMenu}
-          isNotification={this.state.isNotification}
-          profileData={this.state.arrayValue}
-          />
-      </View>
-     </View>
-</SafeAreaView>
 
     );
   }
@@ -1113,60 +988,30 @@ render() {
 
 }
 
-
 /*
   @styles:  these style constant are used to create a presentable ui .
 */
-  const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-    fontSize: 16,
-    paddingTop: 13,
-    paddingHorizontal: 10,
-    paddingBottom: 12,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    backgroundColor: 'white',
-    color: 'black',
-    },
+
+
+const pickerSelectStyles = StyleSheet.create({
     inputAndroid: {
-    fontSize: 16,
-    paddingTop: 13,
-    paddingHorizontal: 10,
-    paddingBottom: 12,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 8,
-    backgroundColor: 'white',
-    color: 'black',
+        fontSize: 16,
+        paddingTop: 13,
+        paddingHorizontal: 10,
+        paddingBottom: 12,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 4,
+        backgroundColor: 'white',
+        color: 'black',
     },
-    });
+});
 const styles = {
-  safeArea: {
-      flex: 1,
-
-  },
-  text: {
-        padding: 10,
-        fontSize: 14,
-    },
-
-  imgBackground: {
-      width: '100%',
-      height: '100%',
-  },
-
   MainContainer:
           {
               flex: 1,
 
           },
-          footerView: {
-                 width: '100%',
-                 height: 45,
-                 position: 'absolute',
-                 bottom: 0
-             },
   container: {
       paddingTop: 30,
       backgroundColor: '#fff',
@@ -1263,8 +1108,9 @@ textSubLeft: {
 mainRowSub: {
   //backgroundColor:'#0f0',
  flexDirection: 'row',
- marginBottom: 0,
- width:'100%'
+ marginBottom: 10,
+ width:'100%',
+
 
 
 },
@@ -1292,7 +1138,7 @@ color:'#ffffff', width:'56%',
 },
 datePic2: {
 backgroundColor: '#ffffff',height:46,paddingBottom:10,paddingTop:0,paddingLeft:10,borderRadius:3,
-color:'#ffffff', width:'40%',
+color:'#ffffff', width:'44%',
 
 },
 dateCustomStyle:{
@@ -1316,12 +1162,12 @@ FloatingButtonStyle: {
 },
 
 TouchableOpacityStyle:{
-
+  flexDirection:'row'
 },
 mainRowNew: {
  flexDirection: 'row',
- marginBottom: 5,
- width:'100%'
+
+ width:'96%'
 
 
 },
@@ -1356,6 +1202,12 @@ container: {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    containerKeybordSecond: {
+
+       flex: 0.1,
+       alignItems: 'center',
+       justifyContent: 'center',
+     },
   mainPopUp: {
     flex:1,position:'absolute',zIndex:1100000000,height: '100%', width: '100%',  backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
@@ -1364,12 +1216,7 @@ container: {
            alignItems:'center',
            fontWeight:'bold',
            paddingLeft:5,
- },
- mainRowAll: {
-      margin:10,
-     width: '96%',
-
-  }
+ }
 };
 
-export default RequestAppointmentEdit;
+export default RequestAppointmentCard;

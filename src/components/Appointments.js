@@ -40,9 +40,8 @@ class Appointment extends Component {
 */
     componentWillReceiveProps(props) {
 
-
       if (this.state.isRequestAppointment === true){
-        this.setState({isRequestAppointment: false});
+          this.setState({isRequestAppointment: false});
         this.setState({isViewAppointments: true});
 
       }else{
@@ -58,13 +57,27 @@ class Appointment extends Component {
       Set by default Appoinment list
     */
     componentWillMount() {
+        
+   // alert("first2")
     //  alert("componentWillMountAppointment");
         this.setState({isViewAppointments: this.props.isViewAppointments});
+        
+        
+ if (this.state.isRequestAppointment === true){
+          this.setState({isRequestAppointment: false});
+        this.setState({isViewAppointments: true});
+
+      }else{
+
+        this.setState({isViewAppointments: true});
+      }
+       
     }
     /*
       @clickToRequestAppointment: this function use for active RequestAppointment component on Appoinment class
   */
     clickToRequestAppointment = () => {
+         // alert("first3")
         this.setState({isRequestAppointment: true});
         this.setState({isViewAppointments: false});
         // isRequestAppointment = true;
@@ -74,7 +87,7 @@ class Appointment extends Component {
       @clickToViewAppointments: this function use for active Appoinment list component on Appoinment class
   */
     clickToViewAppointments = () => {
-
+  //alert("first4")
 
         this.setState({isRequestAppointment: false});
         this.setState({isViewAppointments: true});
@@ -116,10 +129,10 @@ class Appointment extends Component {
 
 
                         {
-                                (this.state.isRequestAppointment === true) ? <RequestAppointment dataArray={this.props.userData} /> : null
+                                (this.state.isRequestAppointment === true) ? <RequestAppointment dataArray={this.props.userData} isEnableTele={this.props.isEnableTele} /> : null
                         }
                         {
-                                (this.state.isViewAppointments === true) ? <ViewAppointment  /> : null
+                                (this.state.isViewAppointments === true) ? <ViewAppointment  isEnableTele={this.props.isEnableTele} /> : null
                         }
                         <View style={styles.footerView}>
                             <CustomFooter

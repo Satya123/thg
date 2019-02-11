@@ -31,7 +31,7 @@ import Policies from './Policies';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import VendorSplash from './VendorSplash';
-import CustomServiecs from './CustomServiecs';
+import CustomerServices from './CustomerServices';
 import Appointments from './Appointments';
 import IDCard from './IDCard';
 import FCM, { NotificationActionType } from "react-native-fcm";
@@ -184,7 +184,7 @@ class NotificationPermission extends Component {
         <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
         <Scene key='Dependents' component={Dependents} title='' />
         <Scene key='Policies' component={Policies} title='' />
-        <Scene key='CustomServiecs' component={CustomServiecs} title='' />
+        <Scene key='CustomerServices' component={CustomerServices} title='' />
         <Scene key='ServiceClass' component={ServiceClass} title='' />
         <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
         <Scene key='Login' component={Login} title='' />

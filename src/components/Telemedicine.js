@@ -39,6 +39,20 @@ class Telemedicine extends Component {
         });
     }  
   
+  
+  ReplaceAll(Source, stringToFind, stringToReplace) {
+       var temp = Source;
+       var index = temp.indexOf(stringToFind);
+
+       while (index != -1) {
+           temp = temp.replace(stringToFind, stringToReplace);
+           index = temp.indexOf(stringToFind);
+       }
+
+       return temp;
+   }
+  
+  
      getPolocies = (token, memberID) => {
       
             //console.log(token);
@@ -55,7 +69,16 @@ class Telemedicine extends Component {
 //                      UserData.saveData('details', reData.data.data[0].telemedicine.details);
                     
                     this.setState({ phoneText: reData.data.data[0].telemedicine.phone });
-                     this.setState({ details: reData.data.data[0].telemedicine.details });
+                    
+                  let details = reData.data.data[0].telemedicine.details
+                  debugger;
+                   console.log(details)
+                    details = this.ReplaceAll(details,'&lt;','<');
+                    details = this.ReplaceAll(details,'&gt;','>');
+                    
+                    console.log(details)
+
+                 this.setState({details: details});
                     this.setState({ loaded: false });
                   }
                   else {
