@@ -1,0 +1,1 @@
+{"dependencies":[],"output":[{"data":{"code":"__d(function (global, _$$_REQUIRE, module, exports, _dependencyMap) {\n  module.exports = {\n    '@@functional/placeholder': true\n  };\n});","map":[[2,0,27,0,"module"],[2,9,27,7,"exports"],[2,16,27,0],[2,19,27,17],[3,0,27,18],[3,32,27,46],[4,0,27,17],[4,3,27,0]]},"type":"js/module"}]}

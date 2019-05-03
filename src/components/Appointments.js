@@ -8,7 +8,7 @@
 */
 
 import React, { Component } from 'react';
-import { View, Alert, TouchableOpacity, Text, Platform, AsyncStorage, SafeAreaView } from 'react-native';
+import { View, Alert, TouchableOpacity, Text, Platform, AsyncStorage, SafeAreaView, Keyboard } from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import { Actions } from 'react-native-router-flux';
 import RequestAppointment from './RequestAppointment';
@@ -18,6 +18,7 @@ import Dependents from './Dependents';
 import Telemedicine from './Telemedicine';
 import  Policies  from './Policies';
 import CustomHeader from './CustomHeader';
+import NewCustomHeader from './NewCustomHeader';
 import ViewAppointment from './ViewAppointment';
 import OfflineNotice from './OfflineNotice';
 // var isRequestAppointment = false;
@@ -31,6 +32,7 @@ class Appointment extends Component {
             isRequestAppointment: this.props.isRequestAppointment,
             isViewAppointments: this.props.isViewAppointments,
             isAccountInfo: true,
+             bottomHeight: 0
         };
 
     }
@@ -40,44 +42,61 @@ class Appointment extends Component {
 */
     componentWillReceiveProps(props) {
 
+    //alert("tset111".this.state.isRequestAppointment)
       if (this.state.isRequestAppointment === true){
-          this.setState({isRequestAppointment: false});
+        this.setState({isRequestAppointment: false});
         this.setState({isViewAppointments: true});
 
       }else{
 
         this.setState({isViewAppointments: true});
       }
+
+
+
     }
 
-    // componentDidMount(){
-    //   alert("componentDidMountAppointment");
-    // }
+    componentWillUnmount() {
+
+    //  alert("tset111".this.state.isRequestAppointment)
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    componentDidMount(){
+      this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
+      this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
+    }
+
+    _keyboardDidShow(e) {
+        this.setState({ bottomHeight: e.endCoordinates.height-350})
+    }
+
+    _keyboardDidHide() {
+        this.setState({ bottomHeight: 0 })
+    }
+
     /*
       Set by default Appoinment list
     */
     componentWillMount() {
-        
-   // alert("first2")
-    //  alert("componentWillMountAppointment");
+      //alert(this.state.isRequestAppointment)
         this.setState({isViewAppointments: this.props.isViewAppointments});
-        
-        
- if (this.state.isRequestAppointment === true){
+
+        if (this.state.isRequestAppointment === true){
           this.setState({isRequestAppointment: false});
-        this.setState({isViewAppointments: true});
+          this.setState({isViewAppointments: true});
 
-      }else{
+        }else{
 
-        this.setState({isViewAppointments: true});
-      }
-       
+          this.setState({isViewAppointments: true});
+        }
+
     }
     /*
       @clickToRequestAppointment: this function use for active RequestAppointment component on Appoinment class
   */
     clickToRequestAppointment = () => {
-         // alert("first3")
         this.setState({isRequestAppointment: true});
         this.setState({isViewAppointments: false});
         // isRequestAppointment = true;
@@ -87,7 +106,7 @@ class Appointment extends Component {
       @clickToViewAppointments: this function use for active Appoinment list component on Appoinment class
   */
     clickToViewAppointments = () => {
-  //alert("first4")
+
 
         this.setState({isRequestAppointment: false});
         this.setState({isViewAppointments: true});
@@ -99,16 +118,20 @@ class Appointment extends Component {
       @render: this function use to present the UI of the components .
   */
     render() {
-        console.log(this.props.userData);
+       // //console.log(this.props.userData);
         return (
                 <SafeAreaView style={styles.safeArea}>
                     <View style={styles.MainContainer}>
-                        <View style={{width: '100%', height: 60 }}>
-                            <CustomHeader
-                                headerText={'Appointments'}
+                    <View style={{width: '100%' }}>
+                          <NewCustomHeader
+                          headerText={'Appoinment'}
 
-                                />
-                        </View>
+                          />
+                    </View>
+                    <View style={{width: '100%',height:50,justifyContent:'center',alignItems:'center',backgroundColor:'#fff',borderBottomWidth:1,borderColor:'#33333350' }}>
+                         <Text style ={{  fontSize: 18,  color: '#002e3c', alignItems: 'flex-start',  justifyContent: 'flex-start' }}>Appointments</Text>
+                    </View>
+
                         <View style={styles.topView}>
 
                             <TouchableOpacity
@@ -132,16 +155,17 @@ class Appointment extends Component {
                                 (this.state.isRequestAppointment === true) ? <RequestAppointment dataArray={this.props.userData} isEnableTele={this.props.isEnableTele} /> : null
                         }
                         {
-                                (this.state.isViewAppointments === true) ? <ViewAppointment  isEnableTele={this.props.isEnableTele} /> : null
+                                (this.state.isViewAppointments === true) ? <ViewAppointment isEnableTele={this.props.isEnableTele} /> : null
                         }
-                        <View style={styles.footerView}>
-                            <CustomFooter
-                                isclickToRequestAppointment={this.state.isclickToRequestAppointment}
-                                isHome={this.state.isHome}
-                                isMenu={this.state.isMenu}
-                                isNotification={this.state.isNotification}
+                        <View style={{ height: 50,  position: 'absolute', left: 0, right: 0, bottom: this.state.bottomHeight }}>
+                        <CustomFooter
 
-                                />
+                            isAccount={false}
+                            isAppointment={true}
+                            isIDCard={false}
+                            isTelemedicine={false}
+                            isCustomerService={false}
+                            />
                         </View>
 
                     </View>
@@ -167,16 +191,18 @@ class Appointment extends Component {
                 },
 
         textActive: {
-            color: '#ff7417'
+            color: '#00dcc3'
         },
         textInActive: {
             color: 'black'
         },
          footerView: {
                 width: '100%',
-                height: 45,
+                height: 50,
                 position: 'absolute',
-                bottom: 0
+                left: 0, right: 0,
+                 bottom: 0
+
             },
         topView: {
             flexDirection: 'row',
@@ -196,10 +222,10 @@ class Appointment extends Component {
         },
         firstViewActive: {
             borderBottomWidth: 2,
-            borderColor: '#ff7417',
+            borderColor: '#00dcc3',
             width: '51%',
             alignItems: 'center',
-            color: '#ff7417',
+            color: '#00dcc3',
             paddingTop: 18
 
         },
@@ -212,10 +238,10 @@ class Appointment extends Component {
         },
         secondViewActive: {
             borderBottomWidth: 2,
-            borderColor: '#ff7417',
+            borderColor: '#00dcc3',
             width: '49%',
             alignItems: 'center',
-            color: '#ff7417',
+            color: '#00dcc3',
             paddingTop: 18
 
         },

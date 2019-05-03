@@ -34,8 +34,8 @@ class AccountInfo extends Component {
     }
 
     componentWillMount() {
-      console.log('AccountInfoDidMountcall');
-      console.log(this.props.userData);
+     // console.log('AccountInfoDidMountcall');
+      //console.log(this.props.userData);
 
     }
 

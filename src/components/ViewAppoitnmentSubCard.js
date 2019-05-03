@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, Text, TouchableOpacity, TextInput,Alert, ImageBackground, Image,ScrollView,SafeAreaView,NetInfo,AsyncStorage,ActivityIndicator} from 'react-native';
+import { View, Text,Dimensions, TouchableOpacity, TextInput,Alert, ImageBackground, Image,ScrollView,SafeAreaView,NetInfo,AsyncStorage,ActivityIndicator} from 'react-native';
 import ResponsiveImage from 'react-native-responsive-image';
 import AccountInfo from './AccountInfo';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
 import CustomFooter from './CustomFooter';
 import RequestAppointmentEdit from './RequestAppointmentEdit';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+const { width, height } = Dimensions.get('window')
+//import Spinner from 'react-native-loading-spinner-overlay';
 
 
 class ViewAppoitnmentSubCard extends Component {
@@ -14,18 +17,27 @@ class ViewAppoitnmentSubCard extends Component {
         super(props);
 
         this.props = props;
+
         this.state = {
             arrData: [],
             detailsArray: [],
               isViewDetails:false,
-
+loaded: false,
               CancelAppointment:''
         };
     }
 
-  clickToClose = () => {
+
+componentWillMount(){
+//  alert(height.toString())
+    //this.setState({scrollHeight:h})
+
+}
 
 
+
+
+      clickToClose = () => {
           this.setState({ isViewDetails: false });
 
 
@@ -76,13 +88,14 @@ class ViewAppoitnmentSubCard extends Component {
             @ appointmentID: Current appointmentID pass in path
         */
                 getAppointmentDetails = (token, memberID,appointmentID,isEdit) => {
-                           console.log(token);
+                           //console.log(token);
                              this.setState({ loaded: true });
+////   debugger;
                                ServiceClass.appDetails(token, `appointments/${ memberID}/appointment/${appointmentID}`).then((reData) => {
 
                                  if (reData.data.status === '1') {
-                                   //debugger;
-                                   console.log(reData.data.data);
+                                  // //   debugger;
+                                   //console.log(reData.data.data);
                                    this.setState({ detailsArray: reData.data.data });
                                    try {
                                       AsyncStorage.setItem('editDetailsData', JSON.stringify(reData.data.data));
@@ -91,7 +104,6 @@ class ViewAppoitnmentSubCard extends Component {
                                       }
                                    this.setState({ loaded: false });
                                    if (isEdit === true){
-                                    // Actions.RequestAppointmentEdit({isEnableTele={this.props.isEnableTele}});
                                      Actions.RequestAppointmentEdit({isEnableTele:this.props.isEnableTele});
                                    }else{
 
@@ -102,6 +114,7 @@ class ViewAppoitnmentSubCard extends Component {
 
                                  }
                                  else {
+                                   ////   debugger;
                                      this.setState({ loaded: false });
                                    Alert.alert(reData.data.message);
                                    this.setState({
@@ -110,28 +123,45 @@ class ViewAppoitnmentSubCard extends Component {
                                  }
 
                                }).catch((error) => {
-                                   //console.log(error);
+                                   ////console.log(error);
                                    Alert.alert(error);
                                });
                      }
 
 
 
+cancelAppointmentAfterConfirmation(strID){
+  // alert(strID);
+    NetInfo.isConnected.fetch().done((isConnected) => {
+             if (isConnected)
+             {
 
-        cancleAppointMent(strID) {
-         // alert(strID);
-           NetInfo.isConnected.fetch().done((isConnected) => {
-                    if (isConnected)
-                    {
+                 UserData.retriveData('token').then((resToken) => {
+                     UserData.retriveData('memberId').then((res) => {
+                         this.cancelAppointMentDetails(resToken, res,strID);
+                     });
+                 })
 
-                        UserData.retriveData('token').then((resToken) => {
-                            UserData.retriveData('memberId').then((res) => {
-                                this.cancleAppointmentDetails(resToken, res,strID);
-                            });
-                        })
+             }
+         });
+}
 
-                    }
-                });
+
+        cancelAppointMent(strID) {
+
+          Alert.alert(
+       'Cancel Appointment',
+
+       'Are you sure you want to cancel this appointment?',
+       [
+
+         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+         {text: 'OK', onPress: () => this.cancelAppointmentAfterConfirmation(strID)},
+       ],
+       { cancelable: false }
+     )
+
+
          }
 
 
@@ -142,14 +172,14 @@ class ViewAppoitnmentSubCard extends Component {
     @ memberID: memberID pass in path
     @ appointmentID: Current appointmentID pass in path
 */
-        cancleAppointmentDetails = (token, memberID,appointmentID) => {
-                   console.log(token);
+        cancelAppointMentDetails = (token, memberID,appointmentID) => {
+                   //console.log(token);
                      this.setState({ loaded: true });
                        ServiceClass.deleteDetails(token, `appointments/${ memberID}/appointment/${appointmentID}`).then((reData) => {
-                       //  debugger;
+                         //   debugger;
                          if (reData.data.status === '1') {
-                         //  debugger;
-                           console.log(reData.data.data[0].data);
+                           //   debugger;
+                           //console.log(reData.data.data[0].data);
                            this.setState({ arrayDescription: reData.data.data[0].data });
                            this.setState({ loaded: false });
 
@@ -163,18 +193,25 @@ class ViewAppoitnmentSubCard extends Component {
                          }
 
                        }).catch((error) => {
-                           //console.log(error);
+                           ////console.log(error);
                            Alert.alert(error);
                        });
              }
 
 
         viewAppointmentDetails() {
+          // //   debugger;
+          var strAddress = this.state.detailsArray[0].selectedProviderAddress.street + this.state.detailsArray[0].selectedProviderAddress.city + this.state.detailsArray[0].selectedProviderAddress.state + this.state.detailsArray[0].selectedProviderAddress.zip
+          // //console.log(strAddress);
+          if (strAddress === ''){
+              strAddress = "N/A";
+          }
 
           return(
-          
-          <View style={styles.mainRowPopUp}>
 
+          <View style={styles.mainRowPopUp}>
+  
+  
           <View style={styles.mainRowHeading} >
                  <View style={{width:'90%', marginRight:10}}>
                   <Text style={styles.textSubHeading}>Details</Text>
@@ -193,13 +230,17 @@ class ViewAppoitnmentSubCard extends Component {
                     </TouchableOpacity>
                  </View>
                  </View>
+          <ScrollView>
+
 
               <View style={styles.mainRow}>
                   <View style={styles.viewContent} >
-                      <Text style={styles.textSub}>Patent Name(Dependents)</Text>
+                      <Text style={styles.textSub}>Patient Name(Dependents)</Text>
                   </View>
                   <View style={styles.viewText} >
-                      <Text style={styles.textSub}>{(this.state.detailsArray[0].patientName === '')?"N/A":this.state.detailsArray[0].patientName}</Text>
+                      <Text style={styles.textSub}>{
+                        (this.state.detailsArray[0].patientName === '')?"N/A":this.state.detailsArray[0].patientName
+                      }</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -207,8 +248,8 @@ class ViewAppoitnmentSubCard extends Component {
                       <Text style={styles.textSub}>Provider Name</Text>
                   </View>
                   <View style={styles.viewText} >
-                      <Text style={styles.textSub}>{ (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderName === '')? "N/A":this.state.detailsArray[0].selectedProviderName
-                       :(this.state.detailsArray[0].providerName === '')? "N/A":this.state.detailsArray[0].providerName}</Text>
+                      <Text style={styles.textSub}>{ (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderName === '')?"N/A":this.state.detailsArray[0].selectedProviderName
+                        :(this.state.detailsArray[0].providerName === '')?"N/A":this.state.detailsArray[0].providerName}</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -217,9 +258,9 @@ class ViewAppoitnmentSubCard extends Component {
                   </View>
                   <View style={styles.viewText} >
                       <Text style={styles.textSub}>{
-                       (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderType === '')? "N/A":this.state.detailsArray[0].selectedProviderType
+                        (this.state.detailsArray[0].status == 'Scheduled') ? (this.state.detailsArray[0].selectedProviderType === '')?"N/A":this.state.detailsArray[0].selectedProviderType
 
-                     :  (this.state.detailsArray[0].providerOption === '' )? "N/A":this.state.detailsArray[0].providerOption}</Text>
+                      :  (this.state.detailsArray[0].providerOption === '' )?"N/A":this.state.detailsArray[0].providerOption}</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -235,7 +276,10 @@ class ViewAppoitnmentSubCard extends Component {
                       <Text style={styles.textSub}>Provider Address</Text>
                   </View>
                   <View style={styles.viewText} >
-                      <Text style={styles.textSub}>{this.state.detailsArray[0].providerAddress.street} {this.state.detailsArray[0].providerAddress.city} {this.state.detailsArray[0].providerAddress.state} {this.state.detailsArray[0].providerAddress.zip}</Text>
+                      <Text style={styles.textSub}>{
+                        (this.state.detailsArray[0].providerAddress === '' ) ? strAddress : this.state.detailsArray[0].providerAddress
+                      }
+                      </Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -252,6 +296,14 @@ class ViewAppoitnmentSubCard extends Component {
                   </View>
                   <View style={styles.viewText} >
                       <Text style={styles.textSub}>{this.state.detailsArray[0].deductible}</Text>
+                  </View>
+              </View>
+              <View style={styles.mainRow}>
+                  <View style={styles.viewContent} >
+                      <Text style={styles.textSub}>Status</Text>
+                  </View>
+                  <View style={styles.viewText} >
+                      <Text style={styles.textSub}>{this.state.detailsArray[0].status}</Text>
                   </View>
               </View>
               <View style={styles.mainRow}>
@@ -274,9 +326,11 @@ class ViewAppoitnmentSubCard extends Component {
 
 
 
+</ScrollView>
 
           </View>
-         
+
+
             )
 
         }
@@ -288,7 +342,7 @@ reRanderViewInDetails(arrayShow){
   );
 }
 
-renderView() {
+    renderView() {
 
         return this.props.arrayDescription.map((array, index) =>
             <View style={[(array.status === 'Cancelled')? styles.mainRowDateExpire : styles.mainRowTop]}>
@@ -329,7 +383,8 @@ renderView() {
                         <Text style={styles.textSub}>Provider Name</Text>
                     </View>
                     <View style={styles.viewText} >
-                        <Text style={styles.textSub}>{array.selectedProviderName}</Text>
+                    <Text style={styles.textSub}>{ (array.status == 'Scheduled') ? (array.selectedProviderName === '')?"N/A":array.selectedProviderName
+                      :(array.providerName === '')?"N/A":array.providerName}</Text>
                     </View>
                 </View>
                 <View style={styles.mainRow}>
@@ -337,27 +392,30 @@ renderView() {
                         <Text style={styles.textSub}>Provider Type</Text>
                     </View>
                     <View style={styles.viewText} >
-                        <Text style={styles.textSub}>{array.selectedProviderType}</Text>
+                        <Text style={styles.textSub}>{ ( array.status == 'Scheduled') ?
+                          (array.selectedProviderType === '')?"N/A":array.selectedProviderType : (array.providerOption === '')?"N/A":array.providerOption
+                        }</Text>
                     </View>
                 </View>
                 <View style={styles.mainRowHeadSub}>
-                    <Text style={styles.textSub}>Reason for the Visit</Text>
+                    <Text style={styles.textSub}> Reason for the Visit</Text>
                 </View>
                 <View style={styles.mainRowMinus10}>
                     <Text style={styles.textSub}>{array.visitReason}</Text>
                 </View>
                 <View style={styles.mainRowImages}>
 
+
                     <TouchableOpacity onPress={() => this.viewDetails(array.appointmentID)}>
-                        <ResponsiveImage  source={require('../../assets/view-appointments_view.jpeg')}  initWidth="38" initHeight="33" style={{marginRight: 5}}/>
+                        <Image  source={require('../../assets/view-appointments_view.png')}   style={{marginRight: 5,width:34,height:30}}/>
                     </TouchableOpacity>
                     {
-                      (array.status === 'Pending'  || array.status === 'Scheduled' || array.status === 'Update Requested') ? <TouchableOpacity onPress={() => this.appointmentEdit(array.appointmentID)}><ResponsiveImage  source={require('../../assets/view-appointments_edit.jpeg')}  initWidth="36" initHeight="33" style={{marginRight: 5}}/></TouchableOpacity> : null
+                      (array.status === 'Pending'  || array.status === 'Scheduled' || array.status === 'Update Requested') ? <TouchableOpacity onPress={() => this.appointmentEdit(array.appointmentID)}><Image  source={require('../../assets/view-appointments_edit.png')}   style={{marginRight: 5,width:34,height:30}}/></TouchableOpacity> : null
                     }
 
-                    <TouchableOpacity onPress={() => this.cancleAppointMent(array.appointmentID)}>
+                    <TouchableOpacity onPress={() => this.cancelAppointMent(array.appointmentID)}>
                     {
-                      (array.status === 'Cancelled') ? null : <ResponsiveImage  source={require('../../assets/view-appointments_close.jpeg')}  initWidth="45" initHeight="33"/>
+                      (array.status === 'Cancelled') ? null : <Image  source={require('../../assets/view-appointments_close.png')}   style={{width:34,height:30,marginRight:5}}/>
                     }
 
                     </TouchableOpacity>
@@ -368,6 +426,7 @@ renderView() {
 
                                             );
           }
+
                 render() {
                   const {
 
@@ -378,25 +437,29 @@ renderView() {
 
                   return (
                     <View>
+  {
+          (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+        }
 
-                    {
-                      (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-                    }
 
+                
                       {
                           (isViewDetails === true) ?
-                            <View style={styles.mainPopUp}>
-                          {this.viewAppointmentDetails()}</View>: null
+                           <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '101%',paddingLeft:5, backgroundColor: 'rgba(0, 0, 0, 0.9)'}}><View style={styles.SplashScreen_RootView}>
+                          {this.viewAppointmentDetails()}</View></View>: null
                       }
 
 
+                   <ScrollView>
+                          <View style={styles.mainRowAll}>
+                                    {this.renderView()}
+                                  </View>
 
-                                                    <ScrollView>
-                                                      <View style={styles.mainRowAll}>
-                                                        {this.renderView()}
-                                                        </View>
-                                                    </ScrollView>
-                                                    </View>
+                            </ScrollView>
+
+
+
+                          </View>
                                                     );
                                         }
 
@@ -425,14 +488,25 @@ renderView() {
 
        },
 
+       SplashScreen_RootView:
+           {
+
+
+              marginTop:10,
+               position: 'absolute',
+               width: '100%',
+               height: '100%',
+
+           },
 
        mainRowPopUp: {
            width: '96%',
-
-           backgroundColor: '#ffffff',
+           backgroundColor: '#fff',
            zIndex: 100,
-           position: 'absolute',
+            position: 'absolute',
             margin:10,
+
+            height: (height*65)/100
        },
 
        mainRow: {
@@ -447,6 +521,7 @@ renderView() {
        },
        mainRowAll: {
             margin:10,
+            marginBottom:40,
            width: '96%',
         },
        mainRowMinus10: {
@@ -487,7 +562,7 @@ renderView() {
 
        },
        textSubHeading: {
-           color: '#ff7417',
+           color: '#00dcc3',
            fontSize: 20,
            fontWeight: 'bold',
            paddingLeft: 15,
@@ -529,21 +604,20 @@ renderView() {
 
    },
    containerActivety: {
-
-         backgroundColor: 'transparent',
-         height: '100%',
-         width: '100%',
-         zIndex: 10000000,
-         position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
+      top:-50,
+     backgroundColor: 'transparent',
+     height: '100%',
+     width: '100%',
+     zIndex: 10000000,
+     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.1)'
+  },
    mainPopUp: {
-     flex:1,position:'absolute',zIndex:1100000000,height: '100%', width: '100%',  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+     flex:1,position:'absolute',zIndex:1100000000,marginBottom:0, width: '100%',  backgroundColor: '#000',
    },
-   mainPopUpSub: {
-   justifyContent:'center',alignItems:'center',backgroundColor:'transparent',activeOpacity:0.8
-   },
+
 
    scrollHeight: {
        height:550,

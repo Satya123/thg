@@ -1,11 +1,14 @@
+
+
 import FirebaseConstants from "./FirebaseConstants";
 import { Alert } from "react-native";
 
 const API_URL = "https://fcm.googleapis.com/fcm/send";
 
 class FirebaseClient {
+
     async send(body, type) {
-        if (FirebaseConstants.KEY === 'AIzaSyCtAkFj4mjxY4SYB1Jxr9YCavYrHLwf5p8') {
+        if (FirebaseConstants.KEY === 'AIzaSyDKHYcQQBhSgnmanAySzVv9Btcn6T-0F8Y') {
             Alert.alert('Set your API_KEY in app/FirebaseConstants.js')
             return;
         }
@@ -16,7 +19,7 @@ class FirebaseClient {
 
         try {
             let response = await fetch(API_URL, {method: "POST", headers, body});
-            console.log(response);
+            //console.log(response);
             try {
                 response = await response.json();
                 if (!response.success) {

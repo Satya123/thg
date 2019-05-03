@@ -1,15 +1,19 @@
-/*
-* This is page for View Appointment
- */
+/*@ ViewAppointment.js
+  THG App
+  This file is  used to show the  appontment list .
+  Created by Pulkit Arora
+@*/
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { View, Text, TouchableOpacity, TextInput, ImageBackground, Image,ScrollView,SafeAreaView,NetInfo,ActivityIndicator} from 'react-native';
+import { View, Text,Alert, TouchableOpacity, TextInput, ImageBackground, Image,ScrollView,SafeAreaView,NetInfo,ActivityIndicator} from 'react-native';
 import ResponsiveImage from 'react-native-responsive-image';
 import AccountInfo from './AccountInfo';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
 import ViewAppoitnmentSubCard from './ViewAppoitnmentSubCard';
 import CustomFooter from './CustomFooter';
+//import Spinner from 'react-native-loading-spinner-overlay';
+
 class ViewAppointment extends Component {
     constructor(props) {
         super(props);
@@ -22,10 +26,12 @@ class ViewAppointment extends Component {
            dataArray:[],
         };
     }
-
+/*
+  @componentWillReceiveProps: this function is called from child class.
+*/
 
     componentWillReceiveProps(props) {
-      debugger;
+      // debugger;
       NetInfo.isConnected.fetch().done((isConnected) => {
                if (isConnected)
                {
@@ -45,6 +51,7 @@ class ViewAppointment extends Component {
                }
            });
     }
+
 
 
 
@@ -72,27 +79,39 @@ class ViewAppointment extends Component {
 
      }
 
+     /*
+         @getAppointmentlist: In this function we call Api for getting data of Appointment list  .
+         @token: This parameter hold the token value, which is used in Api headers.
+         @ memberID: Current User Id.
 
+     */
 
      getAppointmentlist = (token, memberID,) => {
 
-                console.log(token);
+                //console.log(token);
                   this.setState({ loaded: true });
                     ServiceClass.appDetails(token, `appointments/${ memberID}`).then((reData) => {
 
                       if (reData.data.status === '1') {
-                        console.log(reData.data.data);
+                      //  debugger;
+                        //console.log(reData.data.data);
                         this.setState({ dataArray: reData.data.data });
                         this.setState({ loaded: false });
+                        if (reData.data.message  === ''){
+
+                        }else{
+                              Alert.alert(reData.data.message);
+                        }
+
                       }
                       else {
                           this.setState({ loaded: false });
                         Alert.alert(reData.data.message);
-                        Actions.pop();
+                      //  Actions.pop();
                       }
 
                     }).catch((error) => {
-                        //console.log(error);
+                        ////console.log(error);
                         Alert.alert(error);
                     });
           }
@@ -103,15 +122,22 @@ class ViewAppointment extends Component {
 
 /*************************End Pop Up*******************************************************************/
 
+/*
+  @handler: this function is called from child class to show  updated data.
+*/
+
+
 handler(data) {
 
-  console.log(data);
+  //console.log(data);
   this.setState({
     dataArray:data
   })
  }
 
-
+ /*
+   @render: this function use to present the UI of ViewAppointment components.
+ */
 
 
     render() {
@@ -135,11 +161,10 @@ handler(data) {
     }
 
     {
-      (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#ffa970" /></View></View> : null
-    }
-
+            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+            }
     <View style={{ width: '99%' }}>
-      <ViewAppoitnmentSubCard arrayDescription={dataArray} handler = {this.handler} isEnableTele={this.props.isEnableTele} /> 
+      <ViewAppoitnmentSubCard arrayDescription={dataArray} handler = {this.handler} isEnableTele={this.props.isEnableTele} />
     </View>
     </ImageBackground>
 
@@ -179,7 +204,7 @@ const styles = {
 
     mainRowPopUp: {
         width: '96%',
-        backgroundColor: '#0f0',
+        backgroundColor: '#ffffff',
         zIndex: 100,
         position: 'absolute',
          margin:10,
@@ -276,15 +301,16 @@ footerView: {
 
 },
 containerActivety: {
-
-      backgroundColor: 'transparent',
-      height: '100%',
-      width: '100%',
-      zIndex: 10000000,
-      position: 'absolute',
-     justifyContent: 'center',
-     alignItems: 'center'
-   },
+   top:-50,
+  backgroundColor: 'transparent',
+  height: '100%',
+  width: '100%',
+  zIndex: 10000000,
+  position: 'absolute',
+ justifyContent: 'center',
+ alignItems: 'center',
+ backgroundColor: 'rgba(52, 52, 52, 0.1)'
+},
 mainPopUp: {
   flex:1,position:'absolute',zIndex:1100000000,height: '100%', width: '100%',  backgroundColor: 'rgba(0, 0, 0, 0.7)',justifyContent:'center',alignItems:'center',
 },

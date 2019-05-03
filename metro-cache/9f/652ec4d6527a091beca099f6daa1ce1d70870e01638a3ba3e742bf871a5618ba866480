@@ -1,0 +1,1 @@
+{"dependencies":[],"output":[{"data":{"code":"__d(function (global, _$$_REQUIRE, module, exports, _dependencyMap) {\n  var realNames = {};\n  module.exports = realNames;\n});","map":[[2,0,2,0],[2,6,2,4,"realNames"],[2,18,2,16],[2,20,2,0],[3,0,4,0,"module"],[3,9,4,7,"exports"],[3,16,4,0],[3,19,4,17,"realNames"],[3,28,4,0]]},"type":"js/module"}]}

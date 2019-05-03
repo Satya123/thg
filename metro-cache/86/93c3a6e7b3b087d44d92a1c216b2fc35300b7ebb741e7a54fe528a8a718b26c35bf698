@@ -1,0 +1,1 @@
+{"dependencies":[],"output":[{"data":{"code":"__d(function (global, _$$_REQUIRE, module, exports, _dependencyMap) {\n  function noop() {}\n\n  module.exports = noop;\n});","map":[[2,0,13,0],[2,11,13,9,"noop"],[2,15,13,0],[2,18,13,16],[2,19,15,1],[4,0,17,0,"module"],[4,9,17,7,"exports"],[4,16,17,0],[4,19,17,17,"noop"],[4,23,17,0]]},"type":"js/module"}]}

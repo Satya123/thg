@@ -21,7 +21,7 @@ class IDCardSub extends Component {
                 </View>
                 <View style={styles.fiftypercent}>
                     <Text style={styles.textSubRight} key={index}>{array.right}</Text>
-            
+
                 </View>
             </View>
 
@@ -60,7 +60,7 @@ class IDCardSub extends Component {
             backgroundColor: 'red'
         },
         textStyle: {
-            color: '#ff7417',
+            color: '#00dcc3',
             fontSize: 18,
 
         },

@@ -1,8 +1,9 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+  NotificationPermission.js
+  THG App
+  This file use for Notification Permission and set Route of App.
+  @Created by Pulkit Arora
+**/
 
 import React, { Component } from "react";
 import {
@@ -18,8 +19,10 @@ import {
 
 } from "react-native";
 import { Scene, Router } from 'react-native-router-flux';
+import LiveChat from '../../LiveChat/LiveChat';
 import Login from './Login';
 import HomeScreen from './HomeScreen';
+import RequestAppointmentEdit from './RequestAppointmentEdit';
 import Profile from './Profile';
 import Telemedicine from './Telemedicine';
 import Menu from './Menu';
@@ -33,24 +36,25 @@ import UserData from './UserData';
 import VendorSplash from './VendorSplash';
 import CustomerServices from './CustomerServices';
 import Appointments from './Appointments';
+import ChatVC from './ChatVC';
 import IDCard from './IDCard';
 import FCM, { NotificationActionType } from "react-native-fcm";
 import { Actions } from 'react-native-router-flux';
 import { registerKilledListener, registerAppListener } from "./Listeners";
 import firebaseClient from "./FirebaseClient";
-
+import ViewAppointment from './ViewAppointment';
 registerKilledListener();
 
 class NotificationPermission extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       token: "",
        isLogin: false,
-      tokenCopyFeedback: ""
     };
   }
+
+
 
   async componentDidMount() {
     FCM.createNotificationChannel({
@@ -68,7 +72,7 @@ class NotificationPermission extends Component {
       if (notif && notif.targetScreen === "Notification") {
         setTimeout(() => {
             Actions.Notification();
-        }, 500);
+        }, 200);
       }
     });
 
@@ -79,37 +83,38 @@ class NotificationPermission extends Component {
         alert: true
       });
     } catch (e) {
-  }
+      console.error(e);
+    }
 
     FCM.getFCMToken().then(token => {
-   this.setState({ token: token || "" });
+      UserData.saveData('deviceToken', token);
+      //console.log("TOKEN (getFCMToken)", token);
+      this.setState({ token: token || "" });
     });
 
     if (Platform.OS === "ios") {
       FCM.getAPNSToken().then(token => {
-     });
+
+        //console.log("APNS TOKEN (getFCMToken)", token);
+      });
     }
-  UserData.retriveData('token').then((res) => {
+
+ UserData.retriveData('token').then((res) => {
         //console.log(res);
         if (res === '') {
             this.setState({ isLogin: false });
         } else {
-          //  console.log(res);
+            //console.log(res);
             this.setState({ isLogin: true });
 
         }
     }, (err) => {
-       // console.log(err);
+        //console.log(err);
     });
-    
-    Alert.alert('notification call');
 }
 
   sendRemoteNotification(token) {
-   // debugger;
-    //console.log(token);
     let body;
-
     if (Platform.OS === "android") {
       body = {
         to: token,
@@ -144,7 +149,7 @@ class NotificationPermission extends Component {
   }
 
   sendRemoteData(token) {
-   // console.log(token);
+    //console.log(token);
     let body = {
       to: token,
       data: {
@@ -154,40 +159,41 @@ class NotificationPermission extends Component {
       },
       priority: "normal"
     };
-
     firebaseClient.send(JSON.stringify(body), "data");
   }
-
-
-
-  render() {
-    let { token, tokenCopyFeedback,   isLogin } = this.state;
+/*
+  Set Rouet for app files
+*/
+render() {
+    let { token,   isLogin } = this.state;
 
     return (
-
-      <Router>
-
-      <Scene key='root' >
+<Router>
+    <Scene key='root' >
       <Scene hideNavBar>
-       <Scene key='VendorSplash' component={VendorSplash} title='' />
-        <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
-        {
-          (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
+      {
+          (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} initial={true} wrapRouter={true} /> : <Scene key='Login' component={Login} initial={true} wrapRouter={true} />
         }
-        <Scene key='NotificationPermission' component={NotificationPermission} title='' />
-        <Scene key='Notification' component={Notification} title='' />
-        <Scene key='Appointments' component={Appointments} title='' />
-        <Scene key='Profile' component={Profile} title='' />
-        <Scene key='VendorSplash' component={VendorSplash} title='' />
-        <Scene key='Menu' component={Menu} title='' />
-        <Scene key='Telemedicine' component={Telemedicine} title='' />
-        <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
-        <Scene key='Dependents' component={Dependents} title='' />
-        <Scene key='Policies' component={Policies} title='' />
-        <Scene key='CustomerServices' component={CustomerServices} title='' />
-        <Scene key='ServiceClass' component={ServiceClass} title='' />
-        <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
-        <Scene key='Login' component={Login} title='' />
+        <Scene key='Login' component={Login} />
+        <Scene key='VendorSplash' component={VendorSplash} />
+        <Scene key='HomeScreen' component={HomeScreen}  />
+        <Scene key='NotificationPermission' component={NotificationPermission} />
+        <Scene key='Notification' component={Notification} />
+        <Scene key='Appointments' component={Appointments} />
+        <Scene key='Profile' component={Profile} />
+        <Scene key='VendorSplash' component={VendorSplash} />
+        <Scene key='Menu' component={Menu} />
+        <Scene key='Telemedicine' component={Telemedicine} />
+        <Scene key='AccountInfo' component={AccountInfo} path={'/AccountInfo/:userData/'} />
+        <Scene key='Dependents' component={Dependents} />
+        <Scene key='Policies' component={Policies} />
+        <Scene key='CustomerServices' component={CustomerServices} />
+        <Scene key='ServiceClass' component={ServiceClass} />
+        <Scene key='IDCard' component={IDCard}  path={'/AccountInfo/:cardData/'} />
+        <Scene key='ChatVC' component={ChatVC}  />
+        <Scene key='LiveChat' component={LiveChat}  />
+        <Scene key='ViewAppointment' component={ViewAppointment}  />
+        <Scene key='RequestAppointmentEdit' component={RequestAppointmentEdit}  path={'/RequestAppointmentEdit/:appointmentDetailsData/'} />
       </Scene>
       </Scene>
       </Router>
@@ -195,20 +201,7 @@ class NotificationPermission extends Component {
     );
   }
 
-  setClipboardContent(text) {
 
-    this.sendRemoteData(text);
-    this.sendRemoteNotification(text);
-    Clipboard.setString(text);
-    this.setState({ tokenCopyFeedback: "Token copied to clipboard." });
-    setTimeout(() => {
-      this.clearTokenCopyFeedback();
-    }, 2000);
-  }
-
-  clearTokenCopyFeedback() {
-    this.setState({ tokenCopyFeedback: "" });
-  }
 }
 
 export default NotificationPermission;

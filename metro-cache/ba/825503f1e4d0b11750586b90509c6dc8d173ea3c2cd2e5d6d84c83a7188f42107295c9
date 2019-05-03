@@ -1,0 +1,1 @@
+{"dependencies":[{"name":"./lib/axios","isAsync":false}],"output":[{"data":{"code":"__d(function (global, _$$_REQUIRE, module, exports, _dependencyMap) {\n  module.exports = _$$_REQUIRE(_dependencyMap[0], './lib/axios');\n});","map":[[2,0,1,0,"module"],[2,9,1,7,"exports"],[2,16,1,0],[2,19,1,17,"require"],[2,50,1,25],[2,63,1,17],[2,64,1,0]]},"type":"js/module"}]}

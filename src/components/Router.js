@@ -14,7 +14,7 @@ import Dependents from './Dependents';
 import Policies from './Policies';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
-import Chat from './Chat';
+import ChatVC from './ChatVC';
 import VendorSplash from './VendorSplash';
 import CustomerServices from './CustomerServices';
 import Appointments from './Appointments';
@@ -24,6 +24,7 @@ import IDCard from './IDCard';
 import ViewAppointment from './ViewAppointment';
 import RequestAppointmentEdit from './RequestAppointmentEdit';
 
+import LiveChat from '../../LiveChat/LiveChat';
 
 class RouterComponent extends Component {
   constructor() {
@@ -38,18 +39,18 @@ class RouterComponent extends Component {
   }
   componentDidMount() {
     UserData.retriveData('token').then((res) => {
-        //console.log(res);
+        ////console.log(res);
         if (res === '') {
             this.setState({ isLogin: false });
         } else {
 
-            //console.log(res);
+            ////console.log(res);
             this.setState({ isLogin: true });
 
 
         }
     }, (err) => {
-        //console.log(err);
+        ////console.log(err);
     });
   }
 
@@ -64,34 +65,36 @@ class RouterComponent extends Component {
    <Scene key='root' >
      <Scene hideNavBar>
      {
-         (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash} title='' initial /> : <Scene key='Login' component={Login} title='' initial />
+         (isLogin === true) ? <Scene key='VendorSplash' component={VendorSplash}  initial /> : <Scene key='Login' component={Login}  initial />
        }
-       <Scene key='Login' component={Login} title='' />
-       <Scene key='VendorSplash' component={VendorSplash} title='' />
-       <Scene key='HomeScreen' component={HomeScreen} title='' path={'/HomeScreen/:profileData/'} />
-       <Scene key='NotificationPermission' component={NotificationPermission} title='' />
-       <Scene key='Notification' component={Notification} title='' />
-       <Scene key='Appointments' component={Appointments} title='' />
-       <Scene key='Profile' component={Profile} title='' />
-       <Scene key='VendorSplash' component={VendorSplash} title='' />
-       <Scene key='Menu' component={Menu} title='' />
-       <Scene key='Telemedicine' component={Telemedicine} title='' />
-       <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} />
-       <Scene key='Dependents' component={Dependents} title='' />
-       <Scene key='Policies' component={Policies} title='' />
-       <Scene key='CustomerServices' component={CustomerServices} title='' />
-       <Scene key='ServiceClass' component={ServiceClass} title='' />
-       <Scene key='IDCard' component={IDCard} title='' path={'/AccountInfo/:cardData/'} />
-       <Scene key='Chat' component={Chat} title=''  />
-       <Scene key='ViewAppointment' component={ViewAppointment} title=''  />
-       <Scene key='RouterComponent' component={RouterComponent} title=''  />
-       <Scene key='RequestAppointmentEdit' component={RequestAppointmentEdit} title=''  path={'/RequestAppointmentEdit/:appointmentDetailsData/'} />
+       <Scene key='Login' component={Login}  />
+       <Scene key='VendorSplash' component={VendorSplash}  />
+       <Scene key='HomeScreen' component={HomeScreen}  path={'/HomeScreen/:profileData/'} />
+       <Scene key='NotificationPermission' component={NotificationPermission}  />
+       <Scene key='Notification' component={Notification}  />
+       <Scene key='Appointments' component={Appointments}  />
+       <Scene key='Profile' component={Profile}  />
+       <Scene key='VendorSplash' component={VendorSplash}  />
+       <Scene key='Menu' component={Menu}  />
+       <Scene key='Telemedicine' component={Telemedicine}  />
+       <Scene key='AccountInfo' component={AccountInfo}  path={'/AccountInfo/:userData/'} />
+       <Scene key='Dependents' component={Dependents}  />
+       <Scene key='Policies' component={Policies}  />
+       <Scene key='CustomerServices' component={CustomerServices}  />
+       <Scene key='ServiceClass' component={ServiceClass}  />
+       <Scene key='IDCard' component={IDCard}  path={'/AccountInfo/:cardData/'} />
+       <Scene key='ChatVC' component={ChatVC}   />
+       <Scene key='LiveChat' component={LiveChat}   />
+       <Scene key='ViewAppointment' component={ViewAppointment}   />
+       <Scene key='RouterComponent' component={RouterComponent}   />
+    
+       <Scene key='RequestAppointmentEdit' component={RequestAppointmentEdit}   path={'/RequestAppointmentEdit/:appointmentDetailsData/'} />
      </Scene>
      </Scene>
      </Router>
       );
-      
-      
+
+
     }
 
 
