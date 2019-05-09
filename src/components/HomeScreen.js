@@ -30,10 +30,7 @@ import ResponsiveImage from 'react-native-responsive-image';
                       isNotification: false,
                     };
                  }
-    /**
-        @Save User Profile Data In loacl Secure File
-        @Save User MemberId In AsyncStorage
-    **/
+
 
     componentWillMount() {
       AsyncStorage.getItem('profileArray')
@@ -123,7 +120,7 @@ import ResponsiveImage from 'react-native-responsive-image';
                                  activeOpacity={0.5}
                                  onPress={() => { this.clickToCustomerServies(); }} >
                                  <View style={{justifyContent:'center',alignItems:'center'}}>
-                                 <ResponsiveImage  source={require('../../assets/customer-service.png')}  initWidth="66" initHeight="70"/>
+                               <ResponsiveImage  source={require('../../assets/customerservice.png')}  initWidth="66" initHeight="70"/>
                                    <Text style={{fontSize:18,color:'white'}}>Customer Services</Text>
                                  </View>
                                  </TouchableOpacity>
@@ -137,7 +134,7 @@ import ResponsiveImage from 'react-native-responsive-image';
                             activeOpacity={0.5}
                             onPress={() => { this.clickToCustomerServies(); }} >
                             <View style={{justifyContent:'center',alignItems:'center'}}>
-                            <ResponsiveImage  source={require('../../assets/customer-service.png')}  initWidth="66" initHeight="70"/>
+                         <ResponsiveImage  source={require('../../assets/customerservice.png')}  initWidth="66" initHeight="70"/>
                               <Text style={{fontSize:18,color:'white'}}>Customer Services</Text>
                             </View>
                             </TouchableOpacity>:null

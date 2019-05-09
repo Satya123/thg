@@ -13,7 +13,7 @@ import UserData from './UserData';
 import ServiceClass from './ServiceClass';
 import DependentSubData from './DependentSubData';
 import { Actions } from 'react-native-router-flux';
-//import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Dependents extends Component {
 
@@ -62,7 +62,7 @@ class Dependents extends Component {
               this.setState({ loaded: true });
                 ServiceClass.appDetails(token, `dependents/${ memberID}`).then((reData) => {
                   if ( reData.status === 200) {
-                                
+
                                   if (reData.data.status === '1') {
                     //console.log(reData.data.data);
                     this.setState({ dataArray: reData.data.data });
@@ -73,14 +73,14 @@ class Dependents extends Component {
                     Alert.alert(reData.data.message.toString());
                   //  Actions.pop();
                   }
-                
-              
+
+
                       }else {
                             this.setState({ loaded: false });
-               
+
                                  alert("Something went wrong.")
                                  return ;
-                
+
 }
 
                 }).catch((error) => {
@@ -112,10 +112,11 @@ class Dependents extends Component {
             </View>
 
 
- {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-            }
-            
+            <Spinner
+               visible={this.state.loaded}
+               color={'#00dcc3'}
+               />
+
             </ImageBackground>
             <View style={styles.footerView}>
             <CustomFooter

@@ -1,5 +1,5 @@
 {
-  "name": "thg",
+  "name": "THG",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -29,6 +29,7 @@
     "react-native-image-zoom-viewer": "^2.2.23",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-livechat": "^1.0.22",
+    "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-pdf": "^5.0.6",
     "react-native-phone-call": "^1.0.9",

@@ -14,7 +14,7 @@ class VendorSplash extends React.Component {
         this.state = {
             isVisible: true,
             loaded: false,
-            
+
             url: '',
             isApiCall: null,
             appState: AppState.currentState,
@@ -208,7 +208,7 @@ class VendorSplash extends React.Component {
 
                                 />
                                {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
             }
                             {
                               (this.state.isApiCall === false)?  <Text>Please try again!!</Text> : null
@@ -219,7 +219,7 @@ class VendorSplash extends React.Component {
 
                     {this.goToHomeScreen()}
                     <StatusBar
-                       
+
                         barStyle="light-content"
                         />
 

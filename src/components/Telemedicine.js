@@ -10,6 +10,7 @@ import ServiceClass from './ServiceClass';
 import OfflineNotice from './OfflineNotice';
 import ResponsiveImage from 'react-native-responsive-image';
 import HTML from 'react-native-render-html';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { Actions, Scene, Router} from 'react-native-router-flux';
 
 
@@ -233,17 +234,11 @@ let  details = this.ReplaceAll(strDetails,'&lt;','<');
                      </View>
                  }
 
-
-
-
-
-                                         {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-            }
-
-
-
-                   </ImageBackground>
+                 <Spinner
+                    visible={this.state.loaded}
+                    color={'#00dcc3'}
+                    />
+                  </ImageBackground>
 
                   <View style={styles.footerView}>
                   <CustomFooter

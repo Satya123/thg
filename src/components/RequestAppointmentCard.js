@@ -589,17 +589,17 @@ return(
   underlineColorAndroid="transparent"
 />*/}
 
-<TextInput 
-    style={styles.textBox} 
+<TextInput
+    style={styles.textBox}
     underlineColorAndroid="transparent"
-    blurOnSubmit={false} 
-    autoFocus={false} 
-    autoCorrect={false} 
-    autoCapitalize="none" 
+    blurOnSubmit={false}
+    autoFocus={false}
+    autoCorrect={false}
+    autoCapitalize="none"
      maxLength  = {35}
     returnKeyType="next"
     onChangeText={txtName => this.setState({txtName})}
-   
+
 />
 
   </View>
@@ -620,25 +620,25 @@ maxLenght={10}
    underlineColorAndroid="transparent"
 
 />*/}
-   <TextInput 
-    style={styles.textBox} 
+   <TextInput
+    style={styles.textBox}
     underlineColorAndroid="transparent"
-    blurOnSubmit={false} 
-    autoFocus={false} 
-    autoCorrect={false} 
-    autoCapitalize="none" 
+    blurOnSubmit={false}
+    autoFocus={false}
+    autoCorrect={false}
+    autoCapitalize="none"
     maxLength  = {10}
      keyboardType="number-pad"
    returnKeyType='done'
 
     returnKeyType="next"
     onChangeText={txtPhone => this.setState({txtPhone})}
-   
-/>                         
-                            
-                            
-                            
-                            
+
+/>
+
+
+
+
 </View>
   </View>
 
@@ -654,25 +654,25 @@ maxLenght={10}
   underlineColorAndroid="transparent"
 
 />*/}
-      <TextInput 
-    style={styles.textBox} 
+      <TextInput
+    style={styles.textBox}
     underlineColorAndroid="transparent"
-    blurOnSubmit={false} 
-    autoFocus={false} 
-    autoCorrect={false} 
-    autoCapitalize="none" 
+    blurOnSubmit={false}
+    autoFocus={false}
+    autoCorrect={false}
+    autoCapitalize="none"
    maxLength  = {100}
-     
+
    returnKeyType='done'
-   
+
     returnKeyType="next"
     onChangeText={txtAddress => this.setState({txtAddress})}
-   
-/>                                     
-                                        
-                                        
-                                        
-                                        
+
+/>
+
+
+
+
 </View>
   </View>
   </View>
@@ -864,9 +864,9 @@ return (
 <KeyboardAwareScrollView>
 <ScrollView ref="myScrollView">
  {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
             }
-            
+
 {/***************************************/}
    <View  style={styles.mainRow}>
     <View style={styles.viewContent} >
@@ -949,20 +949,20 @@ return (
     onKeyPress={this.handleKeyDown}
     onChangeText={txtReason => this.setState({txtReasonData:txtReason})}
     multiline={true} />*/}
-    
-    <TextInput 
-    style={styles.textBox} 
+
+    <TextInput
+    style={styles.textBox}
     underlineColorAndroid="transparent"
-    blurOnSubmit={false} 
-    autoFocus={false} 
-    autoCorrect={false} 
-    autoCapitalize="none" 
+    blurOnSubmit={false}
+    autoFocus={false}
+    autoCorrect={false}
+    autoCapitalize="none"
      maxLength  = {100}
     returnKeyType="next"
     onChangeText={txtReason => this.setState({txtReasonData:txtReason})}
-   
+
 />
-   
+
     </View>
     </View>
 
@@ -1054,22 +1054,22 @@ return (
     multiline={true}
   />
   */}
-    <TextInput 
-    style={styles.textBox} 
+    <TextInput
+    style={styles.textBox}
     underlineColorAndroid="transparent"
-    blurOnSubmit={false} 
-    autoFocus={false} 
-    autoCorrect={false} 
-    autoCapitalize="none" 
+    blurOnSubmit={false}
+    autoFocus={false}
+    autoCorrect={false}
+    autoCapitalize="none"
      maxLength  = {100}
     returnKeyType="next"
     onChangeText={txtAditionalInfo => this.setState({txtAditionalInfo:txtAditionalInfo})}
-   
+
 />
-  
-  
-  
-  
+
+
+
+
 
     </View>
     </View>

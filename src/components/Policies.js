@@ -10,7 +10,7 @@ import CustomFooter from './CustomFooter';
 import PoliciesCard from './PoliciesCard';
 import UserData from './UserData';
 import ServiceClass from './ServiceClass';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 class Policies extends Component {
  constructor(props) {
         super(props);
@@ -65,16 +65,16 @@ class Policies extends Component {
             } else {
                 this.setState({loaded: false});
                 Alert.alert(reData.data.message);
-            }         
-                
-                
+            }
+
+
               }else {
-                 this.setState({loaded: false}); 
+                 this.setState({loaded: false});
                 var errorMsg = response.statusText
                          alert("Something went wrong.")
                          return ;
               }
-           
+
         }).catch((error) => {
             ////console.log(error);
             Alert.alert(error);
@@ -104,10 +104,11 @@ class Policies extends Component {
                             </View>
                         </View>
 
-                      {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-            }
-            
+                        <Spinner
+                           visible={this.state.loaded}
+                           color={'#00dcc3'}
+                           />
+
                     </ImageBackground>
 
                     <View style={styles.footerView}>

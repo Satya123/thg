@@ -10,7 +10,7 @@ import ServiceClass from './ServiceClass';
 import UserData from './UserData';
 import OfflineNotice from './OfflineNotice';
 import NotificationPermission from './NotificationPermission';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 class Login extends React.Component {
  //static navigationOptions = { title: '', header: null, navigationBarHidden: true };
 
@@ -203,10 +203,10 @@ let Splash_Screen = (
 
                     </View>
 
-                       {
-                         (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-                       }
-
+                    <Spinner
+                       visible={this.state.loaded}
+                       color={'#00dcc3'}
+                       />
 
                     <TouchableOpacity
                       onPress={this.clickToLogin}

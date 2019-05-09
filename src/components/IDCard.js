@@ -11,7 +11,7 @@ import ImageZoom from 'react-native-image-pan-zoom';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import ServiceClass from './ServiceClass';
 import UserData from './UserData';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default class IDCard extends Component {
@@ -163,7 +163,7 @@ return this.state.arrayCardUrl.map((array, index) =>
     <View style={{alignItems:'center'}}><Image   source={{uri:array.url}} borderRadius={10}  style={{width:325, height:205,transform: [{ rotate: '90deg'}] }}/>
     </View>
 
-       
+
 </View>
 
 
@@ -203,9 +203,10 @@ render() {
                  <Text style ={{  fontSize: 18,  color: '#002e3c', alignItems: 'flex-start',  justifyContent: 'flex-start' }}>ID Card</Text>
             </View>
 
-            {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-            }
+            <Spinner
+               visible={this.state.loaded}
+               color={'#00dcc3'}
+               />
 
         {
           (this.state.back === '' ) ? null :

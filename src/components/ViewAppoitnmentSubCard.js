@@ -210,8 +210,8 @@ cancelAppointmentAfterConfirmation(strID){
           return(
 
           <View style={styles.mainRowPopUp}>
-  
-  
+
+
           <View style={styles.mainRowHeading} >
                  <View style={{width:'90%', marginRight:10}}>
                   <Text style={styles.textSubHeading}>Details</Text>
@@ -438,11 +438,11 @@ reRanderViewInDetails(arrayShow){
                   return (
                     <View>
   {
-          (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+          (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100,height:100,backgroundColor:'transparent',alignItems:'center',justifyContent:'center',borderRadius:10}} >< ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
         }
 
 
-                
+
                       {
                           (isViewDetails === true) ?
                            <View style={{position:'absolute',zIndex:1100000000,height: '100%', width: '101%',paddingLeft:5, backgroundColor: 'rgba(0, 0, 0, 0.9)'}}><View style={styles.SplashScreen_RootView}>

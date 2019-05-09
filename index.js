@@ -24,7 +24,7 @@ import Router from './src/components/Router'
 export default class SimpleFcmClient extends Component {
   render() {
     return (
-            
+
                 <Router />
     );
   }

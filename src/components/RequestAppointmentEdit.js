@@ -94,7 +94,7 @@ import React, { Component } from 'react';
         /*
          @componentWillMount: In this function we retrive  appointment type list which we get on App Details Api,
          and PrimaryCare text which are also provided in same Api.
-         
+
          */
 
 
@@ -123,11 +123,11 @@ import React, { Component } from 'react';
 //                        this.setState({arrayValue: value})
 //                });
         }
-        
-  
+
+
                 /*
                  @componentDidMount: In this function we get all Dependents .
-                 
+
                  */
 
                 componentDidMount() {
@@ -135,7 +135,7 @@ import React, { Component } from 'react';
         UserData.retriveData('isTelemedicineEnable').then((value) => {
 
         this.state({isTelemedicineEnable:value});
-             
+
         })
 
                 AsyncStorage.getItem('editDetailsData')
@@ -151,7 +151,7 @@ import React, { Component } from 'react';
                 valuenew = 0
                         this.setState({ textProvider:'First Provider Available'});
                 }
-              
+
                         this.setState({
                         previousAppointment:value[0].appointmentType.toString() + "*",
                                 SelectdTimeZone:value[0].timeZone.toString(),
@@ -207,7 +207,7 @@ import React, { Component } from 'react';
 
         /*
          @handleKeyDown: this function called on keyboard return press.
-         
+
          */
 
         handleKeyDown = (e) => {
@@ -219,7 +219,7 @@ import React, { Component } from 'react';
          @getDependant: In this function we call Api for getting data of Depandents  .
          @token: This parameter hold the token value, which is used in Api headers.
          @ memberID: Current User Id.
-         
+
          */
 
         getDependant = (token, memberID) => {
@@ -258,7 +258,7 @@ import React, { Component } from 'react';
          */
 
         clickToRequest = () => {
-            
+
      // Alert("dsdsdsds")
        this.setState({isUpdateAppointment:false});
                 const { appointmentTimeOne } = this.state;
@@ -369,7 +369,7 @@ import React, { Component } from 'react';
          @providerPhone: Selected provider Phone Number.
          @providerAddress: Selected provider Address.
          @dependentID: Selected Patient Id .
-         
+
          */
         requestAppointment = (token, memberID, appointmentType, visitReason, appointmentSchedule, schedulingNote, providerOption, providerName, providerPhone, providerAddress, dependentID) => {
         this.setState({ loaded: true });
@@ -591,13 +591,13 @@ import React, { Component } from 'react';
              underlineColorAndroid="transparent"
              />*/}
 
-            <TextInput 
-                style={styles.textBox} 
+            <TextInput
+                style={styles.textBox}
                 underlineColorAndroid="transparent"
-                blurOnSubmit={false} 
-                autoFocus={true} 
-                autoCorrect={false} 
-                autoCapitalize="none" 
+                blurOnSubmit={false}
+                autoFocus={true}
+                autoCorrect={false}
+                autoCapitalize="none"
                 value={this.state.txtName}
                 returnKeyType="next"
                 maxLenght={35}
@@ -624,17 +624,17 @@ import React, { Component } from 'react';
              value={this.state.txtPhone}
              onChangeText={txtPhone => this.setState({txtPhone:txtPhone})}
              underlineColorAndroid="transparent"
-             
+
              />*/}
 
-            <TextInput 
-                style={styles.textBox} 
+            <TextInput
+                style={styles.textBox}
                 underlineColorAndroid="transparent"
-                blurOnSubmit={false} 
-                autoFocus={true} 
-                autoCorrect={false} 
+                blurOnSubmit={false}
+                autoFocus={true}
+                autoCorrect={false}
                  keyboardType="number-pad"
-                autoCapitalize="none" 
+                autoCapitalize="none"
                 maxLength  = {10}
                 value={this.state.txtPhone}
                 returnKeyType="next"
@@ -657,16 +657,16 @@ import React, { Component } from 'react';
              maxLength={100}
              onChangeText={txtAddress => this.setState({txtAddress:txtAddress})}
              underlineColorAndroid="transparent"
-             
+
              />*/}
 
-            <TextInput 
-                style={styles.textBox} 
+            <TextInput
+                style={styles.textBox}
                 underlineColorAndroid="transparent"
-                blurOnSubmit={false} 
-                autoFocus={true} 
-                autoCorrect={false} 
-                autoCapitalize="none" 
+                blurOnSubmit={false}
+                autoFocus={true}
+                autoCorrect={false}
+                autoCapitalize="none"
                 value={this.state.txtAddress}
                 returnKeyType="next"
                 maxLenght={100}
@@ -773,7 +773,7 @@ import React, { Component } from 'react';
 
                                 /*
                                  @Main RenderView All SubPart are added here.
-                                 
+
                                  */
 
 
@@ -930,7 +930,7 @@ import React, { Component } from 'react';
                 </View>
                 {/**************/}
                 {
-                                                                                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100, height:100, backgroundColor:'white', alignItems:'center', justifyContent:'center', borderRadius:10}} >< ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
+                                                                                (loaded === true) ? <View style={styles.containerActivety}><View style={{width:100, height:100, backgroundColor:'transparent', alignItems:'center', justifyContent:'center', borderRadius:10}} >< ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
                 }
 
                 {/*******************************************/}
@@ -980,13 +980,13 @@ import React, { Component } from 'react';
                          value={this.state.txtReasonData}
                          onChangeText={txtReason => this.setState({txtReasonData:txtReason})}
                          multiline={true} />*/}
-                        <TextInput 
-                            style={styles.textBox} 
+                        <TextInput
+                            style={styles.textBox}
                             underlineColorAndroid="transparent"
-                            blurOnSubmit={false} 
-                            autoFocus={true} 
-                            autoCorrect={false} 
-                            autoCapitalize="none" 
+                            blurOnSubmit={false}
+                            autoFocus={true}
+                            autoCorrect={false}
+                            autoCapitalize="none"
                             value={this.state.txtReasonData}
                             returnKeyType="next"
                             maxLenght={100}
@@ -1090,13 +1090,13 @@ import React, { Component } from 'react';
                          multiline={true}
                          />*/}
 
-                        <TextInput 
-                            style={styles.textBox} 
+                        <TextInput
+                            style={styles.textBox}
                             underlineColorAndroid="transparent"
-                            blurOnSubmit={false} 
-                            autoFocus={true} 
-                            autoCorrect={false} 
-                            autoCapitalize="none" 
+                            blurOnSubmit={false}
+                            autoFocus={true}
+                            autoCorrect={false}
+                            autoCapitalize="none"
                             maxLenght={100}
                             value={this.state.txtAditionalInfo}
                             returnKeyType="next"

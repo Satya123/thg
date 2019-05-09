@@ -13,8 +13,7 @@ import CustomHeader from './CustomHeader';
 import ServiceClass from './ServiceClass';
 import { Actions } from 'react-native-router-flux';
 import Router from './Router';
-import Siren from 'react-native-siren'
-//import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class Profile extends Component {
  constructor(props) {
@@ -134,7 +133,7 @@ callAppDetails=(token)=>{
     componentDidMount() {
 
       //console.log(this.props.dataArray);
-    //  Siren.promptUser()
+
 
   }
 
@@ -184,10 +183,10 @@ callAppDetails=(token)=>{
                             */
                           }
 
-                         {/* <Spinner
+                       <Spinner
                           visible={this.state.loaded}
                           color={'#00dcc3'}
-                          />*/}
+                          />
 
                         </View>
                     </ImageBackground>

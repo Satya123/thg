@@ -19,7 +19,7 @@ import ChatVC from './ChatVC';
 import { Actions } from 'react-native-router-flux';
 import {init} from "@livechat/livechat-visitor-sdk";
 import ResponsiveImage from 'react-native-responsive-image';
-//import Spinner from 'react-native-loading-spinner-overlay';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class CustomerServices extends Component {
     constructor(props) {
@@ -314,10 +314,10 @@ class CustomerServices extends Component {
 
                             </View>
 
-
-                        {
-            (loaded === true) ? <View style={styles.containerActivety}><View style={{width: 100, height: 100, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', borderRadius: 10}}><ActivityIndicator size="large" color="#00dcc3" /></View></View> : null
-            }
+                            <Spinner
+                               visible={this.state.loaded}
+                               color={'#00dcc3'}
+                               />
                                                    </ScrollView >
                                                    </View>
                         </ImageBackground>

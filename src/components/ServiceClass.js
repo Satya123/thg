@@ -7,8 +7,8 @@
 
 import React from 'react';
 import axios from 'axios';
-//const baseUrl = 'https://appdev.transparenthealth.co/api/';
-const baseUrl = 'https://appdev-dev.transparenthealth.co/api/';
+const baseUrl = 'https://appdev.transparenthealth.co/api/';
+//const baseUrl = 'https://appdev-dev.transparenthealth.co/api/';
 
 export default class ServiceClass extends React.Component {
 /*

@@ -77,7 +77,7 @@ class RouterComponent extends Component {
        <Scene key='VendorSplash' component={VendorSplash}  />
        <Scene key='Menu' component={Menu}  />
        <Scene key='Telemedicine' component={Telemedicine}  />
-       <Scene key='AccountInfo' component={AccountInfo}  path={'/AccountInfo/:userData/'} />
+      <Scene key='AccountInfo' component={AccountInfo} title='' path={'/AccountInfo/:userData/'} panHandlers={null}  />
        <Scene key='Dependents' component={Dependents}  />
        <Scene key='Policies' component={Policies}  />
        <Scene key='CustomerServices' component={CustomerServices}  />
@@ -87,7 +87,7 @@ class RouterComponent extends Component {
        <Scene key='LiveChat' component={LiveChat}   />
        <Scene key='ViewAppointment' component={ViewAppointment}   />
        <Scene key='RouterComponent' component={RouterComponent}   />
-    
+
        <Scene key='RequestAppointmentEdit' component={RequestAppointmentEdit}   path={'/RequestAppointmentEdit/:appointmentDetailsData/'} />
      </Scene>
      </Scene>
