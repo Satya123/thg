@@ -45,7 +45,7 @@
     "react-native-zoomable-image": "^0.1.0",
     "react-navigation": "^2.13.0",
     "rn-fetch-blob": "^0.10.13",
-    "yarn": "^1.10.1"
+    "yarn": "^1.17.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
