@@ -10,7 +10,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "add": "^2.0.6",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "cors": "^2.8.5",
     "native-base": "^2.8.0",
     "react": "16.4.1",
