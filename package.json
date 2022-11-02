@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "native-base": "^2.8.0",
     "react": "16.4.1",
-    "react-native": "0.56.0",
+    "react-native": "0.70.4",
     "react-native-calendar-datepicker": "^1.2.2",
     "react-native-card-flip": "^1.0.3",
     "react-native-datepicker": "^1.7.2",
